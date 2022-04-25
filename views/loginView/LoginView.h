@@ -6,6 +6,11 @@
 #include <ctype.h>
 #include <iostream>
 #include <fstream>
+#include <string>
+#include <filesystem>
+#include <unistd.h>
+#include <cstring>
+
 using namespace std;
 
 class LoginView {

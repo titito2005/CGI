@@ -27,4 +27,15 @@ userService: services/userService/UserService.cc services/userService/UserServic
 database: services/Database.cc services/Database.h
 	g++ -c services/Database.cc services/Database.h -L/usr/lib/mysql -lmysqlclient
 
+#PUBLIC FILES ON CGI DIRECTION
+deletePublicCGI:
+	sudo rm -rf /var/www/html/public
+
+copyPublicCGI:
+	sudo cp -r public /var/www/html
+
+xd:
+	sudo rm -rf /usr/lib/cgi-bin/public
+
+
 
