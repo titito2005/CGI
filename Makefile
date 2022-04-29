@@ -34,8 +34,6 @@ deletePublicCGI:
 copyPublicCGI:
 	sudo cp -r public /var/www/html
 
-xd:
-	sudo rm -rf /usr/lib/cgi-bin/public
-
-
-
+refreshPublicCGI:
+	sudo rm -rf /var/www/html/public
+	sudo cp -r public /var/www/html

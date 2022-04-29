@@ -5,50 +5,45 @@ sudo apt install apache2
 2-) Compilador c++.
 sudo apt-get install build-essential
 
-3-) Compilar prueba.
-sudo g++ -o /usr/lib/cgi-bin/example example.c
-
-4-) Make it executable.
-sudo chmod +x /usr/lib/cgi-bin/example
-
-5-) Enable CGI modules.
-cd /etc/apache2/mods-enable
+3-) Enable CGI modules.
+cd /etc/apache2/mods-enabled
 sudo ln -s ../mods-available/cgi.load
 
-6-) Reload Apache.
+4-) Reload Apache.
 sudo service apache2 reload
 
-7-) Acces cgi.
+5-) Acces cgi.
 http://127.0.0.1/cgi-bin/example/
 
-8-) Instalar MariaDB.
+6-) Instalar MariaDB.
 sudo apt install mariadb-server
 
-9-) Configurar MariaDB.
+7-) Configurar MariaDB.
 sudo mysql_secure_installation
 
-10-) Crear admin.
-GRANT ALL ON *.* TO 'admin'@'localhost' IDENTIFIED BY 'password' WITH GRANT OPTION;
+8-) Crear admin.
+sudo mariadb;
+GRANT ALL ON *.* TO 'admin'@'localhost' IDENTIFIED BY 'admin' WITH GRANT OPTION;
 FLUSH PRIVILEGES;
 exit;
 
-11-) Acceder MariaDB.
+9-) Acceder MariaDB.
 mysql -u 'user' -p
 
-12-) Create database.
-create db server;
+10-) Create database.
+create database server;
 use server;
 
-13-) Create tables (suponiendo que el repo este en desktop)
+11-) Create tables (suponiendo que el repo este en desktop)
 source /home/'youruser'/Desktop/Seguridad/db/database.sql
 show tables;
 
-14-) Library to connect to DB
+12-) Library to connect to DB
 sudo apt update
 sudo apt install libmysqlclient-dev
 https://gist.github.com/komasaru/c9c6c03bda4629283808
 
-15-)
+15-) No lo hagan
 g++ -c userService.c userService.h -L/usr/lib/mysql -lmysqlclient
 g++ -c main.c userService.h -L/usr/lib/mysql -lmysqlclient
 g++ main.o userService.o -o programa -L/usr/lib/mysql -lmysqlclient
