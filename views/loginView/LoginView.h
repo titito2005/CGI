@@ -11,15 +11,21 @@
 #include <unistd.h>
 #include <cstring>
 
+#include "../../services/parserService/ParserService.h"
+
 using namespace std;
+
+#define MAX_ARGS 100
 
 class LoginView {
     public:
         LoginView();
         ~LoginView();
-        bool CGI();
+        bool responseGET();
+        bool responsePOST(char* content_length, char* query_string);
     private:
         //Variables
+        ParserService *parser;
         //Methods
 };
 #endif

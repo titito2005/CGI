@@ -7,3 +7,12 @@ CREATE TABLE user(
     createdAt timestamp default current_timestamp,
     primary key(id)
 );
+
+CREATE TABLE userSession(
+    id int auto_increment;
+    ip varchar(10);
+    userId int;
+    userLogin varchar(100);
+    createdAt timestamp default current_timestamp,
+    primary key(id)
+);

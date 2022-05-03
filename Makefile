@@ -23,6 +23,9 @@ user: models/userModel/User.cc models/userModel/User.h
 userService: services/userService/UserService.cc services/userService/UserService.h
 	g++ -c services/userService/UserService.cc services/userService/UserService.h -L/usr/lib/mysql -lmysqlclient
 
+parserService: services/parserService/ParserService.cc services/parserService/ParserService.h
+	g++ -c services/parserService/ParserService.cc services/parserService/ParserService.h
+
 #DATABASE
 database: services/Database.cc services/Database.h
 	g++ -c services/Database.cc services/Database.h -L/usr/lib/mysql -lmysqlclient
@@ -37,3 +40,13 @@ copyPublicCGI:
 refreshPublicCGI:
 	sudo rm -rf /var/www/html/public
 	sudo cp -r public /var/www/html
+
+#PRUEBA LOGIN VIEW (IGNORAR)
+parser: services/parserService/ParserService.cc services/parserService/ParserService.h
+	g++ -c services/parserService/ParserService.cc services/parserService/ParserService.h
+
+login: views/loginView/LoginView.cc views/loginView/LoginView.h services/parserService/ParserService.h
+	g++ -c views/loginView/LoginView.cc views/loginView/LoginView.h services/parserService/ParserService.h
+
+loginCompleto: LoginView.o ParserService.o
+	sudo g++ -o /usr/lib/cgi-bin/login LoginView.o ParserService.o
