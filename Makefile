@@ -45,8 +45,8 @@ refreshPublicCGI:
 parser: services/parserService/ParserService.cc services/parserService/ParserService.h
 	g++ -c services/parserService/ParserService.cc services/parserService/ParserService.h
 
-login: views/loginView/LoginView.cc views/loginView/LoginView.h services/parserService/ParserService.h
+login: views/loginView/LoginView.cc views/loginView/LoginView.h services/parserService/ParserService.h services/userService/UserService.h
 	g++ -c views/loginView/LoginView.cc views/loginView/LoginView.h services/parserService/ParserService.h
 
-loginCompleto: LoginView.o ParserService.o
-	sudo g++ -o /usr/lib/cgi-bin/login LoginView.o ParserService.o
+loginCompleto: LoginView.o ParserService.o UserService.o User.o Database.o
+	sudo g++ -o /usr/lib/cgi-bin/login LoginView.o ParserService.o UserService.o User.o Database.o -L/usr/lib/mysql -lmysqlclient

@@ -13,6 +13,8 @@
 
 #define MAX_ARGS 100
 
+using namespace std;
+
 class ParserService {
     public:
         ParserService();

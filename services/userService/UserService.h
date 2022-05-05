@@ -15,15 +15,9 @@ class UserService {
     public:
         UserService();
         ~UserService();
-        User getUserById(char* id);
-        User getUserByEmail(char* email);
-        User* getAllUsers();
-        bool addUser(User newUser);
-        bool updateUser(User updateUser);
-        bool deleteUser(User deleteUser);
-        //Returns user if exists by email;
-        User verifyUserByEmail(char* email);
-        bool verifyPassword(User findUser, char* password);
+        User* getUserById(char* id);
+        User* getUserByEmail(char* email);
+        bool verifyPassword(char* email, char* password);
         bool verifySession(char* userId);
         char* createSession(char* userId);
         char* cretaeCookieSession();

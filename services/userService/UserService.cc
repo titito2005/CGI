@@ -16,25 +16,25 @@ UserService::~UserService(){
     //red
 }
 
-User UserService::getUserById(char* id){
+User* UserService::getUserById(char* id){
     MYSQL_ROW row;
-    User findUser;
+    User* findUser = NULL;
     char* query = "SELECT * FROM user WHERE id = ";
     char* finalQuery = (char *) malloc(1 + strlen(query)+ strlen(id));
     strcpy(finalQuery, query);
     strcat(finalQuery, id);
-
     //Return 0 for success
-    if (!mysql_query(conn, finalQuery)) {
+    if (!mysql_query(conn, finalQuery)){
         res = mysql_use_result(conn);
+        findUser = new User();
         // Fetch a result set
         while ((row = mysql_fetch_row(res)) != NULL){
-            findUser.setId(row[0]);
-            findUser.setFirstName(row[1]);
-            findUser.setLastName(row[2]);
-            findUser.setEmail(row[3]);
-            findUser.setPassword(row[4]);
-            findUser.setCreatedAt(row[5]);
+            findUser->setId(row[0]);
+            findUser->setFirstName(row[1]);
+            findUser->setLastName(row[2]);
+            findUser->setEmail(row[3]);
+            findUser->setPassword(row[4]);
+            findUser->setCreatedAt(row[5]);
         }
         // Release memories
         mysql_free_result(res);
@@ -43,24 +43,27 @@ User UserService::getUserById(char* id){
     return findUser;
 }
 
-User UserService::verifyUserByEmail(char* email){
-    User findUser = NULL;
+User* UserService::getUserByEmail(char* email){
+    MYSQL_ROW row;
+    User* findUser = NULL;
     char* query = "SELECT * FROM user WHERE email = ";
-    char* finalQuery = (char *) malloc(1 + strlen(query)+ strlen(email));
+    char* finalQuery = (char *) malloc(3 + strlen(query)+ strlen(email));
     strcpy(finalQuery, query);
+    strcat(finalQuery, "'");
     strcat(finalQuery, email);
-
+    strcat(finalQuery, "'");
     //Return 0 for success
     if (!mysql_query(conn, finalQuery)) {
         res = mysql_use_result(conn);
+        findUser = new User();
         // Fetch a result set
         while ((row = mysql_fetch_row(res)) != NULL){
-            findUser.setId(row[0]);
-            findUser.setFirstName(row[1]);
-            findUser.setLastName(row[2]);
-            findUser.setEmail(row[3]);
-            findUser.setPassword(row[4]);
-            findUser.setCreatedAt(row[5]);
+            findUser->setId(row[0]);
+            findUser->setFirstName(row[1]);
+            findUser->setLastName(row[2]);
+            findUser->setEmail(row[3]);
+            findUser->setPassword(row[4]);
+            findUser->setCreatedAt(row[5]);
         }
         // Release memories
         mysql_free_result(res);
@@ -71,23 +74,11 @@ User UserService::verifyUserByEmail(char* email){
 
 bool UserService::verifyPassword(char* email, char* password){
     bool acceptPassword = false;
-    User findUser = verifyUserByEmail(email);
-    if(findUser != NULL){
-        if (strcmp(findUser.password, password) == 0){
+    User* findUser = getUserByEmail(email);
+    if(findUser!=NULL){
+        if (strcmp(findUser->getPassword(), password) == 0){
             acceptPassword = true;
         }
     }
-    return acceptPassword
-}
-
-bool UserService::verifySession(char* userId){
-    return true;
-}
-
-char* UserService::createSession(char* userId){
-    return NULL;
-}
-
-char* UserService::cretaeCookieSession(){
-    return NULL;
+    return acceptPassword;
 }

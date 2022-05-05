@@ -1,6 +1,12 @@
 #include "User.h"
 
 User::User(){
+    id = NULL;
+    firstName = NULL;
+    lastName = NULL;
+    email = NULL;
+    password = NULL;
+    createdAt = NULL;
 }
 
 User::User(char* _id, char* _firstName, char* _lastName, char* _email, char* _password, char* _createdAt){

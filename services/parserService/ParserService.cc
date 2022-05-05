@@ -36,7 +36,6 @@ void ParserService::parseQuery(char* query_string, int query_length){
         while ((end_value<query_length) && (query_string[end_value] != '&')){
             end_value++;
         }
-
         // Copy and decode value string
         queryValue[queryArgCnt] = copy_string(query_string, start_value, end_value);
         decode_string(queryValue[queryArgCnt]);
@@ -47,8 +46,12 @@ void ParserService::parseQuery(char* query_string, int query_length){
 char* ParserService::getQueryArg(const char name[]){
     // Lookup argument by name
     for (int arg=0; arg<queryArgCnt; arg++){
+        //Verify if exists argument name
         if (strcmp(name, queryName[arg]) == 0){
-            return queryValue[arg];
+            //Verify if value exists and is different to NULL.
+            if(strlen(queryValue[arg]) > 0){
+                return queryValue[arg];
+            }
         }
     }
     // Return NULL if not found
@@ -93,6 +96,7 @@ char* ParserService::copy_string(char *str, int start, int end){
     }
     copy[pos-start] = '\0';
     return copy;
+    return NULL;
 }
 
 void ParserService::decode_string(char *str){
