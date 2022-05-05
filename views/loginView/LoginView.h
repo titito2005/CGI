@@ -12,6 +12,7 @@
 #include <cstring>
 
 #include "../../services/parserService/ParserService.h"
+#include "../../services/userService/UserService.h"
 
 using namespace std;
 
@@ -23,9 +24,14 @@ class LoginView {
         ~LoginView();
         bool responseGET();
         bool responsePOST(char* content_length, char* query_string);
+        void printHTML();
     private:
         //Variables
         ParserService *parser;
+        UserService *userService;
+
+        bool error;
+        char* errorMessage;
         //Methods
 };
 #endif

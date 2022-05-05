@@ -21,6 +21,12 @@ class UserService {
         bool addUser(User newUser);
         bool updateUser(User updateUser);
         bool deleteUser(User deleteUser);
+        //Returns user if exists by email;
+        User verifyUserByEmail(char* email);
+        bool verifyPassword(User findUser, char* password);
+        bool verifySession(char* userId);
+        char* createSession(char* userId);
+        char* cretaeCookieSession();
     private:
         Database* db;
         MYSQL* conn;
