@@ -1,35 +1,34 @@
 #ifndef USER_H
 #define USER_H
 
-#include <bits/stdc++.h>
-#include <cstring>
-#include <stdio.h>
-#include <memory.h>
-#include <cstdlib>
+#include <iostream>
+#include <string>
+
+using namespace std;
 
 class User{
     public:
         User();
-        User(char* _id, char* _firstName, char* _lastName, char* _email, char* _password, char* _createdAt);
+        User(string _id, string _firstName, string _lastName, string _email, string _password, string _createdAt);
         ~User();
-        void setId(char* _id);
-        void setFirstName(char* _firstName);
-        void setLastName(char* _lastName);
-        void setEmail(char* _email);
-        void setPassword(char* _password);
-        void setCreatedAt(char* _createdAt);
-        char* getId();
-        char* getFirstName();
-        char* getLastName();
-        char* getEmail();
-        char* getPassword();
-        char* getCreatedAt();
+        void setId(string _id);
+        void setFirstName(string _firstName);
+        void setLastName(string _lastName);
+        void setEmail(string _email);
+        void setPassword(string _password);
+        void setCreatedAt(string _createdAt);
         void printUser();
-        char* id;
-        char* firstName;
-        char* lastName;
-        char* email;
-        char* password;
-        char* createdAt;
+        string getId();
+        string getFirstName();
+        string getLastName();
+        string getEmail();
+        string getPassword();
+        string getCreatedAt();
+        string id;
+        string firstName;
+        string lastName;
+        string email;
+        string password;
+        string createdAt;
 };
 #endif

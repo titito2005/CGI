@@ -1,96 +1,74 @@
 #include "User.h"
 
 User::User(){
-    id = NULL;
-    firstName = NULL;
-    lastName = NULL;
-    email = NULL;
-    password = NULL;
-    createdAt = NULL;
+    id = "";
+    firstName = "";
+    lastName = "";
+    email = "";
+    password = "";
+    createdAt = "";
 }
 
-User::User(char* _id, char* _firstName, char* _lastName, char* _email, char* _password, char* _createdAt){
-    id = (char *) malloc(1 + strlen(_id));
-    strcpy(id, _id);
-
-    firstName = (char *) malloc(1 + strlen(_firstName));
-    strcpy(firstName, _firstName);
-
-    lastName = (char *) malloc(1 + strlen(_lastName));
-    strcpy(lastName, _lastName);
-
-    email = (char *) malloc(1 + strlen(_email));
-    strcpy(email, _email);
-
-    password = (char *) malloc(1 + strlen(_password));
-    strcpy(password, _password);
-
-    createdAt = (char *) malloc(1 + strlen(_createdAt));
-    strcpy(createdAt, _createdAt);
+User::User(string _id, string _firstName, string _lastName, string _email, string _password, string _createdAt){
+    id = _id;
+    firstName = _firstName;
+    lastName = _lastName;
+    email = _email;
+    password = _password;
+    createdAt = _createdAt;
 }
 
 User::~User(){
 }
 
-void User::setId(char* _id){
-    id = (char *) malloc(1 + strlen(_id));
-    strcpy(id, _id);
+void User::setId(string _id){
+    id = _id;
 }
 
-void User::setFirstName(char* _firstName){
-    firstName = (char *) malloc(1 + strlen(_firstName));
-    strcpy(firstName, _firstName);
+void User::setFirstName(string _firstName){
+    firstName = _firstName;
 }
 
-void User::setLastName(char* _lastName){
-    lastName = (char *) malloc(1 + strlen(_lastName));
-    strcpy(lastName, _lastName);
+void User::setLastName(string _lastName){
+    lastName = _lastName;
 }
 
-void User::setEmail(char* _email){
-    email = (char *) malloc(1 + strlen(_email));
-    strcpy(email, _email);
+void User::setEmail(string _email){
+    email = _email;
 }
 
-void User::setPassword(char* _password){
-    password = (char *) malloc(1 + strlen(_password));
-    strcpy(password, _password);
+void User::setPassword(string _password){
+    password = _password;
 }
 
-void User::setCreatedAt(char* _createdAt){
-    createdAt = (char *) malloc(1 + strlen(_createdAt));
-    strcpy(createdAt, _createdAt);
+void User::setCreatedAt(string _createdAt){
+    createdAt = _createdAt;
 }
 
-char* User::getId(){
+string User::getId(){
     return id;
 }
 
-char* User::getFirstName(){
+string User::getFirstName(){
     return firstName;
 }
 
-char* User::getLastName(){
+string User::getLastName(){
     return lastName;
 }
 
-char* User::getEmail(){
+string User::getEmail(){
     return email;
 }
 
-char* User::getPassword(){
+string User::getPassword(){
     return password;
 }
 
-char* User::getCreatedAt(){
+string User::getCreatedAt(){
     return createdAt;
 }
 
 void User::printUser(){
-    printf("%s \n", id);
-    printf("%s \n", firstName);
-    printf("%s \n", lastName);
-    printf("%s \n", email);
-    printf("%s \n", password);
-    printf("%s \n", createdAt);
+    cout<<id<<firstName<<lastName<<email<<password<<createdAt<<endl;
 }

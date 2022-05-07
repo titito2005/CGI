@@ -26,9 +26,9 @@ User* UserService::getUserById(char* id){
     //Return 0 for success
     if (!mysql_query(conn, finalQuery)){
         res = mysql_use_result(conn);
-        findUser = new User();
         // Fetch a result set
-        while ((row = mysql_fetch_row(res)) != NULL){
+        if ((row = mysql_fetch_row(res)) != NULL){
+            findUser = new User();
             findUser->setId(row[0]);
             findUser->setFirstName(row[1]);
             findUser->setLastName(row[2]);
@@ -55,9 +55,9 @@ User* UserService::getUserByEmail(char* email){
     //Return 0 for success
     if (!mysql_query(conn, finalQuery)) {
         res = mysql_use_result(conn);
-        findUser = new User();
         // Fetch a result set
-        while ((row = mysql_fetch_row(res)) != NULL){
+        if ((row = mysql_fetch_row(res)) != NULL){
+            findUser = new User();
             findUser->setId(row[0]);
             findUser->setFirstName(row[1]);
             findUser->setLastName(row[2]);
@@ -76,7 +76,7 @@ bool UserService::verifyPassword(char* email, char* password){
     bool acceptPassword = false;
     User* findUser = getUserByEmail(email);
     if(findUser!=NULL){
-        if (strcmp(findUser->getPassword(), password) == 0){
+        if ((findUser->getPassword().compare(password)) == 0){
             acceptPassword = true;
         }
     }
