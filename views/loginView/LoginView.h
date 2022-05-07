@@ -13,6 +13,8 @@
 
 #include "../../services/parserService/ParserService.h"
 #include "../../services/userService/UserService.h"
+#include "../headerView/HeaderView.h"
+#include "../footerView/FooterView.h"
 
 using namespace std;
 
@@ -29,6 +31,8 @@ class LoginView {
         //Variables
         ParserService *parser;
         UserService *userService;
+        HeaderView *headerView;
+        FooterView *footerView;
 
         bool error;
         char* errorMessage;

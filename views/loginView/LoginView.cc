@@ -5,6 +5,8 @@ LoginView::LoginView()
     error = false;
     parser = new ParserService();
     userService = new UserService();
+    headerView = new HeaderView();
+    footerView = new FooterView();
     // Read environment variables
     char *request_method = getenv("REQUEST_METHOD");
     char *query_string = getenv("QUERY_STRING");
@@ -99,6 +101,8 @@ void LoginView::printHTML(){
         cout<<"<link rel='stylesheet' type='text/css' href='/public/userLogin/userLogin.css'>"<<endl;
         cout<<"<title>Login page</title>"<<endl;
     cout<<"</head>"<<endl;
+    //PRINT HEADER
+    headerView->printHeaderHTML();
     cout<<"<body class='d-flex justify-content-center'>"<<endl;
         cout<<"<div class='card mt-20' style='width: 30rem;'>"<<endl;
             cout<<"<div class='card-body'>"<<endl;
@@ -125,6 +129,7 @@ void LoginView::printHTML(){
         cout<<"<script src='https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js' integrity='sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1' crossorigin='anonymous'></script>"<<endl;
         cout<<"<script src='https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js' integrity='sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM' crossorigin='anonymous'></script>"<<endl;
     cout<<"</body>"<<endl;
+    footerView->printFooterHTML();
     cout<<"</html>"<<endl;
 }
 

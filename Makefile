@@ -45,8 +45,14 @@ refreshPublicCGI:
 parser: services/parserService/ParserService.cc services/parserService/ParserService.h
 	g++ -c services/parserService/ParserService.cc services/parserService/ParserService.h
 
-login: views/loginView/LoginView.cc views/loginView/LoginView.h services/parserService/ParserService.h services/userService/UserService.h
-	g++ -c views/loginView/LoginView.cc views/loginView/LoginView.h services/parserService/ParserService.h
+login: views/loginView/LoginView.cc views/loginView/LoginView.h services/parserService/ParserService.h services/userService/UserService.h views/headerView/HeaderView.h views/footerView/FooterView.h
+	g++ -c views/loginView/LoginView.cc views/loginView/LoginView.h services/parserService/ParserService.h views/headerView/HeaderView.h views/footerView/FooterView.h
 
-loginCompleto: LoginView.o ParserService.o UserService.o User.o Database.o
-	sudo g++ -o /usr/lib/cgi-bin/login LoginView.o ParserService.o UserService.o User.o Database.o -L/usr/lib/mysql -lmysqlclient
+loginCompleto: LoginView.o ParserService.o UserService.o User.o Database.o HeaderView.o FooterView.o
+	sudo g++ -o /usr/lib/cgi-bin/login LoginView.o ParserService.o UserService.o User.o Database.o HeaderView.o FooterView.o -L/usr/lib/mysql -lmysqlclient
+
+footer: views/footerView/FooterView.cc views/footerView/FooterView.h
+	g++ -c views/footerView/FooterView.cc views/footerView/FooterView.h
+
+header: views/headerView/HeaderView.cc views/headerView/HeaderView.h
+	g++ -c views/headerView/HeaderView.cc views/headerView/HeaderView.h
