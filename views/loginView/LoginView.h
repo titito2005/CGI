@@ -10,6 +10,7 @@
 #include <filesystem>
 #include <unistd.h>
 #include <cstring>
+#include <string>
 
 #include "../../services/parserService/ParserService.h"
 #include "../../services/userService/UserService.h"
@@ -25,17 +26,17 @@ class LoginView {
         LoginView();
         ~LoginView();
         bool responseGET();
-        bool responsePOST(char* content_length, char* query_string);
+        bool responsePOST();
         void printHTML();
     private:
         //Variables
-        ParserService *parser;
+        ParserService *parserService;
         UserService *userService;
         HeaderView *headerView;
         FooterView *footerView;
 
         bool error;
-        char* errorMessage;
+        string errorMessage;
         //Methods
 };
 #endif

@@ -81,6 +81,66 @@ int ParserService::getQueryCant(){
 }
 
 //COOKIE PARSER
+void ParserService::parseCookie(char* cookie_string, int cookie_length){
+    // Separate cookie_string into arguments 
+    int start_name, end_name, start_value, end_value = -1;
+    while (end_value < cookie_length){
+        // Find argument name
+        start_name = end_name = end_value + 1;
+        while ((end_name<cookie_length) && (cookie_string[end_name] != '=')){
+            end_name++;
+        }
+        // Copy and decode name string
+        cookieName[cookieArgCnt] = copy_string(cookie_string, start_name, end_name);
+        // Find argument value
+        start_value = end_value = end_name + 1;
+        while ((end_value<cookie_length) && (cookie_string[end_value] != ';')){
+            end_value++;
+        }
+        // Copy and decode value string
+        cookieValue[cookieArgCnt] = copy_string(cookie_string, start_value, end_value);
+        cookieArgCnt++;
+        //White space
+        end_value++;
+    }
+}
+
+char* ParserService::getCookieArg(const char name[]){
+    // Lookup argument by name
+    for (int arg=0; arg<cookieArgCnt; arg++){
+        //Verify if exists argument name
+        if (strcmp(name, cookieName[arg]) == 0){
+            //Verify if value exists and is different to NULL.
+            if(strlen(cookieValue[arg]) > 0){
+                return cookieValue[arg];
+            }
+        }
+    }
+    // Return NULL if not found
+    return NULL;
+}
+
+char* ParserService::getCookieName(int index){
+    // Lookup argument by location
+    if ((index >= 0) && (index < cookieArgCnt)){
+        return cookieName[index];
+    }else{
+        return NULL;
+    }
+}
+
+char* ParserService::getCookieValue(int index){
+    // Lookup argument by location
+    if ((index >= 0) && (index < cookieArgCnt)){
+        return cookieValue[index];
+    }else{
+        return NULL;
+    }
+}
+
+int ParserService::getCookieCant(){
+    return cookieArgCnt;
+}
 
 //OTHER METHODS
 char* ParserService::copy_string(char *str, int start, int end){
@@ -96,7 +156,6 @@ char* ParserService::copy_string(char *str, int start, int end){
     }
     copy[pos-start] = '\0';
     return copy;
-    return NULL;
 }
 
 void ParserService::decode_string(char *str){

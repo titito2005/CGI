@@ -21,16 +21,16 @@ class ParserService {
         ~ParserService();
         //Parser query
         void parseQuery(char* query_string, int query_length);
-        char *getQueryArg(const char name[]);
-        char *getQueryName(int index);
-        char *getQueryValue(int index);
+        char* getQueryArg(const char name[]);
+        char* getQueryName(int index);
+        char* getQueryValue(int index);
         int getQueryCant();
 
         //Parser cookies
-        void parseCookie();
-        char *getCookieArg(const char name[]);
-        char *getCookieName(int index);
-        char *getCookieValue(int index);
+        void parseCookie(char* cookie_string, int cookie_length);
+        char* getCookieArg(const char name[]);
+        char* getCookieName(int index);
+        char* getCookieValue(int index);
         int getCookieCant();
 
         //Others

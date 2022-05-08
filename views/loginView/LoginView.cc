@@ -3,7 +3,7 @@
 LoginView::LoginView()
 {
     error = false;
-    parser = new ParserService();
+    parserService = new ParserService();
     userService = new UserService();
     headerView = new HeaderView();
     footerView = new FooterView();
@@ -12,8 +12,30 @@ LoginView::LoginView()
     char *query_string = getenv("QUERY_STRING");
     char *content_length = getenv("CONTENT_LENGTH");
     char *requestAddr = getenv("REMOTE_ADDR");
-    char *requestCookies = getenv("HTTP_COOKIE");
+    char *cookie_string = getenv("HTTP_COOKIE");
 
+    int query_length = 0;
+    int cookie_length = 0;
+
+    if (content_length != NULL){
+        query_length = atoi(content_length);
+        query_string = (char *)malloc(query_length);
+        if (query_string != NULL){
+            for (int pos = 0; pos < query_length; pos++){
+                query_string[pos] = fgetc(stdin);
+            }
+        }
+    }
+
+    //PARSE QUERY
+    if(query_string != NULL && content_length != NULL){
+        parserService->parseQuery(query_string, query_length);
+    }
+    //PARSE COOKIES
+    if(cookie_string != NULL){
+        cookie_length = strlen(cookie_string);
+        parserService->parseCookie(cookie_string, cookie_length);
+    }
     // Check request_method variable
     if (request_method != NULL){
         // Handle GET requests
@@ -22,7 +44,7 @@ LoginView::LoginView()
         }
         // Handle POST requests
         if (strcmp(request_method, "POST") == 0){
-            responsePOST(content_length, query_string);
+            responsePOST();
         }
     }
 }
@@ -32,40 +54,26 @@ LoginView::~LoginView()
 }
 
 bool LoginView::responseGET(){
-    //cout << "Set-Cookie: prueba = holiwis; SameSite=None; Secure" << endl;
-    //cout << "Set-Cookie: prueba = holiwis; SameSite=None; Secure" << endl;  
+    cout << "Set-Cookie:prueba1=holiwis1; SameSite=None; Secure" << endl;
+    cout << "Set-Cookie:prueba2=holiwis2; SameSite=None; Secure" << endl;
+    cout << "Set-Cookie:prueba3=holiwis3; SameSite=None; Secure" << endl;    
     printHTML();
     return true;
 }
 
-bool LoginView::responsePOST(char* content_length, char* query_string){
-    int query_length = 0;
-
-    if (content_length == NULL){
-        return false; 
-    }else{
-        query_length = atoi(content_length);
-    }
-
-    query_string = (char *)malloc(query_length);
-    if (query_string == NULL){
-        return false;
-    }
-    for (int pos = 0; pos < query_length; pos++){
-        query_string[pos] = fgetc(stdin);
-    }
-
-    //PARSE QUERY
-    parser->parseQuery(query_string, query_length);
+bool LoginView::responsePOST(){
     //EXPECTED VARIABLES FROM QUERY
-    char* userEmail = parser->getQueryArg("userEmail");
-    char* userPassword = parser->getQueryArg("userPassword");
+    char* userEmail = parserService->getQueryArg("userEmail");
+    char* userPassword = parserService->getQueryArg("userPassword");
     if(userEmail != NULL){
         if(userPassword != NULL){
             if(userService->verifyPassword(userEmail, userPassword)){
                 //MOVE LOCATION TO ANOTHER PAGE, CORRECT LOGIN, ASSIGN COOKIES.
                 cout << "Content-type:text/plain\r\n\r\n";
                 cout << "USER LOGED" << endl;
+                cout << parserService->getCookieArg("prueba1") << endl;
+                cout << parserService->getCookieArg("prueba2") << endl;
+                cout << parserService->getCookieArg("prueba3") << endl;
             }else{
                 //PRINT ERROR VERIFY PASSWORD
                 error = true;
@@ -83,7 +91,7 @@ bool LoginView::responsePOST(char* content_length, char* query_string){
     }
 
     if(error){
-        //SI HAY ERROR IMPRIME EL HTML DE NUEVO.
+        //SI HAY ERROR IMPRIME EL HTML DE NUEVO CON LOS ERRORES.
         printHTML();
     }
     return true;
