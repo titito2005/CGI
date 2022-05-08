@@ -1,7 +1,16 @@
 #Makefile Servidor
+#CREATE LOGIN cgi-bin/login
+login: refreshPublicCGI database user userService parserService footerView headerView loginView loginCompleto
+
 #VIEWS
-loginView: views/loginView/LoginView.cc views/loginView/LoginView.h
-	sudo g++ -o /usr/lib/cgi-bin/login views/loginView/LoginView.cc views/loginView/LoginView.h
+loginView: views/loginView/LoginView.cc views/loginView/LoginView.h services/parserService/ParserService.h services/userService/UserService.h views/headerView/HeaderView.h views/footerView/FooterView.h
+	g++ -c views/loginView/LoginView.cc views/loginView/LoginView.h services/parserService/ParserService.h views/headerView/HeaderView.h views/footerView/FooterView.h
+
+footerView: views/footerView/FooterView.cc views/footerView/FooterView.h
+	g++ -c views/footerView/FooterView.cc views/footerView/FooterView.h
+
+headerView: views/headerView/HeaderView.cc views/headerView/HeaderView.h
+	g++ -c views/headerView/HeaderView.cc views/headerView/HeaderView.h
 
 #MODELS
 user: models/userModel/User.cc models/userModel/User.h
@@ -24,17 +33,6 @@ refreshPublicCGI:
 	sudo cp -r public /var/www/html
 
 #PRUEBA LOGIN VIEW (IGNORAR)
-parser: services/parserService/ParserService.cc services/parserService/ParserService.h
-	g++ -c services/parserService/ParserService.cc services/parserService/ParserService.h
-
-login: views/loginView/LoginView.cc views/loginView/LoginView.h services/parserService/ParserService.h services/userService/UserService.h views/headerView/HeaderView.h views/footerView/FooterView.h
-	g++ -c views/loginView/LoginView.cc views/loginView/LoginView.h services/parserService/ParserService.h views/headerView/HeaderView.h views/footerView/FooterView.h
-
 loginCompleto: LoginView.o ParserService.o UserService.o User.o Database.o HeaderView.o FooterView.o
 	sudo g++ -o /usr/lib/cgi-bin/login LoginView.o ParserService.o UserService.o User.o Database.o HeaderView.o FooterView.o -L/usr/lib/mysql -lmysqlclient
 
-footer: views/footerView/FooterView.cc views/footerView/FooterView.h
-	g++ -c views/footerView/FooterView.cc views/footerView/FooterView.h
-
-header: views/headerView/HeaderView.cc views/headerView/HeaderView.h
-	g++ -c views/headerView/HeaderView.cc views/headerView/HeaderView.h
