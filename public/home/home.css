@@ -1,0 +1,21 @@
+body{
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    font-family: Kanit, sans-serif;
+    height: 100vh;
+}
+
+footer{
+    margin-top: auto;
+}
+
+.main-content{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    margin-top: 6%;
+    margin-bottom: 6%;
+}

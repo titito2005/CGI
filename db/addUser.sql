@@ -2,3 +2,4 @@ INSERT INTO user (firstName, lastName, email, userPassword) VALUES ('Luis', 'Roj
 INSERT INTO user (firstName, lastName, email, userPassword) VALUES ('Eduardo', 'Carrillo', 'eduardocorreo', 'password2');
 INSERT INTO user (firstName, lastName, email, userPassword) VALUES ('Daniela', 'Rojas', 'danielacorreo', 'password3');
 INSERT INTO user (firstName, lastName, email, userPassword) VALUES ('Daniela', 'Rojas', 'prueba@prueba.com', 'prueba');
+INSERT INTO sell (nameArticle, valueArticle, DescriptionArticle) VALUES ('Zapatos', '1000', 'estos son unos zapatos talla 44');
