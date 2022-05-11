@@ -25,7 +25,8 @@ CREATE TABLE sell(
     id int auto_increment,
     nameArticle varchar(100),
     valueArticle int,
-    DescriptionArticle varchar(100),
+    DescriptionArticle varchar(5000),
+    Img varchar(1000),
     createdAt timestamp default current_timestamp,
     primary key(id)
 );

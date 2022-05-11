@@ -5,14 +5,16 @@ Sell::Sell(){
     nameArticle = "";
     valueArticle = "";
     DescriptionArticle = "";
+    img = "";
     createdAt = "";
 }
 
-Sell::Sell(string _id, string _nameArticle, string _valueArticle, string _DescriptionArticle, string _createdAt){
+Sell::Sell(string _id, string _nameArticle, string _valueArticle, string _DescriptionArticle, string _img, string _createdAt){
     id = _id;
     nameArticle = _nameArticle;
     valueArticle = _valueArticle;
     DescriptionArticle = _DescriptionArticle;
+    img=_img;
     createdAt = _createdAt;
 }
 
@@ -34,7 +36,9 @@ void Sell::setvalueArticle(string _valueArticle){
 void Sell::setDescriptionArticle(string _DescriptionArticle){
     DescriptionArticle = _DescriptionArticle;
 }
-
+void Sell::setImg(string _Img){
+    img = _Img;
+}
 void Sell::setCreatedAt(string _createdAt){
     createdAt = _createdAt;
 }
@@ -55,11 +59,15 @@ string Sell::getDescriptionArticle(){
     return DescriptionArticle;
 }
 
+string Sell::getImg(){
+    return img;
+}
+
 
 string Sell::getCreatedAt(){
     return createdAt;
 }
 
 void Sell::printSell(){
-    cout<<id<<nameArticle<<valueArticle<<DescriptionArticle<<createdAt<<endl;
+    cout<<id<<nameArticle<<valueArticle<<DescriptionArticle<<img<<createdAt<<endl;
 }

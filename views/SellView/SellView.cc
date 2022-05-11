@@ -91,6 +91,7 @@ void SellView::printHTML(){
                 cout<<"<div class='card-body'>"<<endl;
                     cout<<"<div class=\"card mb-3\">"<<endl;
                             cout<<"<div class=\"card-body\">"<<endl;
+                                cout <<"<img src=\"/home/elvis/proyecto/CGI/public/img/index.jpeg\"height=\"200px\"width=\"200px\"/>"<<endl;
                                 cout<<"<h5 class=\"card-title\">"+sell->nameArticle+"</h5>"<<endl;
                                 cout<<"<h5 class=\"card-title\">"+sell->valueArticle+"</h5>"<<endl;
                                 cout<<"<p class=\"card-text\">"+sell->DescriptionArticle+"</p>"<<endl;
