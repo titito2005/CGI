@@ -18,9 +18,7 @@ class UserService {
         User* getUserById(char* id);
         User* getUserByEmail(char* email);
         bool verifyPassword(char* email, char* password);
-        bool verifySession(char* userId);
-        char* createSession(char* userId);
-        char* cretaeCookieSession();
+        string getIdByEmail(char* email);
     private:
         Database* db;
         MYSQL* conn;

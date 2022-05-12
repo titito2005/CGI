@@ -1,10 +1,10 @@
 #Makefile Servidor
 #CREATE LOGIN cgi-bin/login
-login: refreshPublicCGI database user sell userService SellService parserService footerView headerView loginView SellView loginCompleto SellCompleto
+login: refreshPublicCGI database user sell session sessionService userService SellService parserService footerView headerView loginView SellView loginCompleto SellCompleto
 
 #VIEWS
-loginView: views/loginView/LoginView.cc views/loginView/LoginView.h services/parserService/ParserService.h services/userService/UserService.h views/headerView/HeaderView.h views/footerView/FooterView.h
-	g++ -c views/loginView/LoginView.cc views/loginView/LoginView.h services/parserService/ParserService.h views/headerView/HeaderView.h views/footerView/FooterView.h
+loginView: views/loginView/LoginView.cc views/loginView/LoginView.h services/sessionService/SessionService.h services/parserService/ParserService.h services/userService/UserService.h services/userService/UserService.h views/headerView/HeaderView.h views/footerView/FooterView.h
+	g++ -c views/loginView/LoginView.cc views/loginView/LoginView.h services/sessionService/SessionService.h services/parserService/ParserService.h services/userService/UserService.h views/headerView/HeaderView.h views/footerView/FooterView.h
 
 SellView: views/SellView/SellView.cc views/SellView/SellView.h services/parserService/ParserService.h services/SellService/SellService.h views/headerView/HeaderView.h views/footerView/FooterView.h
 	g++ -c views/SellView/SellView.cc views/SellView/SellView.h services/parserService/ParserService.h views/headerView/HeaderView.h views/footerView/FooterView.h
@@ -22,6 +22,9 @@ user: models/userModel/User.cc models/userModel/User.h
 sell: models/SellModel/Sell.cc models/SellModel/Sell.h
 	g++ -c models/SellModel/Sell.cc models/SellModel/Sell.h
 
+session: models/sessionModel/Session.cc models/sessionModel/Session.h
+	g++ -c models/sessionModel/Session.cc models/sessionModel/Session.h
+ 
 #SERVICES
 userService: services/userService/UserService.cc services/userService/UserService.h
 	g++ -c services/userService/UserService.cc services/userService/UserService.h -L/usr/lib/mysql -lmysqlclient
@@ -31,6 +34,9 @@ SellService: services/SellService/SellService.cc services/SellService/SellServic
 
 parserService: services/parserService/ParserService.cc services/parserService/ParserService.h
 	g++ -c services/parserService/ParserService.cc services/parserService/ParserService.h
+
+sessionService: services/sessionService/SessionService.cc services/sessionService/SessionService.h
+	g++ -c services/sessionService/SessionService.cc services/sessionService/SessionService.h
 
 #DATABASE
 database: services/Database.cc services/Database.h
@@ -42,8 +48,8 @@ refreshPublicCGI:
 	sudo cp -r public /var/www/html
 
 #PRUEBA LOGIN VIEW (IGNORAR)
-loginCompleto: LoginView.o ParserService.o UserService.o User.o Database.o HeaderView.o FooterView.o
-	sudo g++ -o /usr/lib/cgi-bin/login LoginView.o ParserService.o UserService.o User.o Database.o HeaderView.o FooterView.o -L/usr/lib/mysql -lmysqlclient
+loginCompleto: LoginView.o ParserService.o SessionService.o Session.o UserService.o User.o Database.o HeaderView.o FooterView.o
+	sudo g++ -o /usr/lib/cgi-bin/login LoginView.o ParserService.o Session.o SessionService.o UserService.o User.o Database.o HeaderView.o FooterView.o -L/usr/lib/mysql -lmysqlclient
 
 SellCompleto: SellView.o ParserService.o SellService.o Sell.o Database.o HeaderView.o FooterView.o
 	sudo g++ -o /usr/lib/cgi-bin/Sell SellView.o ParserService.o SellService.o Sell.o Database.o HeaderView.o FooterView.o -L/usr/lib/mysql -lmysqlclient

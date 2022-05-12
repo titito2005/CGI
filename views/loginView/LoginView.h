@@ -14,6 +14,7 @@
 
 #include "../../services/parserService/ParserService.h"
 #include "../../services/userService/UserService.h"
+#include "../../services/sessionService/SessionService.h"
 #include "../headerView/HeaderView.h"
 #include "../footerView/FooterView.h"
 
@@ -26,14 +27,17 @@ class LoginView {
         LoginView();
         ~LoginView();
         bool responseGET();
-        bool responsePOST();
+        bool responsePOST(char* ip);
         void printHTML();
     private:
         //Variables
-        ParserService *parserService;
-        UserService *userService;
+        //VIEWS
         HeaderView *headerView;
         FooterView *footerView;
+        //SERVICES
+        SessionService *sessionService;
+        ParserService *parserService;
+        UserService *userService;
 
         bool error;
         string errorMessage;

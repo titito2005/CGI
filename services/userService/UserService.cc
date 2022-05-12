@@ -72,6 +72,15 @@ User* UserService::getUserByEmail(char* email){
     return findUser;
 }
 
+string UserService::getIdByEmail(char* email){
+    string userId = "";
+    User* findUser = getUserByEmail(email);
+    if(findUser!=NULL){
+        userId = findUser->getId();
+    }
+    return userId;
+}
+
 bool UserService::verifyPassword(char* email, char* password){
     bool acceptPassword = false;
     User* findUser = getUserByEmail(email);

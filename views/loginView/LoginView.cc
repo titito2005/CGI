@@ -3,8 +3,11 @@
 LoginView::LoginView()
 {
     error = false;
+    //SERVICES
+    sessionService = new SessionService();
     parserService = new ParserService();
     userService = new UserService();
+    //VIEWS
     headerView = new HeaderView();
     footerView = new FooterView();
     // Read environment variables
@@ -44,7 +47,7 @@ LoginView::LoginView()
         }
         // Handle POST requests
         if (strcmp(request_method, "POST") == 0){
-            responsePOST();
+            responsePOST(requestAddr);
         }
     }
 }
@@ -53,15 +56,12 @@ LoginView::~LoginView()
 {
 }
 
-bool LoginView::responseGET(){
-    cout << "Set-Cookie:prueba1=holiwis1; SameSite=None; Secure" << endl;
-    cout << "Set-Cookie:prueba2=holiwis2; SameSite=None; Secure" << endl;
-    cout << "Set-Cookie:prueba3=holiwis3; SameSite=None; Secure" << endl;    
+bool LoginView::responseGET(){ 
     printHTML();
     return true;
 }
 
-bool LoginView::responsePOST(){
+bool LoginView::responsePOST(char* ip){
     //EXPECTED VARIABLES FROM QUERY
     char* userEmail = parserService->getQueryArg("userEmail");
     char* userPassword = parserService->getQueryArg("userPassword");
@@ -71,9 +71,10 @@ bool LoginView::responsePOST(){
                 //MOVE LOCATION TO ANOTHER PAGE, CORRECT LOGIN, ASSIGN COOKIES.
                 cout << "Content-type:text/plain\r\n\r\n";
                 cout << "USER LOGED" << endl;
-                cout << parserService->getCookieArg("prueba1") << endl;
-                cout << parserService->getCookieArg("prueba2") << endl;
-                cout << parserService->getCookieArg("prueba3") << endl;
+                string cookie = sessionService->generateCookieString();
+                string userId = userService->getIdByEmail(userEmail);
+                sessionService->setSessionCookie(ip, userId, cookie);
+
             }else{
                 //PRINT ERROR VERIFY PASSWORD
                 error = true;
