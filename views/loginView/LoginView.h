@@ -11,6 +11,8 @@
 #include <unistd.h>
 #include <cstring>
 #include <string>
+#include <ctime>
+#include <cstdlib>
 
 #include "../../services/parserService/ParserService.h"
 #include "../../services/userService/UserService.h"
@@ -26,7 +28,7 @@ class LoginView {
     public:
         LoginView();
         ~LoginView();
-        bool responseGET();
+        bool responseGET(char* ip);
         bool responsePOST(char* ip);
         void printHTML();
     private:

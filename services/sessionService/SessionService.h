@@ -29,9 +29,9 @@ class SessionService {
         //Genera strings de cookies aleatorias.
         string generateCookieString();
         //Verifica si una session es valida.
-        bool validateSession(string ip, string userId, Session* session);
+        bool validateSession(char* ip, char* cookie);
         //Borra una sesion por cookie
-        bool deleteSessionByCookie(string cookie);
+        bool deleteSessionByUserId(string userID);
     private:
         Database* db;
         MYSQL* conn;

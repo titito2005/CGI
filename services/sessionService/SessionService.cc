@@ -84,11 +84,11 @@ string SessionService::getUserIdByCookie(char* cookie){
     return userId;
 }
 
-bool SessionService::validateSession(string ip, string userId, Session* session){
+bool SessionService::validateSession(char* ip, char* cookie){
     bool validateSession = false;
-    if(session->getIp().compare(ip) == 0){
-        if(session->getUserId().compare(userId) == 0){
-            //FALTA VALIDAR LA FECHA DE LA SESSION
+    Session *findSession = getSessionByUserCookie(cookie);
+    if(findSession != NULL){
+        if(findSession->getIp().compare(ip) == 0){
             validateSession = true;
         }
     }
@@ -107,9 +107,9 @@ bool SessionService::setSessionCookie(string ip, string userId, string cookie){
     return setCookie;
 }
 
-bool SessionService::deleteSessionByCookie(string cookie){
+bool SessionService::deleteSessionByUserId(string userID);
     bool deleteCookie = false;
-    string query = "DELETE FROM userSession WHERE loginCookie = '"+cookie+"'";
+    string query = "DELETE FROM userSession WHERE userId = '"+userID+"'";
     const char *finalQuery = query.c_str();
     if (!mysql_query(conn, finalQuery)){
         deleteCookie = true;

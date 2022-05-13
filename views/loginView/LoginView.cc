@@ -43,7 +43,7 @@ LoginView::LoginView()
     if (request_method != NULL){
         // Handle GET requests
         if (strcmp(request_method, "GET") == 0){
-            responseGET();
+            responseGET(requestAddr);
         }
         // Handle POST requests
         if (strcmp(request_method, "POST") == 0){
@@ -56,8 +56,20 @@ LoginView::~LoginView()
 {
 }
 
-bool LoginView::responseGET(){ 
-    printHTML();
+bool LoginView::responseGET(char* ip){ 
+    char *sessionID = parserService->getCookieArg("sessionID");
+    //HAY UNA COOKIE
+    if(sessionID != NULL){
+        if(sessionService->validateSession(ip, sessionID)){
+            //LA COOKIE ES VALIDA NO DEBERIA ENTRAR A LOGIN.
+        } else {
+            //LA IP Y LA COOKIE NO COINCIDEN.
+            printHTML();
+        }
+    } else {
+        //NO HAY COOKIE
+        printHTML();
+    }
     return true;
 }
 
@@ -69,12 +81,15 @@ bool LoginView::responsePOST(char* ip){
         if(userPassword != NULL){
             if(userService->verifyPassword(userEmail, userPassword)){
                 //MOVE LOCATION TO ANOTHER PAGE, CORRECT LOGIN, ASSIGN COOKIES.
-                cout << "Content-type:text/plain\r\n\r\n";
-                cout << "USER LOGED" << endl;
                 string cookie = sessionService->generateCookieString();
                 string userId = userService->getIdByEmail(userEmail);
-                sessionService->setSessionCookie(ip, userId, cookie);
-
+                //BORRO COOKIE CON EL ID DEL USUARIO (Por si existe una session anterior)
+                userService->deleteSessionByUserId(userId);
+                if(sessionService->setSessionCookie(ip, userId, cookie)){
+                    cout << "Set-Cookie:sessionID="<<cookie<<"; SameSite=None; Secure=true;"<< endl;
+                }
+                cout << "Content-type:text/plain\r\n\r\n";
+                cout << "USER LOGED" << endl;
             }else{
                 //PRINT ERROR VERIFY PASSWORD
                 error = true;
