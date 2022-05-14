@@ -1,6 +1,6 @@
 #Makefile Servidor
 #CREATE LOGIN cgi-bin/login
-login: refreshPublicCGI database user sell userService SellService parserService footerView headerView loginView SellView loginCompleto SellCompleto
+login: refreshPublicCGI database user sell userService SellService parserService footerView headerView loginView SellView loginCompleto SellCompleto registerCompleto
 
 #VIEWS
 loginView: views/loginView/LoginView.cc views/loginView/LoginView.h services/parserService/ParserService.h services/userService/UserService.h views/headerView/HeaderView.h views/footerView/FooterView.h
@@ -8,6 +8,9 @@ loginView: views/loginView/LoginView.cc views/loginView/LoginView.h services/par
 
 SellView: views/SellView/SellView.cc views/SellView/SellView.h services/parserService/ParserService.h services/SellService/SellService.h views/headerView/HeaderView.h views/footerView/FooterView.h
 	g++ -c views/SellView/SellView.cc views/SellView/SellView.h services/parserService/ParserService.h views/headerView/HeaderView.h views/footerView/FooterView.h
+
+registerView: views/registerView/RegisterView.cc views/registerView/RegisterView.h services/parserService/ParserService.h services/userService/UserService.h views/headerView/HeaderView.h views/footerView/FooterView.h
+	g++ -c views/registerView/RegisterView.cc views/registerView/RegisterView.h services/parserService/ParserService.h views/headerView/HeaderView.h views/footerView/FooterView.h
 
 footerView: views/footerView/FooterView.cc views/footerView/FooterView.h
 	g++ -c views/footerView/FooterView.cc views/footerView/FooterView.h
@@ -48,3 +51,5 @@ loginCompleto: LoginView.o ParserService.o UserService.o User.o Database.o Heade
 SellCompleto: SellView.o ParserService.o SellService.o Sell.o Database.o HeaderView.o FooterView.o
 	sudo g++ -o /usr/lib/cgi-bin/Sell SellView.o ParserService.o SellService.o Sell.o Database.o HeaderView.o FooterView.o -L/usr/lib/mysql -lmysqlclient
 
+registerCompleto: RegisterView.o ParserService.o UserService.o Sell.o Database.o HeaderView.o FooterView.o
+	sudo g++ -o /usr/lib/cgi-bin/register RegisterView.o ParserService.o UserService.o User.o Database.o HeaderView.o FooterView.o -L/usr/lib/mysql -lmysqlclient
