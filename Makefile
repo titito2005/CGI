@@ -51,5 +51,5 @@ loginCompleto: LoginView.o ParserService.o UserService.o User.o Database.o Heade
 SellCompleto: SellView.o ParserService.o SellService.o Sell.o Database.o HeaderView.o FooterView.o
 	sudo g++ -o /usr/lib/cgi-bin/Sell SellView.o ParserService.o SellService.o Sell.o Database.o HeaderView.o FooterView.o -L/usr/lib/mysql -lmysqlclient
 
-registerCompleto: RegisterView.o ParserService.o UserService.o Sell.o Database.o HeaderView.o FooterView.o
-	sudo g++ -o /usr/lib/cgi-bin/register RegisterView.o ParserService.o UserService.o User.o Database.o HeaderView.o FooterView.o -L/usr/lib/mysql -lmysqlclient
+registerCompleto: RegisterView.o ParserService.o UserService.o User.o Database.o HeaderView.o FooterView.o
+	sudo g++ -o /usr/lib/cgi-bin/userRegister RegisterView.o ParserService.o UserService.o User.o Database.o HeaderView.o FooterView.o -L/usr/lib/mysql -lmysqlclient

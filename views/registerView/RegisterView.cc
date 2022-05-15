@@ -63,15 +63,8 @@ bool RegisterView::responseGET(){
 
 bool RegisterView::responsePOST(){
     //EXPECTED VARIABLES FROM QUERY
-    char* userFirstName = parserService->getQueryArg("userFirstName");
-    char* userLastName1 = parserService->getQueryArg("userLastName1");
-    char* userLastName2 = parserService->getQueryArg("userLastName2");
-    char* userTelephone = parserService->getQueryArg("userTelephone");
-    char* userDirection= parserService->getQueryArg("userDirection");
-    char* userUserName = parserService->getQueryArg("userUserName");
     char* userEmail = parserService->getQueryArg("userEmail");
     char* userPassword = parserService->getQueryArg("userPassword");
-    
     if(userEmail != NULL){
         if(userPassword != NULL){
             if(userService->verifyPassword(userEmail, userPassword)){
@@ -105,7 +98,7 @@ bool RegisterView::responsePOST(){
 }
 
 void RegisterView::printHTML(){
-    //FALTA IMPRIMIR HEADER Y FOOTER
+     //FALTA IMPRIMIR HEADER Y FOOTER
     cout << "Content-type:text/html\r\n\r\n";
     cout<<"<!doctype html>"<<endl;
     cout<<"<html lang='en'"<<endl;
@@ -113,8 +106,8 @@ void RegisterView::printHTML(){
             cout<<"<meta charset='utf-8'>"<<endl;
             cout<<"<meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>"<<endl;
             cout<<"<link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css' integrity='sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T' crossorigin='anonymous'>"<<endl;
-            cout<<"<link rel='stylesheet' type='text/css' href='/public/userRegister/userRegister.css'>"<<endl;
-            cout<<"<title>Register page</title>"<<endl;
+            cout<<"<link rel='stylesheet' type='text/css' href='/public/userLogin/userLogin.css'>"<<endl;
+            cout<<"<title>Login page</title>"<<endl;
         cout<<"</head>"<<endl;
         //PRINT HEADER
         cout<<"<body>"<<endl;
@@ -128,40 +121,16 @@ void RegisterView::printHTML(){
                             cout<< errorMessage << endl;
                         cout<<"</div>"<<endl;
                     }
-                        cout<<"<form action='register' method='POST'>"<<endl;
+                        cout<<"<form action='login' method='POST'>"<<endl;
                             cout<<"<div class='form-group'>"<<endl;
-                                cout<<"<label for='inputFirstName'>Nombre</label>"<<endl;
-                                cout<<"<input name='userFirstName' type='firstName' class='form-control' id='inputFirstName' placeholder='Ingrese su nombre'>"<<endl;
-                            cout<<"</div>"<<endl;
-                            cout<<"<div class='form-group'>"<<endl;
-                                cout<<"<label for='inputLastName1'>Primer apellido</label>"<<endl;
-                                cout<<"<input name='userLastName1' type='lastName1' class='form-control' id='inputLastName1' placeholder='Ingrese su primer apellido'>"<<endl;
-                            cout<<"</div>"<<endl;
-                            cout<<"<div class='form-group'>"<<endl;
-                                cout<<"<label for='inputLastName2'>Segundo apellido</label>"<<endl;
-                                cout<<"<input name='userLastName2' type='lastName2' class='form-control' id='inputLastName2' placeholder='Ingrese su segundo apellido'>"<<endl;
-                            cout<<"</div>"<<endl;
-                            cout<<"<div class='form-group'>"<<endl;
-                                cout<<"<label for='inputTelephone'>Telefono</label>"<<endl;
-                                cout<<"<input name='userTelephone' type='telephone' class='form-control' id='inputTelephone' placeholder='Ingrese su telefono'>"<<endl;
-                            cout<<"</div>"<<endl;
-                            cout<<"<div class='form-group'>"<<endl;
-                                cout<<"<label for='inputDirection'>Direccion</label>"<<endl;
-                                cout<<"<input name='userDirection' type='direction' class='form-control' id='inputDirection' placeholder='Ingrese su direccion'>"<<endl;
-                            cout<<"</div>"<<endl;
-                            cout<<"<div class='form-group'>"<<endl;
-                                cout<<"<label for='inputUserName'>Usuario</label>"<<endl;
-                                cout<<"<input name='userUserName' type='userName' class='form-control' id='inputUserName' placeholder='Ingrese el nombre de usuario que desee'>"<<endl;
-                            cout<<"</div>"<<endl;
-                            cout<<"<div class='form-group'>"<<endl;
-                                cout<<"<label for='inputEmail'>Email</label>"<<endl;
-                                cout<<"<input name='userEmail' type='email' class='form-control' id='inputEmail' placeholder='Ingrese su correo electrónico'>"<<endl;
+                                cout<<"<label for='inputEmail1'>Email</label>"<<endl;
+                                cout<<"<input name='userEmail' type='email' class='form-control' id='inputEmail1' placeholder='Ingrese su correo electrónico'>"<<endl;
                             cout<<"</div>"<<endl;
                             cout<<"<div class='form-group'>"<<endl;
                                 cout<<"<label for='inputPassword'>Contraseña</label>"<<endl;
                                 cout<<"<input name='userPassword' type='password' class='form-control' id='inputPassword' placeholder='Ingrese su contraseña'>"<<endl;
                             cout<<"</div>"<<endl;
-                            cout<<"<button type='submit' class='btn btn-primary'>Registrarse</button>"<<endl;
+                            cout<<"<button type='submit' class='btn btn-primary'>Iniciar sesión</button>"<<endl;
                         cout<<"</form>"<<endl;
                     cout<<"</div>"<<endl;
                 cout<<"</div>"<<endl;
