@@ -6,7 +6,7 @@
 #include <stdio.h>
 #include <memory.h>
 
-#include "../../models/SellModel/Sell.h"
+#include "../../models/sellModel/Sell.h"
 #include "../Database.h"
 
 using namespace std;
@@ -16,13 +16,12 @@ class SellService {
         SellService();
         ~SellService();
         Sell* getSellById(char* id);
-        char* createSession(char* SellId);
-        char* cretaeCookieSession();
+        int getSellCountAll();
     private:
         Database* db;
         MYSQL* conn;
         MYSQL_RES *res;
+        MYSQL_FIELD *field;
 };
 #endif
 
-//sprintf(sql_statement, "INSERT INTO USERS_TBL(LOGIN, PASSWORD) VALUES('%s', '%s')", login, password);

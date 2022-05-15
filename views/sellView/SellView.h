@@ -13,7 +13,7 @@
 #include <string>
 
 #include "../../services/parserService/ParserService.h"
-#include "../../services/SellService/SellService.h"
+#include "../../services/sellService/SellService.h"
 #include "../headerView/HeaderView.h"
 #include "../footerView/FooterView.h"
 
