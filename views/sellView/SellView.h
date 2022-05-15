@@ -1,19 +1,11 @@
 #ifndef SELLVIEW_H
 #define SELLVIEW_H
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <ctype.h>
 #include <iostream>
-#include <fstream>
-#include <string>
-#include <filesystem>
-#include <unistd.h>
-#include <cstring>
 #include <string>
 
 #include "../../services/parserService/ParserService.h"
-#include "../../services/SellService/SellService.h"
+#include "../../services/sellService/SellService.h"
 #include "../headerView/HeaderView.h"
 #include "../footerView/FooterView.h"
 

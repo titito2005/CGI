@@ -27,7 +27,7 @@ class Sell{
         string id;
         string nameArticle;
         string valueArticle;
-        string DescriptionArticle;
+        string descriptionArticle;
         string img;
         string createdAt;
 };

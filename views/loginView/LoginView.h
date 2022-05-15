@@ -1,19 +1,12 @@
 #ifndef LOGINVIEW_H
 #define LOGINVIEW_H
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <ctype.h>
 #include <iostream>
-#include <fstream>
-#include <string>
-#include <filesystem>
-#include <unistd.h>
-#include <cstring>
 #include <string>
 
 #include "../../services/parserService/ParserService.h"
 #include "../../services/userService/UserService.h"
+#include "../../services/sessionService/SessionService.h"
 #include "../headerView/HeaderView.h"
 #include "../footerView/FooterView.h"
 
@@ -25,15 +18,19 @@ class LoginView {
     public:
         LoginView();
         ~LoginView();
-        bool responseGET();
-        bool responsePOST();
+        bool responseGET(char* ip);
+        bool responsePOST(char* ip);
+        bool createCookie(char* ip, char* email);
         void printHTML();
     private:
         //Variables
-        ParserService *parserService;
-        UserService *userService;
+        //VIEWS
         HeaderView *headerView;
         FooterView *footerView;
+        //SERVICES
+        SessionService *sessionService;
+        ParserService *parserService;
+        UserService *userService;
 
         bool error;
         string errorMessage;

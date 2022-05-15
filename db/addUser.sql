@@ -3,3 +3,5 @@ INSERT INTO user (firstName, lastName, email, userPassword) VALUES ('Eduardo', '
 INSERT INTO user (firstName, lastName, email, userPassword) VALUES ('Daniela', 'Rojas', 'danielacorreo', 'password3');
 INSERT INTO user (firstName, lastName, email, userPassword) VALUES ('Daniela', 'Rojas', 'prueba@prueba.com', 'prueba');
 INSERT INTO sell (nameArticle, valueArticle, DescriptionArticle, Img) VALUES ('Zapatos', '1000', 'estos son unos zapatos talla 44','/home/elvis/proyecto/CGI/public/img/index.jpeg');
+INSERT INTO sell (nameArticle, valueArticle, DescriptionArticle, Img) VALUES ('Zapatos2', '1000', 'estos son unos zapatos talla 45','/home/elvis/proyecto/CGI/public/img/index.jpeg');
+INSERT INTO sell (nameArticle, valueArticle, DescriptionArticle, Img) VALUES ('Zapatos3', '1000', 'estos son unos zapatos talla 41','/home/elvis/proyecto/CGI/public/img/index.jpeg');

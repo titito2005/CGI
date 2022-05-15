@@ -3,8 +3,11 @@
 LoginView::LoginView()
 {
     error = false;
+    //SERVICES
+    sessionService = new SessionService();
     parserService = new ParserService();
     userService = new UserService();
+    //VIEWS
     headerView = new HeaderView();
     footerView = new FooterView();
     // Read environment variables
@@ -13,7 +16,6 @@ LoginView::LoginView()
     char *content_length = getenv("CONTENT_LENGTH");
     char *requestAddr = getenv("REMOTE_ADDR");
     char *cookie_string = getenv("HTTP_COOKIE");
-
     int query_length = 0;
     int cookie_length = 0;
 
@@ -26,7 +28,6 @@ LoginView::LoginView()
             }
         }
     }
-
     //PARSE QUERY
     if(query_string != NULL && content_length != NULL){
         parserService->parseQuery(query_string, query_length);
@@ -40,11 +41,11 @@ LoginView::LoginView()
     if (request_method != NULL){
         // Handle GET requests
         if (strcmp(request_method, "GET") == 0){
-            responseGET();
+            responseGET(requestAddr);
         }
         // Handle POST requests
         if (strcmp(request_method, "POST") == 0){
-            responsePOST();
+            responsePOST(requestAddr);
         }
     }
 }
@@ -53,27 +54,36 @@ LoginView::~LoginView()
 {
 }
 
-bool LoginView::responseGET(){
-    cout << "Set-Cookie:prueba1=holiwis1; SameSite=None; Secure" << endl;
-    cout << "Set-Cookie:prueba2=holiwis2; SameSite=None; Secure" << endl;
-    cout << "Set-Cookie:prueba3=holiwis3; SameSite=None; Secure" << endl;    
+bool LoginView::responseGET(char* ip){ 
+    char *sessionID = parserService->getCookieArg("sessionID");
+    //HAY UNA COOKIE
+    if(sessionID != NULL){
+        if(sessionService->validateSession(ip, sessionID)){
+            //LA COOKIE ES VALIDA NO DEBERIA ENTRAR A LOGIN.
+            cout << "Location: http://localhost/cgi-bin/Sell\n\n" << endl;
+        }
+    }
+    //NO HAY COOKIE O NO ES VALIDA
     printHTML();
     return true;
 }
 
-bool LoginView::responsePOST(){
+bool LoginView::responsePOST(char* ip){
     //EXPECTED VARIABLES FROM QUERY
     char* userEmail = parserService->getQueryArg("userEmail");
     char* userPassword = parserService->getQueryArg("userPassword");
     if(userEmail != NULL){
         if(userPassword != NULL){
+            //VERIFICAMOS USER AND PASSWORD.
             if(userService->verifyPassword(userEmail, userPassword)){
-                //MOVE LOCATION TO ANOTHER PAGE, CORRECT LOGIN, ASSIGN COOKIES.
-                cout << "Content-type:text/plain\r\n\r\n";
-                cout << "USER LOGED" << endl;
-                cout << parserService->getCookieArg("prueba1") << endl;
-                cout << parserService->getCookieArg("prueba2") << endl;
-                cout << parserService->getCookieArg("prueba3") << endl;
+                //CREAMOS COOKIE.
+                if(createCookie(ip, userEmail)){
+                    //REDIRECCION A HOME.
+                    cout << "Location: http://localhost/cgi-bin/Sell\n\n" << endl;
+                } else {
+                    error = true;
+                    errorMessage = "Error verificando el usuario.";
+                }
             }else{
                 //PRINT ERROR VERIFY PASSWORD
                 error = true;
@@ -95,6 +105,18 @@ bool LoginView::responsePOST(){
         printHTML();
     }
     return true;
+}
+
+bool LoginView::createCookie(char* ip, char* userEmail){
+    string cookie = sessionService->generateCookieString();
+    string userId = userService->getIdByEmail(userEmail);
+    //BORRO COOKIE CON EL ID DEL USUARIO (Por si existe una session anterior)
+    sessionService->deleteSessionByUserId(userId);
+    if(sessionService->setSessionCookie(ip, userId, cookie)){
+        cout << "Set-Cookie:sessionID="<<cookie<<"; SameSite=None; Secure=true;"<< endl;
+        return true;
+    }
+    return false;
 }
 
 void LoginView::printHTML(){

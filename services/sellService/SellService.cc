@@ -41,3 +41,21 @@ Sell* SellService::getSellById(char* id){
     free(finalQuery);
     return findUser;
 }
+
+int SellService::getSellCountAll(){
+    MYSQL_ROW row;
+    Sell* findUser = NULL;
+    char* query = "SELECT * FROM sell";
+    int num_fields=0;
+    //Return 0 for success
+    if (!mysql_query(conn, query)){
+        res = mysql_store_result (conn);
+        field = mysql_fetch_fields(res);
+        num_fields = mysql_num_rows(res);
+ 
+    }
+    // Release memories
+    mysql_free_result(res);
+    return num_fields;
+}
+

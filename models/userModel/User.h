@@ -24,6 +24,8 @@ class User{
         string getEmail();
         string getPassword();
         string getCreatedAt();
+
+    private:
         string id;
         string firstName;
         string lastName;
