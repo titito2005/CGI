@@ -1,9 +1,9 @@
 #Makefile Servidor
 #CREATE LOGIN cgi-bin/login
-login: refreshPublicCGI database user sell session sessionService userService SellService parserService footerView headerView loginView SellView loginCompleto SellCompleto
+login: refreshPublicCGI database user sell session sessionService userService SellService parserService footerView headerView loginView SellView logoutView loginCompleto SellCompleto logoutCompleto
 
 #VIEWS
-loginView: views/loginView/LoginView.cc views/loginView/LoginView.h services/sessionService/SessionService.h services/parserService/ParserService.h services/userService/UserService.h services/userService/UserService.h views/headerView/HeaderView.h views/footerView/FooterView.h
+loginView: views/loginView/LoginView.cc views/loginView/LoginView.h services/sessionService/SessionService.h services/parserService/ParserService.h services/userService/UserService.h views/headerView/HeaderView.h views/footerView/FooterView.h
 	g++ -c views/loginView/LoginView.cc views/loginView/LoginView.h services/sessionService/SessionService.h services/parserService/ParserService.h services/userService/UserService.h views/headerView/HeaderView.h views/footerView/FooterView.h
 
 SellView: views/SellView/SellView.cc views/SellView/SellView.h services/parserService/ParserService.h services/SellService/SellService.h views/headerView/HeaderView.h views/footerView/FooterView.h
@@ -15,6 +15,8 @@ footerView: views/footerView/FooterView.cc views/footerView/FooterView.h
 headerView: views/headerView/HeaderView.cc views/headerView/HeaderView.h
 	g++ -c views/headerView/HeaderView.cc views/headerView/HeaderView.h
 
+logoutView: views/logoutView/LogoutView.cc views/logoutView/LogoutView.h services/sessionService/SessionService.h services/parserService/ParserService.h
+	g++ -c views/logoutView/LogoutView.cc views/logoutView/LogoutView.h services/sessionService/SessionService.h services/parserService/ParserService.h
 #MODELS
 user: models/userModel/User.cc models/userModel/User.h
 	g++ -c models/userModel/User.cc models/userModel/User.h
@@ -54,3 +56,5 @@ loginCompleto: LoginView.o ParserService.o SessionService.o Session.o UserServic
 SellCompleto: SellView.o ParserService.o SellService.o Sell.o Database.o HeaderView.o FooterView.o
 	sudo g++ -o /usr/lib/cgi-bin/Sell SellView.o ParserService.o SellService.o Sell.o Database.o HeaderView.o FooterView.o -L/usr/lib/mysql -lmysqlclient
 
+logoutCompleto: LogoutView.o ParserService.o SessionService.o Session.o Database.o
+	sudo g++ -o /usr/lib/cgi-bin/logout LogoutView.o ParserService.o SessionService.o Session.o Database.o -L/usr/lib/mysql -lmysqlclient

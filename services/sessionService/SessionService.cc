@@ -119,6 +119,18 @@ bool SessionService::deleteSessionByUserId(string userID){
     return deleteCookie;
 }
 
+bool SessionService::deleteSessionByCookie(string cookie){
+    bool deleteCookie = false;
+    string query = "DELETE FROM userSession WHERE loginCookie = '";
+    query.append(cookie);
+    query.append("'");
+    const char *finalQuery = query.c_str();
+    if(!mysql_query(conn, finalQuery)){
+        deleteCookie = true;
+    }
+    return deleteCookie;
+}
+
 string SessionService::generateCookieString(){
     static const char alphanum[] =
         "0123456789"
