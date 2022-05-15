@@ -1,6 +1,6 @@
 #Makefile Servidor
 #CREATE LOGIN cgi-bin/login
-login: refreshPublicCGI database user sell session sessionService userService sellService parserService footerView headerView loginView sellView logoutView loginCompleto sellCompleto logoutCompleto registerCompleto
+login: refreshPublicCGI database user sell session sessionService userService sellService parserService footerView headerView loginView sellView logoutView registerView loginCompleto sellCompleto logoutCompleto registerCompleto 
 
 #VIEWS
 loginView: views/loginView/LoginView.cc views/loginView/LoginView.h services/sessionService/SessionService.h services/parserService/ParserService.h services/userService/UserService.h views/headerView/HeaderView.h views/footerView/FooterView.h
