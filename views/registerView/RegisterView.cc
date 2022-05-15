@@ -54,46 +54,31 @@ RegisterView::~RegisterView()
 }
 
 bool RegisterView::responseGET(){
-    cout << "Set-Cookie:prueba1=holiwis1; SameSite=None; Secure" << endl;
-    cout << "Set-Cookie:prueba2=holiwis2; SameSite=None; Secure" << endl;
-    cout << "Set-Cookie:prueba3=holiwis3; SameSite=None; Secure" << endl;    
     printHTML();
     return true;
 }
 
 bool RegisterView::responsePOST(){
     //EXPECTED VARIABLES FROM QUERY
+    char* userName = parserService->getQueryArg("userName");
+    char* userLastNames = parserService->getQueryArg("userLastNames");
     char* userEmail = parserService->getQueryArg("userEmail");
     char* userPassword = parserService->getQueryArg("userPassword");
-    if(userEmail != NULL){
-        if(userPassword != NULL){
-            if(userService->verifyPassword(userEmail, userPassword)){
-                //MOVE LOCATION TO ANOTHER PAGE, CORRECT LOGIN, ASSIGN COOKIES.
-                cout << "Content-type:text/plain\r\n\r\n";
-                cout << "USER LOGED" << endl;
-                cout << parserService->getCookieArg("prueba1") << endl;
-                cout << parserService->getCookieArg("prueba2") << endl;
-                cout << parserService->getCookieArg("prueba3") << endl;
-            }else{
-                //PRINT ERROR VERIFY PASSWORD
-                error = true;
-                errorMessage = "El email y la contraseña no coinciden.";
-            }
-        }else{
-            //PRINT ERROR NO PASSWORD
+    char* userPhoneNumber = parserService->getQueryArg("userPhoneNumber");
+    char* userDirection = parserService->getQueryArg("userDirection");
+
+    if(userName != NULL && userLastNames != NULL && userPhoneNumber != NULL && userDirection != NULL && userEmail != NULL && userPassword != NULL){
+        if(userService->insertUserRegister(userName, userLastNames, userEmail, userPassword, userPhoneNumber, userDirection)){
+            cout << "Location: http://localhost/cgi-bin/Sell\n\n" << endl;
+        } else {
             error = true;
-            errorMessage = "No se ha ingresado la contraseña, asegúrese de rellenar todos los espacios.";
+            errorMessage = "Error registrando el usuario.";
         }
-    }else{
-        //PRINT ERROR NO EMAIL
+    } else {
         error = true;
-        errorMessage = "No se ha ingresado el email, asegúrese de rellenar todos los espacios.";
+        errorMessage = "Hay datos incompletos. Por favor inserte todos los datos solicitados.";
     }
 
-    if(error){
-        //SI HAY ERROR IMPRIME EL HTML DE NUEVO CON LOS ERRORES.
-        printHTML();
-    }
     return true;
 }
 
@@ -121,7 +106,7 @@ void RegisterView::printHTML(){
                             cout<< errorMessage << endl;
                         cout<<"</div>"<<endl;
                     }
-                        cout<<"<form action='register' method='POST'>"<<endl;
+                        cout<<"<form action='userRegister' method='POST'>"<<endl;
                             cout<<"<div class='form-group'>"<<endl;
                                 cout<<"<label for='inputName'>Nombre</label>"<<endl;
                                 cout<<"<input name='userName' type='name' class='form-control' id='inputName' placeholder='Ingrese su nombre'>"<<endl;
@@ -131,20 +116,20 @@ void RegisterView::printHTML(){
                                 cout<<"<input name='userLastNames' type='lastNames' class='form-control' id='inputLastNames' placeholder='Ingrese sus dos apellidos'>"<<endl;
                             cout<<"</div>"<<endl;
                             cout<<"<div class='form-group'>"<<endl;
-                                cout<<"<label for='inputPhoneNumber'>Teléfono</label>"<<endl;
-                                cout<<"<input name='userPhoneNumber' type='phoneNumber' class='form-control' id='inputPhoneNumber' placeholder='Ingrese su número de teléfono'>"<<endl;
-                            cout<<"</div>"<<endl;
-                            cout<<"<div class='form-group'>"<<endl;
-                                cout<<"<label for='inputDirection'>Dirección</label>"<<endl;
-                                cout<<"<input name='userDirection' type='direction' class='form-control' id='inputDirection' placeholder='Ingrese su dirección'>"<<endl;
-                            cout<<"</div>"<<endl;
-                            cout<<"<div class='form-group'>"<<endl;
                                 cout<<"<label for='inputEmail'>Email</label>"<<endl;
                                 cout<<"<input name='userEmail' type='email' class='form-control' id='inputEmail' placeholder='Ingrese su correo electrónico'>"<<endl;
                             cout<<"</div>"<<endl;
                             cout<<"<div class='form-group'>"<<endl;
                                 cout<<"<label for='inputPassword'>Contraseña</label>"<<endl;
                                 cout<<"<input name='userPassword' type='password' class='form-control' id='inputPassword' placeholder='Ingrese su contraseña'>"<<endl;
+                            cout<<"</div>"<<endl;
+                            cout<<"<div class='form-group'>"<<endl;
+                                cout<<"<label for='inputPhoneNumber'>Teléfono</label>"<<endl;
+                                cout<<"<input name='userPhoneNumber' type='phoneNumber' class='form-control' id='inputPhoneNumber' placeholder='Ingrese su número de teléfono'>"<<endl;
+                            cout<<"</div>"<<endl;
+                            cout<<"<div class='form-group'>"<<endl;
+                                cout<<"<label for='inputDirection'>Dirección</label>"<<endl;
+                                cout<<"<input name='userDirection' type='direction' class='form-control' id='inputDirection' placeholder='Ingrese su dirección'>"<<endl;
                             cout<<"</div>"<<endl;
                             cout<<"<button type='submit' class='btn btn-primary'>Registrarse</button>"<<endl;
                         cout<<"</form>"<<endl;

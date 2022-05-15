@@ -9,7 +9,7 @@ using namespace std;
 class User{
     public:
         User();
-        User(string _id, string _firstName, string _lastName, string _email, string _password, string _createdAt);
+        User(string _id, string _firstName, string _lastName, string _email, string _password, string _createdAt, string _phoneNumber, string _direction);
         ~User();
         void setId(string _id);
         void setFirstName(string _firstName);
@@ -17,6 +17,8 @@ class User{
         void setEmail(string _email);
         void setPassword(string _password);
         void setCreatedAt(string _createdAt);
+        void setPhoneNumber(string _phoneNumber);
+        void setDirection(string _direction);
         void printUser();
         string getId();
         string getFirstName();
@@ -24,6 +26,8 @@ class User{
         string getEmail();
         string getPassword();
         string getCreatedAt();
+        string getPhoneNumber();
+        string getDirection();
 
     private:
         string id;
@@ -32,5 +36,7 @@ class User{
         string email;
         string password;
         string createdAt;
+        string phoneNumber;
+        string direction;
 };
 #endif

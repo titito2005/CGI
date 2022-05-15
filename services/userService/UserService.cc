@@ -35,6 +35,8 @@ User* UserService::getUserById(char* id){
             findUser->setEmail(row[3]);
             findUser->setPassword(row[4]);
             findUser->setCreatedAt(row[5]);
+            findUser->setPhoneNumber(row[6]);
+            findUser->setDirection(row[7]);
         }
         // Release memories
         mysql_free_result(res);
@@ -64,6 +66,8 @@ User* UserService::getUserByEmail(char* email){
             findUser->setEmail(row[3]);
             findUser->setPassword(row[4]);
             findUser->setCreatedAt(row[5]);
+            findUser->setPhoneNumber(row[6]);
+            findUser->setDirection(row[7]);
         }
         // Release memories
         mysql_free_result(res);
@@ -90,4 +94,16 @@ bool UserService::verifyPassword(char* email, char* password){
         }
     }
     return acceptPassword;
+}
+
+bool UserService::insertUserRegister(string name, string lastNames, string email, string password, string phoneNumber, string direction){
+    bool insertNewUser = false;
+    string query = "INSERT INTO user(firstName,lastName,email,userPassword,phoneNumber,direction)VALUES(";
+    query.append("'"+name+"','"+lastNames+"','"+email+"','"+password+"','"+phoneNumber+"','"+direction+"')");
+    const char *finalQuery = query.c_str();
+    if (!mysql_query(conn, finalQuery)){
+        insertNewUser = true;
+    }
+
+    return insertNewUser;
 }

@@ -37,6 +37,5 @@ class RegisterView {
 
         bool error;
         string errorMessage;
-        //Methods
 };
 #endif
