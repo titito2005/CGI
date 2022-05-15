@@ -1,10 +1,8 @@
 #ifndef USERSERVICE_H
 #define USERSERVICE_H
 #include <mysql/mysql.h>  // require libmysqlclient-dev
-#include <bits/stdc++.h>
 #include <cstring>
 #include <stdio.h>
-#include <memory.h>
 
 #include "../../models/userModel/User.h"
 #include "../Database.h"

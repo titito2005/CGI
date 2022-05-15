@@ -1,14 +1,8 @@
 #ifndef PARSERSERVICE_H
 #define PARSERSERVICE_H
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <ctype.h>
 #include <iostream>
-#include <fstream>
 #include <string>
-#include <filesystem>
-#include <unistd.h>
 #include <cstring>
 
 #define MAX_ARGS 100

@@ -1,18 +1,8 @@
 #ifndef LOGINVIEW_H
 #define LOGINVIEW_H
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <ctype.h>
 #include <iostream>
-#include <fstream>
 #include <string>
-#include <filesystem>
-#include <unistd.h>
-#include <cstring>
-#include <string>
-#include <ctime>
-#include <cstdlib>
 
 #include "../../services/parserService/ParserService.h"
 #include "../../services/userService/UserService.h"

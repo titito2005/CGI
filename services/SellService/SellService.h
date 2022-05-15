@@ -1,10 +1,8 @@
 #ifndef SELLSERVICE_H
 #define SELLSERVICE_H
 #include <mysql/mysql.h>  // require libmysqlclient-dev
-#include <bits/stdc++.h>
 #include <cstring>
 #include <stdio.h>
-#include <memory.h>
 
 #include "../../models/SellModel/Sell.h"
 #include "../Database.h"

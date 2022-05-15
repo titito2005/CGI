@@ -2,11 +2,8 @@
 #define SESSIONSERVICE_H
 #include <mysql/mysql.h>  // require libmysqlclient-dev
 #include <bits/stdc++.h>
-#include <cstring>
-#include <stdio.h>
-#include <memory.h>
-#include <ctime>
 #include <iostream>
+#include <string>
 #include <unistd.h>
 
 #include "../../models/sessionModel/Session.h"
