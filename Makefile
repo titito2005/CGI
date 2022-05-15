@@ -17,6 +17,9 @@ headerView: views/headerView/HeaderView.cc views/headerView/HeaderView.h
 
 logoutView: views/logoutView/LogoutView.cc views/logoutView/LogoutView.h services/sessionService/SessionService.h services/parserService/ParserService.h
 	g++ -c views/logoutView/LogoutView.cc views/logoutView/LogoutView.h services/sessionService/SessionService.h services/parserService/ParserService.h
+
+shoppingCartView: views/shoppingCartView/ShoppingCartView.cc views/shoppingCartView/ShoppingCartView.h services/sessionService/SessionService.h services/parserService/ParserService.h services/sellService/SellService.h services/shoppingCartService/ShoppingCartService.h models/sellModel/Sell.h models/shoppingCartModel/ShoppingCart.h
+	g++ -c views/shoppingCartView/ShoppingCartView.cc views/shoppingCartView/ShoppingCartView.h services/sessionService/SessionService.h services/parserService/ParserService.h services/sellService/SellService.h services/shoppingCartService/ShoppingCartService.h models/sellModel/Sell.h models/shoppingCartModel/ShoppingCart.h
 #MODELS
 user: models/userModel/User.cc models/userModel/User.h
 	g++ -c models/userModel/User.cc models/userModel/User.h
@@ -26,6 +29,9 @@ sell: models/sellModel/Sell.cc models/sellModel/Sell.h
 
 session: models/sessionModel/Session.cc models/sessionModel/Session.h
 	g++ -c models/sessionModel/Session.cc models/sessionModel/Session.h
+
+shoppingCart: models/shoppingCartModel/ShoppingCart.cc models/shoppingCartModel/ShoppingCart.h
+	g++ -c models/shoppingCartModel/ShoppingCart.cc models/shoppingCartModel/ShoppingCart.h
  
 #SERVICES
 userService: services/userService/UserService.cc services/userService/UserService.h
@@ -39,6 +45,9 @@ parserService: services/parserService/ParserService.cc services/parserService/Pa
 
 sessionService: services/sessionService/SessionService.cc services/sessionService/SessionService.h
 	g++ -c services/sessionService/SessionService.cc services/sessionService/SessionService.h
+
+shoppingCartService: services/shoppingCartService/ShoppingCartService.cc services/shoppingCartService/ShoppingCartService.h
+	g++ -c services/shoppingCartService/ShoppingCartService.cc services/shoppingCartService/ShoppingCartService.h
 
 #DATABASE
 database: services/Database.cc services/Database.h
@@ -58,3 +67,6 @@ sellCompleto: SellView.o ParserService.o SellService.o Sell.o Database.o HeaderV
 
 logoutCompleto: LogoutView.o ParserService.o SessionService.o Session.o Database.o
 	sudo g++ -o /usr/lib/cgi-bin/logout LogoutView.o ParserService.o SessionService.o Session.o Database.o -L/usr/lib/mysql -lmysqlclient
+
+shoppingCartCompleto: ShoppingCartView.o SellService.o ParserService.o ShoppingCartService.o SessionService.o Session.o Sell.o ShoppingCart.o UserService.o User.o Database.o HeaderView.o FooterView.o
+	sudo g++ -o /usr/lib/cgi-bin/cart ShoppingCartView.o SellService.o ParserService.o ShoppingCartService.o SessionService.o Session.o Sell.o ShoppingCart.o UserService.o User.o Database.o HeaderView.o FooterView.o -L/usr/lib/mysql -lmysqlclient
