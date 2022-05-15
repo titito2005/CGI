@@ -9,7 +9,7 @@ class HeaderView{
     public:
         HeaderView();
         ~HeaderView();
-        void printHeaderHTML();
+        void printHeaderHTML(bool loged);
     private:
 };
 #endif
