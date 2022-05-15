@@ -51,7 +51,7 @@ int SellService::getSellCountAll(){
     if (!mysql_query(conn, query)){
         res = mysql_store_result (conn);
         field = mysql_fetch_fields(res);
-        num_fields = mysql_num_fields(res);
+        num_fields = mysql_num_rows(res);
  
     }
     // Release memories

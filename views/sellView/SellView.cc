@@ -98,8 +98,12 @@ void SellView::printHTML()
     cout << "<body>" << endl;
     headerView->printHeaderHTML();
     for (int i = 1; i <= SellCount; i++)
-    {
-        sell = sellService->getSellById("1");
+    {   
+        string tmp = to_string(i);
+        char const * num_char = tmp.c_str();
+        char* n;
+        strcpy(n,num_char);
+        sell = sellService->getSellById(n);
         cout << "<div class='main-content'>" << endl;
         cout << "<div class='card mt-20' style='width: 30rem;'>" << endl;
         cout << "<div class='card-body'>" << endl;
