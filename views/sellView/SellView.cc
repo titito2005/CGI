@@ -63,9 +63,6 @@ SellView::~SellView()
 
 bool SellView::responseGET()
 {
-    cout << "Set-Cookie:prueba1=holiwis1; SameSite=None; Secure" << endl;
-    cout << "Set-Cookie:prueba2=holiwis2; SameSite=None; Secure" << endl;
-    cout << "Set-Cookie:prueba3=holiwis3; SameSite=None; Secure" << endl;
     printHTML();
     return true;
 }
@@ -96,7 +93,7 @@ void SellView::printHTML()
     cout << "</head>" << endl;
     // PRINT HEADER
     cout << "<body>" << endl;
-    headerView->printHeaderHTML();
+    headerView->printHeaderHTML(false);
     for (int i = 1; i <= SellCount; i++)
     {   
         string tmp = to_string(i);

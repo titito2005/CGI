@@ -1,6 +1,7 @@
 DROP TABLE user;
 DROP TABLE userSession;
 DROP TABLE sell;
+DROP TABLE shoppingCart;
 
 CREATE TABLE user(
     id int auto_increment,
@@ -33,4 +34,15 @@ CREATE TABLE sell(
     img varchar(1000),
     createdAt timestamp default current_timestamp,
     primary key(id)
+);
+
+CREATE TABLE shoppingCart(
+    id int auto_increment,
+    userId int NOT NULL,
+    sellId int NOT NULL,
+    sellCant int DEFAULT (1),
+    createdAt timestamp default current_timestamp,
+    primary key(id),
+    foreign key(userId) references user(id),
+    foreign key(sellId) references sell(id)
 );

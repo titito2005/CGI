@@ -20,9 +20,11 @@ User* UserService::getUserById(char* id){
     MYSQL_ROW row;
     User* findUser = NULL;
     char* query = "SELECT * FROM user WHERE id = ";
-    char* finalQuery = (char *) malloc(1 + strlen(query)+ strlen(id));
+    char* finalQuery = (char *) malloc(3 + strlen(query)+ strlen(id));
     strcpy(finalQuery, query);
+    strcat(finalQuery, "'");
     strcat(finalQuery, id);
+    strcat(finalQuery, "'");
     //Return 0 for success
     if (!mysql_query(conn, finalQuery)){
         res = mysql_use_result(conn);
