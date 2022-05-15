@@ -106,8 +106,8 @@ void RegisterView::printHTML(){
             cout<<"<meta charset='utf-8'>"<<endl;
             cout<<"<meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>"<<endl;
             cout<<"<link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css' integrity='sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T' crossorigin='anonymous'>"<<endl;
-            cout<<"<link rel='stylesheet' type='text/css' href='/public/userLogin/userLogin.css'>"<<endl;
-            cout<<"<title>Login page</title>"<<endl;
+            cout<<"<link rel='stylesheet' type='text/css' href='/public/userRegister/userRegister.css'>"<<endl;
+            cout<<"<title>User Register page</title>"<<endl;
         cout<<"</head>"<<endl;
         //PRINT HEADER
         cout<<"<body>"<<endl;
@@ -121,16 +121,32 @@ void RegisterView::printHTML(){
                             cout<< errorMessage << endl;
                         cout<<"</div>"<<endl;
                     }
-                        cout<<"<form action='login' method='POST'>"<<endl;
+                        cout<<"<form action='register' method='POST'>"<<endl;
                             cout<<"<div class='form-group'>"<<endl;
-                                cout<<"<label for='inputEmail1'>Email</label>"<<endl;
-                                cout<<"<input name='userEmail' type='email' class='form-control' id='inputEmail1' placeholder='Ingrese su correo electrónico'>"<<endl;
+                                cout<<"<label for='inputName'>Nombre</label>"<<endl;
+                                cout<<"<input name='userName' type='name' class='form-control' id='inputName' placeholder='Ingrese su nombre'>"<<endl;
+                            cout<<"</div>"<<endl;
+                            cout<<"<div class='form-group'>"<<endl;
+                                cout<<"<label for='inputLastNames'>Apellidos</label>"<<endl;
+                                cout<<"<input name='userLastNames' type='lastNames' class='form-control' id='inputLastNames' placeholder='Ingrese sus dos apellidos'>"<<endl;
+                            cout<<"</div>"<<endl;
+                            cout<<"<div class='form-group'>"<<endl;
+                                cout<<"<label for='inputPhoneNumber'>Teléfono</label>"<<endl;
+                                cout<<"<input name='userPhoneNumber' type='phoneNumber' class='form-control' id='inputPhoneNumber' placeholder='Ingrese su número de teléfono'>"<<endl;
+                            cout<<"</div>"<<endl;
+                            cout<<"<div class='form-group'>"<<endl;
+                                cout<<"<label for='inputDirection'>Dirección</label>"<<endl;
+                                cout<<"<input name='userDirection' type='direction' class='form-control' id='inputDirection' placeholder='Ingrese su dirección'>"<<endl;
+                            cout<<"</div>"<<endl;
+                            cout<<"<div class='form-group'>"<<endl;
+                                cout<<"<label for='inputEmail'>Email</label>"<<endl;
+                                cout<<"<input name='userEmail' type='email' class='form-control' id='inputEmail' placeholder='Ingrese su correo electrónico'>"<<endl;
                             cout<<"</div>"<<endl;
                             cout<<"<div class='form-group'>"<<endl;
                                 cout<<"<label for='inputPassword'>Contraseña</label>"<<endl;
                                 cout<<"<input name='userPassword' type='password' class='form-control' id='inputPassword' placeholder='Ingrese su contraseña'>"<<endl;
                             cout<<"</div>"<<endl;
-                            cout<<"<button type='submit' class='btn btn-primary'>Iniciar sesión</button>"<<endl;
+                            cout<<"<button type='submit' class='btn btn-primary'>Registrarse</button>"<<endl;
                         cout<<"</form>"<<endl;
                     cout<<"</div>"<<endl;
                 cout<<"</div>"<<endl;
