@@ -96,7 +96,7 @@ void RegisterView::printHTML(){
         cout<<"</head>"<<endl;
         //PRINT HEADER
         cout<<"<body>"<<endl;
-            headerView->printHeaderHTML();
+            headerView->printHeaderHTML(false);
             cout<<"<div class='main-content'>"<<endl;
                 cout<<"<div class='card mt-20' style='width: 30rem;'>"<<endl;
                     cout<<"<div class='card-body'>"<<endl;
