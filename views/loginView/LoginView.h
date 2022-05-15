@@ -30,6 +30,7 @@ class LoginView {
         ~LoginView();
         bool responseGET(char* ip);
         bool responsePOST(char* ip);
+        bool createCookie(char* ip, char* email);
         void printHTML();
     private:
         //Variables

@@ -107,11 +107,13 @@ bool SessionService::setSessionCookie(string ip, string userId, string cookie){
     return setCookie;
 }
 
-bool SessionService::deleteSessionByUserId(string userID);
+bool SessionService::deleteSessionByUserId(string userID){
     bool deleteCookie = false;
-    string query = "DELETE FROM userSession WHERE userId = '"+userID+"'";
+    string query = "DELETE FROM userSession WHERE userId = '";
+    query.append(userID);
+    query.append("'");
     const char *finalQuery = query.c_str();
-    if (!mysql_query(conn, finalQuery)){
+    if(!mysql_query(conn, finalQuery)){
         deleteCookie = true;
     }
     return deleteCookie;
