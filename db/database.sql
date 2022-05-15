@@ -14,11 +14,13 @@ CREATE TABLE user(
 
 CREATE TABLE userSession(
     id int auto_increment,
-    ip varchar(10),
-    userId int,
-    userLogin varchar(100),
+    ip varchar(10) NOT NULL,
+    userId int NOT NULL,
+    loginCookie varchar(100) NOT NULL,
     createdAt timestamp default current_timestamp,
-    primary key(id)
+    active boolean NOT NULL,
+    primary key(id),
+    foreign key(userId) references user(id)
 );
 
 CREATE TABLE sell(
