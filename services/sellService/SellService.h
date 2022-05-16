@@ -15,6 +15,7 @@ class SellService {
         ~SellService();
         Sell* getSellById(char* id);
         Sell* getById(int id);
+        bool addSell(string GameName, string GameValue, string GameDescription);
         int getSellCountAll();
     private:
         Database* db;
@@ -23,4 +24,3 @@ class SellService {
         MYSQL_FIELD *field;
 };
 #endif
-

@@ -89,4 +89,15 @@ int SellService::getSellCountAll(){
     mysql_free_result(res);
     return num_fields;
 }
+bool SellService::addSell(string GameName, string GameValue, string GameDescription){
+    bool addSell = false;
+    string img="/home/elvis/proyecto/CGI/public/img/index.jpeg";
+    string query = "INSERT INTO sell(nameArticle, valueArticle, descriptionArticle, img)VALUES(";
+    query.append("'"+GameName+"','"+GameValue+"','"+GameDescription+"','"+img+"')");
+    const char *finalQuery = query.c_str();
+    if (!mysql_query(conn, finalQuery)){
+        addSell = true;
+    }
 
+    return addSell;
+}
