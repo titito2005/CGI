@@ -109,3 +109,13 @@ bool UserService::insertUserRegister(string name, string lastNames, string email
 
     return insertNewUser;
 }
+
+bool UserService::verifyEmailExistence(char* incomingEmail){
+    bool emailExist = false;
+    User* findUser = getUserByEmail(incomingEmail);
+    if (findUser != NULL){
+        emailExist = true; // encuentra el email de usuario
+    }
+    
+    return emailExist;
+}

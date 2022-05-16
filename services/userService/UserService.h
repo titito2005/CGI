@@ -18,7 +18,8 @@ class UserService {
         bool verifyPassword(char* email, char* password);
         string getIdByEmail(char* email);
         bool insertUserRegister(string name, string lastNames, string email, string password, string phoneNumber, string direction);
-
+        bool verifyEmailExistence(char* incomingEmail);
+        
     private:
         Database* db;
         MYSQL* conn;

@@ -68,17 +68,27 @@ bool RegisterView::responsePOST(){
     char* userDirection = parserService->getQueryArg("userDirection");
 
     if(userName != NULL && userLastNames != NULL && userPhoneNumber != NULL && userDirection != NULL && userEmail != NULL && userPassword != NULL){
-        if(userService->insertUserRegister(userName, userLastNames, userEmail, userPassword, userPhoneNumber, userDirection)){
-            cout << "Location: http://localhost/cgi-bin/Sell\n\n" << endl;
-        } else {
+        if (userService->verifyEmailExistence(userEmail) == false){ //No existe el usuario x el correo
+            if(userService->insertUserRegister(userName, userLastNames, userEmail, userPassword, userPhoneNumber, userDirection)){
+            cout << "Location: http://localhost/cgi-bin/home\n\n" << endl;
+            } else {
+                error = true;
+                errorMessage = "Error registrando el usuario.";
+            }
+        } else { //verify es true, o sea que sí existe el correo
             error = true;
-            errorMessage = "Error registrando el usuario.";
+            errorMessage = "Este correo ya existe, ingrese uno válido.";
         }
+        
     } else {
         error = true;
         errorMessage = "Hay datos incompletos. Por favor inserte todos los datos solicitados.";
     }
 
+    if(error){
+        //SI HAY ERROR IMPRIME EL HTML DE NUEVO CON LOS ERRORES.
+        printHTML();
+    }
     return true;
 }
 
