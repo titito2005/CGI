@@ -66,34 +66,63 @@ bool RegisterView::responsePOST(){
     char* userPassword = parserService->getQueryArg("userPassword");
     char* userPhoneNumber = parserService->getQueryArg("userPhoneNumber");
     char* userDirection = parserService->getQueryArg("userDirection");
+    //REGEX VALIDATIONS FOR REGISTER FORM
+    regex validationNames("[ +\\w+]+");
+    regex validationEmail("(\\w+)(\\.|_)?(\\w*)@(\\w+)(\\.(\\w+))+");
+    regex validationPhoneNumber("[0-9]+");
 
-    if(userName != NULL && userLastNames != NULL && userPhoneNumber != NULL && userDirection != NULL && userEmail != NULL && userPassword != NULL){
-        if (userService->verifyEmailExistence(userEmail) == false){ //No existe el usuario x el correo
-            if(userService->insertUserRegister(userName, userLastNames, userEmail, userPassword, userPhoneNumber, userDirection)){
-            cout << "Location: http://localhost/cgi-bin/home\n\n" << endl;
-            } else {
+    //VERIFY THAT FORM HAS COMPLETE DATA
+    if(userName != NULL && userLastNames != NULL && userPhoneNumber != NULL && userDirection != NULL && userEmail != NULL && userPassword != NULL){ 
+        //VERIFY IF ANOTHER USER HAS THE SAME EMAIL
+        if (userService->verifyEmailExistence(userEmail) == false){ 
+            //VERIFICATIONS OF DATA FORMAT OF THE FORM
+            if (regex_match(userName, validationNames) && regex_match(userLastNames, validationNames)) { 
+                
+                if (regex_match(userEmail, validationEmail)){ 
+                    
+                    if (regex_match(userPhoneNumber, validationPhoneNumber)){  
+                        //INSERT THE NEW USER DATA TO THE DB
+                        if(userService->insertUserRegister(userName, userLastNames, userEmail, userPassword, userPhoneNumber, userDirection)){
+                            cout << "Location: http://localhost/cgi-bin/home\n\n" << endl;
+                            } else {
+                                error = true;
+                                errorMessage = "Error registrando el usuario.";
+                            }
+                        } else { 
+                            //PRINT ERROR PHONE NUMBER
+                            error = true;
+                            errorMessage = "El número de teléfono solo debe contener números. Por favor ingreselo de nuevo.";
+                        }
+                } else { 
+                    //PRINT ERROR EMAIL FORMAT
+                    error = true;
+                    errorMessage = "El correo no tiene un formato correcto. Por favor digitelo correctamente.";
+                }
+            } else { 
+                //PRINT ERROR NAME OR LAST NAMES FORMAT
                 error = true;
-                errorMessage = "Error registrando el usuario.";
-            }
-        } else { //verify es true, o sea que sí existe el correo
+                errorMessage = "Los datos para su nombre completo deben tener solo letras. Por favor insertelos correctamente.";
+            }   
+        } else { 
+            //PRINT ERROR EXISTENCE OF EMAIL IN OTHER USER
             error = true;
             errorMessage = "Este correo ya existe, ingrese uno válido.";
         }
-        
     } else {
+        //PRINT ERROR INCOMPLETE DATA
         error = true;
         errorMessage = "Hay datos incompletos. Por favor inserte todos los datos solicitados.";
     }
 
     if(error){
-        //SI HAY ERROR IMPRIME EL HTML DE NUEVO CON LOS ERRORES.
+        //VERIFY ERRORS AND PRINT THEM
         printHTML();
     }
     return true;
 }
 
 void RegisterView::printHTML(){
-     //FALTA IMPRIMIR HEADER Y FOOTER
+    
     cout << "Content-type:text/html\r\n\r\n";
     cout<<"<!doctype html>"<<endl;
     cout<<"<html lang='en'"<<endl;
@@ -110,7 +139,7 @@ void RegisterView::printHTML(){
             cout<<"<div class='main-content'>"<<endl;
                 cout<<"<div class='card mt-20' style='width: 30rem;'>"<<endl;
                     cout<<"<div class='card-body'>"<<endl;
-                    //SI HAY ERROR LO IMPRIMO COMO UN WARNING
+                    //VERIFIES ERRORS AND PRINT THEM AS WARNINGS
                     if(error){
                         cout<<"<div class='alert alert-warning' role='alert'>"<<endl;
                             cout<< errorMessage << endl;
@@ -146,6 +175,7 @@ void RegisterView::printHTML(){
                     cout<<"</div>"<<endl;
                 cout<<"</div>"<<endl;
             cout<<"</div>"<<endl;
+            //PRINT FOOTER
             footerView->printFooterHTML();
             cout<<"<script src='https://code.jquery.com/jquery-3.3.1.slim.min.js' integrity='sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo' crossorigin='anonymous'></script>"<<endl;
             cout<<"<script src='https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js' integrity='sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1' crossorigin='anonymous'></script>"<<endl;
