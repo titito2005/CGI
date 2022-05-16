@@ -10,6 +10,8 @@ CREATE TABLE user(
     email varchar(100),
     userPassword varchar(100),
     createdAt timestamp default current_timestamp,
+    phoneNumber int,
+    direction varchar(100),
     primary key(id)
 );
 

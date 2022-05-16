@@ -1,6 +1,6 @@
 #Makefile Servidor
 #CREATE LOGIN cgi-bin/login
-login: refreshPublicCGI database user sell session shoppingCart sessionService userService sellService parserService shoppingCartService footerView headerView loginView sellView logoutView shoppingCartView loginCompleto sellCompleto logoutCompleto shoppingCartCompleto
+login: refreshPublicCGI database user sell session shoppingCart sessionService userService sellService parserService shoppingCartService footerView headerView loginView sellView logoutView shoppingCartView registerView loginCompleto sellCompleto logoutCompleto shoppingCartCompleto registerCompleto
 
 #VIEWS
 loginView: views/loginView/LoginView.cc views/loginView/LoginView.h services/sessionService/SessionService.h services/parserService/ParserService.h services/userService/UserService.h views/headerView/HeaderView.h views/footerView/FooterView.h
@@ -8,6 +8,9 @@ loginView: views/loginView/LoginView.cc views/loginView/LoginView.h services/ses
 
 sellView: views/sellView/SellView.cc views/sellView/SellView.h services/parserService/ParserService.h services/sellService/SellService.h views/headerView/HeaderView.h views/footerView/FooterView.h
 	g++ -c views/sellView/SellView.cc views/sellView/SellView.h services/parserService/ParserService.h views/headerView/HeaderView.h views/footerView/FooterView.h
+
+registerView: views/registerView/RegisterView.cc views/registerView/RegisterView.h services/parserService/ParserService.h services/userService/UserService.h views/headerView/HeaderView.h views/footerView/FooterView.h
+	g++ -c views/registerView/RegisterView.cc views/registerView/RegisterView.h services/parserService/ParserService.h views/headerView/HeaderView.h views/footerView/FooterView.h
 
 footerView: views/footerView/FooterView.cc views/footerView/FooterView.h
 	g++ -c views/footerView/FooterView.cc views/footerView/FooterView.h
@@ -64,6 +67,9 @@ loginCompleto: LoginView.o ParserService.o SessionService.o Session.o UserServic
 
 sellCompleto: SellView.o ParserService.o SellService.o Sell.o Database.o HeaderView.o FooterView.o
 	sudo g++ -o /usr/lib/cgi-bin/home SellView.o ParserService.o SellService.o Sell.o Database.o HeaderView.o FooterView.o -L/usr/lib/mysql -lmysqlclient
+
+registerCompleto: RegisterView.o ParserService.o UserService.o User.o Database.o HeaderView.o FooterView.o
+	sudo g++ -o /usr/lib/cgi-bin/userRegister RegisterView.o ParserService.o UserService.o User.o Database.o HeaderView.o FooterView.o -L/usr/lib/mysql -lmysqlclient
 
 logoutCompleto: LogoutView.o ParserService.o SessionService.o Session.o Database.o
 	sudo g++ -o /usr/lib/cgi-bin/logout LogoutView.o ParserService.o SessionService.o Session.o Database.o -L/usr/lib/mysql -lmysqlclient
