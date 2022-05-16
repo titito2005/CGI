@@ -80,7 +80,7 @@ void SellView::printHTML()
     // FALTA IMPRIMIR HEADER Y FOOTER
     int SellCount = 1;
     Sell *sell = NULL;
-    SellCount = sellService->getSellCountAll();
+    SellCount =sellService->getSellCountAll();
     cout << "Content-type:text/html\r\n\r\n";
     cout << "<!doctype html>" << endl;
     cout << "<html lang='en'" << endl;
@@ -96,20 +96,16 @@ void SellView::printHTML()
     headerView->printHeaderHTML(false);
     for (int i = 1; i <= SellCount; i++)
     {   
-        string tmp = to_string(i);
-        char const * num_char = tmp.c_str();
-        char* n;
-        strcpy(n,num_char);
-        sell = sellService->getSellById(n);
+        sell = sellService->getById(i);
         cout << "<div class='main-content'>" << endl;
         cout << "<div class='card mt-20' style='width: 30rem;'>" << endl;
         cout << "<div class='card-body'>" << endl;
         cout << "<div class=\"card mb-3\">" << endl;
         cout << "<div class=\"card-body\">" << endl;
         cout << "<img src=\"/home/elvis/proyecto/CGI/public/img/index.jpeg\"height=\"200px\"width=\"200px\"/>" << endl;
-        cout << "<h5 class=\"card-title\">" + sell->nameArticle + "</h5>" << endl;
-        cout << "<h5 class=\"card-title\">" + sell->valueArticle + "</h5>" << endl;
-        cout << "<p class=\"card-text\">" + sell->descriptionArticle + "</p>" << endl;
+        cout << "<h5 class=\"card-title\">"+sell->getnameArticle()+"</h5>" << endl;
+        cout << "<h5 class=\"card-title\">"+sell->getvalueArticle()+"</h5>" << endl;
+        cout << "<p class=\"card-text\">"+sell->getDescriptionArticle()+"</p>" << endl;
         cout << "</div>" << endl;
         cout << "</div>" << endl;
         cout << "</div>" << endl;

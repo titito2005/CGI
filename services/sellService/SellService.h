@@ -14,6 +14,7 @@ class SellService {
         SellService();
         ~SellService();
         Sell* getSellById(char* id);
+        Sell* getById(int id);
         int getSellCountAll();
     private:
         Database* db;
