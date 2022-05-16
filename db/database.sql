@@ -1,7 +1,7 @@
-DROP TABLE shoppingCart;
 DROP TABLE userSession;
-DROP TABLE sell;
+DROP TABLE shoppingCart;
 DROP TABLE user;
+DROP TABLE sell;
 
 CREATE TABLE user(
     id int auto_increment,
