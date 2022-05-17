@@ -119,3 +119,13 @@ bool UserService::verifyEmailExistence(char* incomingEmail){
     
     return emailExist;
 }
+
+string UserService::encryption(string password){
+    string encrypt = "";
+    for (int i = 0; i < password.length(); i++){
+        password[i] = password[i]+2; //key for encryption is 3 and is added to ASCII
+    }
+    encrypt = password;
+    
+    return encrypt;
+}

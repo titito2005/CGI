@@ -70,6 +70,8 @@ bool RegisterView::responsePOST(){
     regex validationNames("[ +\\w+]+");
     regex validationEmail("(\\w+)(\\.|_)?(\\w*)@(\\w+)(\\.(\\w+))+");
     regex validationPhoneNumber("[0-9]+");
+    //STRING FOR ENCRYPTION
+    string encryptPassword = "";
 
     //VERIFY THAT FORM HAS COMPLETE DATA
     if(userName != NULL && userLastNames != NULL && userPhoneNumber != NULL && userDirection != NULL && userEmail != NULL && userPassword != NULL){ 
@@ -80,9 +82,12 @@ bool RegisterView::responsePOST(){
                 
                 if (regex_match(userEmail, validationEmail)){ 
                     
-                    if (regex_match(userPhoneNumber, validationPhoneNumber)){  
+                    if (regex_match(userPhoneNumber, validationPhoneNumber)){ 
+                        //ENCRYPTION OF PASSWORD FOR INSERTION IN DB
+                        encryptPassword = userService->encryption(userPassword);
+
                         //INSERT THE NEW USER DATA TO THE DB
-                        if(userService->insertUserRegister(userName, userLastNames, userEmail, userPassword, userPhoneNumber, userDirection)){
+                        if(userService->insertUserRegister(userName, userLastNames, userEmail, encryptPassword, userPhoneNumber, userDirection)){
                             cout << "Location: http://localhost/cgi-bin/home\n\n" << endl;
                             } else {
                                 error = true;
