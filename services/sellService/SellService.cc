@@ -35,12 +35,41 @@ Sell* SellService::getSellById(char* id){
             findUser->setnameArticle(row[1]);
             findUser->setvalueArticle(row[2]);
             findUser->setDescriptionArticle(row[3]);
-            findUser->setCreatedAt(row[4]);
+            findUser->setImg(row[4]);
+            findUser->setCreatedAt(row[5]);
         }
         // Release memories
         mysql_free_result(res);
     }
     free(finalQuery);
+    return findUser;
+}
+
+Sell* SellService::getById(int id){
+    MYSQL_ROW row;
+    Sell* findUser = NULL;
+    string query = "SELECT * FROM sell WHERE id = ";
+    string sellId=to_string(id);
+    query.append("'");
+    query.append(sellId);
+    query.append("'");
+    const char *finalQuery = query.c_str();
+    //Return 0 for success
+    if (!mysql_query(conn, finalQuery)){
+        res = mysql_use_result(conn);
+        // Fetch a result set
+        if ((row = mysql_fetch_row(res)) != NULL){
+            findUser = new Sell();
+            findUser->setId(row[0]);
+            findUser->setnameArticle(row[1]);
+            findUser->setvalueArticle(row[2]);
+            findUser->setDescriptionArticle(row[3]);
+            findUser->setImg(row[4]);
+            findUser->setCreatedAt(row[5]);
+        }
+        // Release memories
+        mysql_free_result(res);
+    }
     return findUser;
 }
 

@@ -6,6 +6,7 @@
 
 #include "../../services/parserService/ParserService.h"
 #include "../../services/sellService/SellService.h"
+#include "../../services/sessionService/SessionService.h"
 #include "../headerView/HeaderView.h"
 #include "../footerView/FooterView.h"
 
@@ -17,16 +18,16 @@ class SellView {
     public:
         SellView();
         ~SellView();
-        bool responseGET();
-        bool responsePOST();
-        void printHTML();
+        bool responseGET(char * ip);
+        bool responsePOST(char * ip);
+        void printHTML(bool sesion);
     private:
         //Variables
         ParserService *parserService;
         SellService *sellService;
         HeaderView *headerView;
         FooterView *footerView;
-
+        SessionService* sessionService;
         bool error;
         string errorMessage;
         //Methods
