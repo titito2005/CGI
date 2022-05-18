@@ -17,6 +17,7 @@
 #include "../../services/userService/UserService.h"
 #include "../headerView/HeaderView.h"
 #include "../footerView/FooterView.h"
+#include "../../models/userModel/User.h"
 
 using namespace std;
 
@@ -26,7 +27,7 @@ class RegisterView {
     public:
         RegisterView();
         ~RegisterView();
-        bool responseGET();
+        bool responseGET(char* ip);
         bool responsePOST();
         void printHTML();
     private:

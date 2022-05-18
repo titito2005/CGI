@@ -53,7 +53,7 @@ RegisterView::~RegisterView()
 {
 }
 
-bool RegisterView::responseGET(){
+bool RegisterView::responseGET(char* ip){
     char *sessionID = parserService->getCookieArg("sessionID");
     //THERE IS A COOKIE 
     if(sessionID != NULL){
