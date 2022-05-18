@@ -20,7 +20,7 @@ class SellView {
         ~SellView();
         bool responseGET(char * ip);
         bool responsePOST(char * ip);
-        void printHTML(bool sesion);
+        void printHTML();
     private:
         //Variables
         ParserService *parserService;
@@ -30,6 +30,8 @@ class SellView {
         SessionService* sessionService;
         bool error;
         string errorMessage;
+        bool sesion;
+        Sell *searchSell = NULL;
         //Methods
 };
 #endif

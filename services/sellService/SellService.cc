@@ -18,7 +18,7 @@ SellService::~SellService(){
 
 Sell* SellService::getSellById(char* id){
     MYSQL_ROW row;
-    Sell* findUser = NULL;
+    Sell* findSell = NULL;
     char* query = "SELECT * FROM sell WHERE id = ";
     char* finalQuery = (char *) malloc(3 + strlen(query)+ strlen(id));
     strcpy(finalQuery, query);
@@ -30,24 +30,24 @@ Sell* SellService::getSellById(char* id){
         res = mysql_use_result(conn);
         // Fetch a result set
         if ((row = mysql_fetch_row(res)) != NULL){
-            findUser = new Sell();
-            findUser->setId(row[0]);
-            findUser->setnameArticle(row[1]);
-            findUser->setvalueArticle(row[2]);
-            findUser->setDescriptionArticle(row[3]);
-            findUser->setImg(row[4]);
-            findUser->setCreatedAt(row[5]);
+            findSell = new Sell();
+            findSell->setId(row[0]);
+            findSell->setnameArticle(row[1]);
+            findSell->setvalueArticle(row[2]);
+            findSell->setDescriptionArticle(row[3]);
+            findSell->setImg(row[4]);
+            findSell->setCreatedAt(row[5]);
         }
         // Release memories
         mysql_free_result(res);
     }
     free(finalQuery);
-    return findUser;
+    return findSell;
 }
 
 Sell* SellService::getById(int id){
     MYSQL_ROW row;
-    Sell* findUser = NULL;
+    Sell* findSell = NULL;
     string query = "SELECT * FROM sell WHERE id = ";
     string sellId=to_string(id);
     query.append("'");
@@ -59,18 +59,18 @@ Sell* SellService::getById(int id){
         res = mysql_use_result(conn);
         // Fetch a result set
         if ((row = mysql_fetch_row(res)) != NULL){
-            findUser = new Sell();
-            findUser->setId(row[0]);
-            findUser->setnameArticle(row[1]);
-            findUser->setvalueArticle(row[2]);
-            findUser->setDescriptionArticle(row[3]);
-            findUser->setImg(row[4]);
-            findUser->setCreatedAt(row[5]);
+            findSell = new Sell();
+            findSell->setId(row[0]);
+            findSell->setnameArticle(row[1]);
+            findSell->setvalueArticle(row[2]);
+            findSell->setDescriptionArticle(row[3]);
+            findSell->setImg(row[4]);
+            findSell->setCreatedAt(row[5]);
         }
         // Release memories
         mysql_free_result(res);
     }
-    return findUser;
+    return findSell;
 }
 
 int SellService::getSellCountAll(){
@@ -89,6 +89,32 @@ int SellService::getSellCountAll(){
     mysql_free_result(res);
     return num_fields;
 }
+Sell*  SellService::sellByName(string searchName){
+MYSQL_ROW row;
+    Sell* findSell = NULL;
+    string query = "SELECT * FROM sell WHERE nameArticle LIKE ";
+    query.append(searchName);
+    query.append("\"");
+    const char *finalQuery = query.c_str();
+    //Return 0 for success
+    if (!mysql_query(conn, finalQuery)){
+        res = mysql_use_result(conn);
+        // Fetch a result set
+        if ((row = mysql_fetch_row(res)) != NULL){
+            findSell = new Sell();
+            findSell->setId(row[0]);
+            findSell->setnameArticle(row[1]);
+            findSell->setvalueArticle(row[2]);
+            findSell->setDescriptionArticle(row[3]);
+            findSell->setImg(row[4]);
+            findSell->setCreatedAt(row[5]);
+        }
+        // Release memories
+        mysql_free_result(res);
+    }
+    return findSell;
+}
+
 bool SellService::addSell(string GameName, string GameValue, string GameDescription){
     bool addSell = false;
     string img="/home/elvis/proyecto/CGI/public/img/index.jpeg";

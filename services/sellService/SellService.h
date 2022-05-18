@@ -16,6 +16,7 @@ class SellService {
         Sell* getSellById(char* id);
         Sell* getById(int id);
         bool addSell(string GameName, string GameValue, string GameDescription);
+        Sell* sellByName(string SearchName);
         int getSellCountAll();
     private:
         Database* db;

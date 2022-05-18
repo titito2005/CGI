@@ -41,6 +41,7 @@ class AddView {
 
         bool error;
         string errorMessage;
+        bool sesion;
         //Methods
 
 };

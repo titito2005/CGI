@@ -60,6 +60,7 @@ bool AddView::responseGET(char* ip){
     if(sessionID != NULL){
         if(sessionService->validateSession(ip, sessionID)){
             //LA COOKIE ES VALIDA PUEDE ENTRAR AL CARRITO
+            sesion=true;
             printHTML();
         } else {
             //NO HAY COOKIE O NO ES VALIDA
@@ -107,7 +108,7 @@ void AddView::printHTML(){
         cout<<"</head>"<<endl;
         //PRINT HEADER
         cout<<"<body>"<<endl;
-            headerView->printHeaderHTML(false);
+            headerView->printHeaderHTML(sesion);
             cout<<"<div class='main-content'>"<<endl;
                 cout<<"<div class='card mt-20' style='width: 30rem;'>"<<endl;
                     cout<<"<div class='card-body'>"<<endl;
