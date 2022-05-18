@@ -11,6 +11,7 @@
 #include <unistd.h>
 #include <cstring>
 #include <string>
+#include <regex>
 
 #include "../../services/parserService/ParserService.h"
 #include "../../services/userService/UserService.h"

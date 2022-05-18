@@ -109,3 +109,23 @@ bool UserService::insertUserRegister(string name, string lastNames, string email
 
     return insertNewUser;
 }
+
+bool UserService::verifyEmailExistence(char* incomingEmail){
+    bool emailExist = false;
+    User* findUser = getUserByEmail(incomingEmail);
+    if (findUser != NULL){
+        emailExist = true; // encuentra el email de usuario
+    }
+    
+    return emailExist;
+}
+
+string UserService::encryption(string password){
+    string encrypt = "";
+    for (int i = 0; i < password.length(); i++){
+        password[i] = password[i]+2; //key for encryption is 3 and is added to ASCII
+    }
+    encrypt = password;
+    
+    return encrypt;
+}
