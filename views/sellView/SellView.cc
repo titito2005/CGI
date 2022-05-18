@@ -92,7 +92,7 @@ bool SellView::responsePOST(char* ip)
         }
     } else {
         error = true;
-        errorMessage = "No se encontro resultados";
+        errorMessage = "No ingreso datos ";
         printHTML();
     }
 

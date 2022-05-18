@@ -90,11 +90,11 @@ int SellService::getSellCountAll(){
     return num_fields;
 }
 Sell*  SellService::sellByName(string searchName){
-MYSQL_ROW row;
+    MYSQL_ROW row;
     Sell* findSell = NULL;
-    string query = "SELECT * FROM sell WHERE nameArticle LIKE ";
+    string query = "SELECT * FROM sell WHERE nameArticle LIKE \"%";
     query.append(searchName);
-    query.append("\"");
+    query.append("%\"");
     const char *finalQuery = query.c_str();
     //Return 0 for success
     if (!mysql_query(conn, finalQuery)){
