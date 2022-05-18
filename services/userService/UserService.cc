@@ -91,7 +91,7 @@ bool UserService::verifyPassword(char* email, char* password){
     bool acceptPassword = false;
     User* findUser = getUserByEmail(email);
     if(findUser!=NULL){
-        if ((findUser->getPassword().compare(password)) == 0){
+        if ((findUser->getPassword().compare(encryption(password))) == 0){
             acceptPassword = true;
         }
     }

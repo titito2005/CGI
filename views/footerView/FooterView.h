@@ -9,7 +9,7 @@ class FooterView{
     public:
         FooterView();
         ~FooterView();
-        void printFooterHTML();
+        void printFooterHTML(bool loged);
     private:
 };
 #endif
