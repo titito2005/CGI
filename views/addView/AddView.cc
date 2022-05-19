@@ -80,7 +80,7 @@ bool AddView::responsePOST(char* ip){
     char* GameName = parserService->getQueryArg("GameName");
     char* GameValue = parserService->getQueryArg("GameValue");
     char* GameDescription = parserService->getQueryArg("GameDescription");
-    char* img = parserService->getQueryArg("Img");
+    //char* img = parserService->getQueryArg("Img");
 
     if(GameName != NULL && GameValue != NULL && GameDescription != NULL ){
         if(sellService->addSell(GameName, GameValue, GameDescription)){
@@ -137,7 +137,7 @@ void AddView::printHTML(){
                                 cout<<"<label for='inputDescription'>Descripcion</label>"<<endl;
                                 cout<<"<input name='GameDescription' type='descripcion' class='form-control' id='inputDescription' placeholder='Ingrese la descripcion'>"<<endl;
                             cout<<"</div>"<<endl;
-                            cout<<"<input name='Img' accept='image/png,image/jpeg' type='file'>"<<endl;
+                            //cout<<"<input name='Img' accept='image/png,image/jpeg' type='file'>"<<endl;
                             cout<<"<button type='submit' class='btn btn-primary'>Agregar</button>"<<endl;
                         cout<<"</form>"<<endl;
                     cout<<"</div>"<<endl;
