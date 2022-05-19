@@ -6,8 +6,8 @@ login: refreshPublicCGI database user sell session shoppingCart sessionService u
 loginView: views/loginView/LoginView.cc views/loginView/LoginView.h services/sessionService/SessionService.h services/parserService/ParserService.h services/userService/UserService.h views/headerView/HeaderView.h views/footerView/FooterView.h
 	g++ -c views/loginView/LoginView.cc views/loginView/LoginView.h services/sessionService/SessionService.h services/parserService/ParserService.h services/userService/UserService.h views/headerView/HeaderView.h views/footerView/FooterView.h
 
-sellView: views/sellView/SellView.cc views/sellView/SellView.h services/sessionService/SessionService.h services/parserService/ParserService.h services/sellService/SellService.h views/headerView/HeaderView.h views/footerView/FooterView.h
-	g++ -c views/sellView/SellView.cc views/sellView/SellView.h services/sessionService/SessionService.h services/parserService/ParserService.h services/sellService/SellService.h  views/headerView/HeaderView.h views/footerView/FooterView.h
+sellView: views/sellView/SellView.cc views/sellView/SellView.h services/sessionService/SessionService.h services/shoppingCartService/ShoppingCartService.h services/parserService/ParserService.h services/sellService/SellService.h views/headerView/HeaderView.h views/footerView/FooterView.h models/shoppingCartModel/ShoppingCart.h
+	g++ -c views/sellView/SellView.cc views/sellView/SellView.h services/sessionService/SessionService.h services/shoppingCartService/ShoppingCartService.h services/parserService/ParserService.h services/sellService/SellService.h  views/headerView/HeaderView.h views/footerView/FooterView.h models/shoppingCartModel/ShoppingCart.h
 
 addView: views/addView/AddView.cc views/addView/AddView.h services/sessionService/SessionService.h services/parserService/ParserService.h services/sellService/SellService.h views/headerView/HeaderView.h views/footerView/FooterView.h
 	g++ -c views/addView/AddView.cc views/addView/AddView.h services/sessionService/SessionService.h services/parserService/ParserService.h services/sellService/SellService.h  views/headerView/HeaderView.h views/footerView/FooterView.h
@@ -69,8 +69,8 @@ refreshPublicCGI:
 loginCompleto: LoginView.o ParserService.o SessionService.o Session.o UserService.o User.o Database.o HeaderView.o FooterView.o
 	sudo g++ -o /usr/lib/cgi-bin/login LoginView.o ParserService.o Session.o SessionService.o UserService.o User.o Database.o HeaderView.o FooterView.o -L/usr/lib/mysql -lmysqlclient
 
-sellCompleto: SellView.o ParserService.o SessionService.o Session.o  SellService.o Sell.o Database.o HeaderView.o FooterView.o
-	sudo g++ -o /usr/lib/cgi-bin/home SellView.o ParserService.o Session.o SessionService.o SellService.o Sell.o Database.o HeaderView.o FooterView.o -L/usr/lib/mysql -lmysqlclient
+sellCompleto: SellView.o ParserService.o SessionService.o Session.o ShoppingCartService.o SellService.o Sell.o ShoppingCart.o Database.o HeaderView.o FooterView.o
+	sudo g++ -o /usr/lib/cgi-bin/home SellView.o ParserService.o Session.o ShoppingCartService.o SessionService.o SellService.o Sell.o ShoppingCart.o Database.o HeaderView.o FooterView.o -L/usr/lib/mysql -lmysqlclient
 
 addCompleto: AddView.o ParserService.o SessionService.o Session.o  SellService.o Sell.o Database.o HeaderView.o FooterView.o
 	sudo g++ -o /usr/lib/cgi-bin/addSell AddView.o ParserService.o Session.o SessionService.o SellService.o Sell.o Database.o HeaderView.o FooterView.o -L/usr/lib/mysql -lmysqlclient

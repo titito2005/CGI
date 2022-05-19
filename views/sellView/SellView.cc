@@ -56,7 +56,7 @@ SellView::~SellView()
 
 bool SellView::responseGET(char* ip)
 {
-    char *sessionID = parserService->getCookieArg("sessionID");
+    sessionID = parserService->getCookieArg("sessionID");
     //HAY UNA COOKIE
     if(sessionID != NULL){
         if(sessionService->validateSession(ip, sessionID)){
@@ -80,9 +80,10 @@ bool SellView::responseGET(char* ip)
 
 bool SellView::responsePOST(char* ip)
 {
-    char* SearchName = parserService->getQueryArg("SearchName");
-     if(SearchName != NULL){
-        searchSell=sellService->sellByName(SearchName);
+    char* searchName = parserService->getQueryArg("SearchName");
+    char* sellId = parserService->getQueryArg("SellId");
+    if(searchName != NULL){
+        searchSell=sellService->sellByName(searchName);
         if(searchSell!=NULL){
             printHTML();
         } else {
@@ -90,7 +91,19 @@ bool SellView::responsePOST(char* ip)
             errorMessage = "No se encontro resultados";
             printHTML();
         }
-    } else {
+    }
+    else if(sellId != NULL){
+        if(sessionID!=NULL){
+            shoppingCartService->addShoppingCar(sellId,sessionID);
+            printHTML();
+        }
+        else{
+            error=true;
+            errorMessage = "error al agregar al carrito";
+            printHTML();
+        }
+    }
+    else {
         error = true;
         errorMessage = "No ingreso datos ";
         printHTML();
@@ -139,6 +152,14 @@ void SellView::printHTML()
                 cout << "<h5 class=\"card-title\">"+searchSell->getnameArticle()+"</h5>" << endl;
                 cout << "<h5 class=\"card-title\">"+searchSell->getvalueArticle()+"</h5>" << endl;
                 cout << "<p class=\"card-text\">"+searchSell->getDescriptionArticle()+"</p>" << endl;
+                if(sesion){
+                    cout<<"<form action='home' method='POST'>"<<endl;
+                    cout<<"<div class='claseDiv'>"<<endl;
+                    cout<<"<input name='SellId' type='sell' class='form-control' id='sellInput' value=\""+searchSell->getId()+"\">"<<endl;
+                    cout<<"</div>"<<endl;
+                    cout<<"<button type='submit' class='btn btn-primary'>Agregar al carrito</button>"<<endl;
+                    cout<<"</form>"<<endl;
+                }
                 cout << "</div>" << endl;
                 cout << "</div>" << endl;
                 cout << "</div>" << endl;
@@ -160,6 +181,14 @@ void SellView::printHTML()
                 cout << "<h5 class=\"card-title\">"+sell->getnameArticle()+"</h5>" << endl;
                 cout << "<h5 class=\"card-title\">"+sell->getvalueArticle()+"</h5>" << endl;
                 cout << "<p class=\"card-text\">"+sell->getDescriptionArticle()+"</p>" << endl;
+                if(sesion){
+                    cout<<"<form action='home' method='POST'>"<<endl;
+                    cout<<"<div class='claseDiv'>"<<endl;
+                    cout<<"<input name='SellId' type='sell' class='form-control' id='sellInput' value=\""+sell->getId()+"\">"<<endl;
+                    cout<<"</div>"<<endl;
+                    cout<<"<button type='submit' class='btn btn-primary'>Agregar al carrito</button>"<<endl;
+                    cout<<"</form>"<<endl;
+                }
                 cout << "</div>" << endl;
                 cout << "</div>" << endl;
                 cout << "</div>" << endl;

@@ -9,7 +9,7 @@
 #include "../../services/sessionService/SessionService.h"
 #include "../headerView/HeaderView.h"
 #include "../footerView/FooterView.h"
-
+#include "../../services/shoppingCartService/ShoppingCartService.h"
 using namespace std;
 
 #define MAX_ARGS 100
@@ -28,10 +28,12 @@ class SellView {
         HeaderView *headerView;
         FooterView *footerView;
         SessionService* sessionService;
+        ShoppingCartService* shoppingCartService;
         bool error;
         string errorMessage;
         bool sesion;
         Sell *searchSell = NULL;
+        char* sessionID=NULL;
         //Methods
 };
 #endif
