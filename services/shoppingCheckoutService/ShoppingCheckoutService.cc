@@ -45,10 +45,10 @@ ShoppingCheckout* ShoppingCheckoutService::getCheckoutByUserId(char* userId){
     return checkout;
 }
 
-bool ShoppingCheckoutService::insertCardData(string cardName, string cardNumber, string cardExpireMonth, string cardExpireYear, string cardCVV){
+bool ShoppingCheckoutService::insertCardData(string userId, string cardName, string cardNumber, string cardExpireMonth, string cardExpireYear, string cardCVV){
     bool insertNewCardData = false;
     string query = "INSERT INTO shoppingCheckout(cardName,cardNumber,cardExpireMonth, cardExpireYear,cardCVV)VALUES(";
-    query.append("'"+cardName+"','"+cardNumber+"','"+cardExpireMonth+"','"+cardExpireYear+"','"+cardCVV+"')");
+    query.append("'"+userId+"','"+cardName+"','"+cardNumber+"','"+cardExpireMonth+"','"+cardExpireYear+"','"+cardCVV+"')");
     const char *finalQuery = query.c_str();
     if (!mysql_query(conn, finalQuery)){
         insertNewCardData = true;
