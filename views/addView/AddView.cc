@@ -64,13 +64,13 @@ bool AddView::responseGET(char* ip){
             printHTML();
         } else {
             //NO HAY COOKIE O NO ES VALIDA
-            //cout << "Location: http://localhost/cgi-bin/home\n\n" << endl;
-            printHTML();
+            cout << "Location: http://localhost/cgi-bin/home\n\n" << endl;
+            //printHTML();
         }
     } else {
         //NO HAY COOKIE O NO ES VALIDA
-        //cout << "Location: http://localhost/cgi-bin/home\n\n" << endl;
-        printHTML();
+        cout << "Location: http://localhost/cgi-bin/home\n\n" << endl;
+        //printHTML();
     }
     return true;
 }

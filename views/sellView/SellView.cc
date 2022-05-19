@@ -164,7 +164,7 @@ void SellView::printHTML()
                 cout << "<div class='card-body'>" << endl;
                 cout << "<div class=\"card mb-3\">" << endl;
                 cout << "<div class=\"card-body\">" << endl;
-                cout << "<img src=\""+searchSell->getImg()+"\"height=\"200px\"width=\"200px\"/>" << endl;
+                cout << "<img src='"+searchSell->getImg()+"'height='200px'width='200px'/>" << endl;
                 cout << "<h5 class=\"card-title\">"+searchSell->getnameArticle()+"</h5>" << endl;
                 cout << "<h5 class=\"card-title\">"+searchSell->getvalueArticle()+"</h5>" << endl;
                 cout << "<p class=\"card-text\">"+searchSell->getDescriptionArticle()+"</p>" << endl;
@@ -193,7 +193,7 @@ void SellView::printHTML()
                 cout << "<div class='card-body'>" << endl;
                 cout << "<div class=\"card mb-3\">" << endl;
                 cout << "<div class=\"card-body\">" << endl;
-                cout << "<img src=\""+searchSell->getImg()+"\"height=\"200px\"width=\"200px\"/>" << endl;
+                cout << "<img src='"+sell->getImg()+"'height='200px'width='200px'/>" << endl;
                 cout << "<h5 class=\"card-title\">"+sell->getnameArticle()+"</h5>" << endl;
                 cout << "<h5 class=\"card-title\">"+sell->getvalueArticle()+"</h5>" << endl;
                 cout << "<p class=\"card-text\">"+sell->getDescriptionArticle()+"</p>" << endl;
