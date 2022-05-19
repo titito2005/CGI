@@ -16,7 +16,7 @@ class ShoppingCartService {
         ShoppingCartService();
         ~ShoppingCartService();
         vector<ShoppingCart> getAllShoppingCartByUserId(string id);
-        bool addShoppingCar(string idUser, string idSell);
+        bool addShoppingCart(string idUser, string idSell);
 
     private:
         Database* db;

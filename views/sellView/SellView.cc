@@ -94,7 +94,8 @@ bool SellView::responsePOST(char* ip)
     }
     else if(sellId != NULL){
         if(sessionID!=NULL){
-            shoppingCartService->addShoppingCar(sellId,sessionID);
+            Session* userId=sessionService->getSessionByUserCookie(sessionID);
+            shoppingCartService->addShoppingCart(sellId,userId->getUserId());
             printHTML();
         }
         else{

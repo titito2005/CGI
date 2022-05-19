@@ -47,7 +47,7 @@ vector<ShoppingCart> ShoppingCartService::getAllShoppingCartByUserId(string id)
     }
     return userCart;
 }
-bool ShoppingCartService::addShoppingCar(string idUser, string idSell)
+bool ShoppingCartService::addShoppingCart(string idUser, string idSell)
 {
     bool addShoppingCar = false;
     string query = "INSERT INTO shoppingCart (userId, sellId)VALUES(";

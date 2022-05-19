@@ -64,11 +64,13 @@ bool AddView::responseGET(char* ip){
             printHTML();
         } else {
             //NO HAY COOKIE O NO ES VALIDA
-            cout << "Location: http://localhost/cgi-bin/home\n\n" << endl;
+            //cout << "Location: http://localhost/cgi-bin/home\n\n" << endl;
+            printHTML();
         }
     } else {
         //NO HAY COOKIE O NO ES VALIDA
-        cout << "Location: http://localhost/cgi-bin/home\n\n" << endl;
+        //cout << "Location: http://localhost/cgi-bin/home\n\n" << endl;
+        printHTML();
     }
     return true;
 }
@@ -78,6 +80,7 @@ bool AddView::responsePOST(char* ip){
     char* GameName = parserService->getQueryArg("GameName");
     char* GameValue = parserService->getQueryArg("GameValue");
     char* GameDescription = parserService->getQueryArg("GameDescription");
+    char* img = parserService->getQueryArg("Img");
 
     if(GameName != NULL && GameValue != NULL && GameDescription != NULL ){
         if(sellService->addSell(GameName, GameValue, GameDescription)){
@@ -85,10 +88,12 @@ bool AddView::responsePOST(char* ip){
         } else {
             error = true;
             errorMessage = "Error al agregar juego";
+            printHTML();
         }
     } else {
         error = true;
-        errorMessage = "Hay datos incompletos. Por favor inserte todos los datos solicitados.";
+        errorMessage = img;
+        printHTML();
     }
 
     return true;
@@ -131,6 +136,7 @@ void AddView::printHTML(){
                                 cout<<"<label for='inputDescription'>Descripcion</label>"<<endl;
                                 cout<<"<input name='GameDescription' type='descripcion' class='form-control' id='inputDescription' placeholder='Ingrese la descripcion'>"<<endl;
                             cout<<"</div>"<<endl;
+                            cout<<"<input name='Img' accept='image/png,image/jpeg' type='file'>"<<endl;
                             cout<<"<button type='submit' class='btn btn-primary'>Agregar</button>"<<endl;
                         cout<<"</form>"<<endl;
                     cout<<"</div>"<<endl;
