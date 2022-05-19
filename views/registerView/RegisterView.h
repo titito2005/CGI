@@ -15,6 +15,7 @@
 
 #include "../../services/parserService/ParserService.h"
 #include "../../services/userService/UserService.h"
+#include "../../services/sessionService/SessionService.h"
 #include "../headerView/HeaderView.h"
 #include "../footerView/FooterView.h"
 #include "../../models/userModel/User.h"
@@ -34,6 +35,7 @@ class RegisterView {
         //Variables
         ParserService *parserService;
         UserService *userService;
+        SessionService *sessionService;
         HeaderView *headerView;
         FooterView *footerView;
 

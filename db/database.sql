@@ -1,5 +1,6 @@
 DROP TABLE userSession;
 DROP TABLE shoppingCart;
+DROP TABLE shoppingCheckout;
 DROP TABLE sell;
 DROP TABLE user;
 

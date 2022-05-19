@@ -40,7 +40,7 @@ RegisterView::RegisterView()
     if (request_method != NULL){
         // Handle GET requests
         if (strcmp(request_method, "GET") == 0){
-            responseGET();
+            responseGET(requestAddr);
         }
         // Handle POST requests
         if (strcmp(request_method, "POST") == 0){

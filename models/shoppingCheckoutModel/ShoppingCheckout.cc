@@ -72,7 +72,7 @@ string ShoppingCheckout::getCardExpireYear(){
 }
 
 string ShoppingCheckout::getCardCVV(){
-    return cardCVV
+    return cardCVV;
 }
 
 string ShoppingCheckout::getCreatedAt(){
