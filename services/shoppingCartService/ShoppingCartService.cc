@@ -40,3 +40,15 @@ vector<ShoppingCart> ShoppingCartService::getAllShoppingCartByUserId(string id){
     }
     return userCart;
 }
+
+bool ShoppingCartService::deleteShoppingCartByUserId(string userId){
+    bool deleteCart = false;
+    string query = "DELETE FROM shoppingCart WHERE userId = '";
+    query.append(userId);
+    query.append("'");
+    const char *finalQuery = query.c_str();
+    if(!mysql_query(conn, finalQuery)){
+        deleteCart = true;
+    }
+    return deleteCart;
+}

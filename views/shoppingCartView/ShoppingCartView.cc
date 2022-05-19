@@ -95,6 +95,7 @@ bool ShoppingCartView::responsePOST(char* ip){
 }
 
 void ShoppingCartView::printHTML(){
+double precioTotal = 0;
 cout<<"Content-type:text/html\r\n\r\n";
 cout<<"<!DOCTYPE html>"<<endl;
 cout<<"<html lang='en'>"<<endl;
@@ -121,9 +122,9 @@ cout<<"<html lang='en'>"<<endl;
                 cout<<"<div class='card mt-2' style='background-color:#EAEAEA'>"<<endl;
                     cout<<"<div class='card-body d-flex justify-content-between'>"<<endl;
                         cout<<"<img src='' alt='hola'>"<<endl;
-                        cout<<"<h5>"<<userItems[i].getnameArticle()<<"</h5>"<<endl;
-                        cout<<"<p>"<<userItems[i].getDescriptionArticle()<<"</p>"<<endl;
-                        cout<<"<h6>"<<userCart[i].getSellCant()<<"Cantidad</h6>"<<endl;
+                        cout<<"<h5> Nombre: "<<userItems[i].getnameArticle()<<"</h5>"<<endl;
+                        cout<<"<p> Descripción: "<<userItems[i].getDescriptionArticle()<<"</p>"<<endl;
+                        cout<<"<h6> Cantidad: "<<userCart[i].getSellCant()<<"</h6>"<<endl;
                         cout<<"<button type='button' class='btn btn-danger'>Eliminar producto</button>"<<endl;
                     cout<<"</div>"<<endl;
                 cout<<"</div>"<<endl;
@@ -135,15 +136,19 @@ cout<<"<html lang='en'>"<<endl;
           cout<<"<div class='card mt-2' style='background-color:#EAEAEA'>"<<endl;
             cout<<"<div class='card-body'>"<<endl;
               cout<<"<h5>Resumen</h5>"<<endl;
-              cout<<"<div class='d-flex mt-1'>"<<endl;
-                cout<<"<h6>Producto</h6>"<<endl;
-                cout<<"<p>Cantidad</p>"<<endl;
-                cout<<"<h6>precio</h6>"<<endl;
-              cout<<"</div>"<<endl;
-              cout<<"<div class='d-flex mt-1'>"<<endl;
-                cout<<"<h6>Total</h6>"<<endl;
-                cout<<"<h6>precio</h6>"<<endl;
-              cout<<"</div>"<<endl;
+                if(userItems.size() > 0){
+                  for(int i = 0; i<userItems.size(); i++){
+                    int cant = stoi(userCart[i].getSellCant());
+                    int precio = stoi(userItems[i].getvalueArticle());
+                    cout<<"<div class='d-flex mt-1'>"<<endl;
+                      cout<<"<h6>"<<userItems[i].getnameArticle()<<"</h6>"<<endl;
+                      cout<<"<p> C"<<precio<<"</p>"<<endl;
+                      precioTotal += cant * precio;
+                    cout<<"</div>"<<endl;
+                  }
+                }
+                cout<<"<h6>Servicio: C2000</h6>"<<endl;
+                cout<<"<h6>Total Final: "<<precioTotal +2000<<"</h6>"<<endl;
               cout<<"<button type='button' class='btn btn-primary'>Finalizar compra</button>"<<endl;
             cout<<"</div>"<<endl;
           cout<<"</div>"<<endl;
