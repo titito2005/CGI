@@ -7,6 +7,7 @@ ShoppingCartView::ShoppingCartView(){
     parserService = new ParserService();
     shoppingCartService = new ShoppingCartService();
     sellService = new SellService();
+    shoppingCheckoutService = new ShoppingCheckoutService();
     //VIEWS
     headerView = new HeaderView();
     footerView = new FooterView();
@@ -60,7 +61,7 @@ bool ShoppingCartView::responseGET(char* ip){
     if(sessionID != NULL){
         if(sessionService->validateSession(ip, sessionID)){
             //LA COOKIE ES VALIDA PUEDE ENTRAR AL CARRITO
-            string userId = sessionService->getUserIdByCookie(sessionID);
+            userId = sessionService->getUserIdByCookie(sessionID);
             if(userId.length()>0){
                 //OBTENGO EL SHOPPING CART DEL USUARIO.
                 userCart =  shoppingCartService->getAllShoppingCartByUserId(userId);
@@ -162,6 +163,10 @@ cout<<"<html lang='en'>"<<endl;
                       cout<<"</button>"<<endl;
                     cout<<"</div>"<<endl;
                     cout<<"<div class='modal-body'>"<<endl;
+                    // 
+                    char* _userId = const_cast<char*>(userId.c_str());
+                    string cardNumber = shoppingCheckoutService->getCardByUserId(_userId);
+                    if (cardNumber.empty()){
                       cout<<"<div class='container'>"<<endl;
                         cout<<"<label for='fname'>Tarjetas aceptadas</label>"<<endl;
                         cout<<"<div class='icon-container'>"<<endl;
@@ -196,6 +201,11 @@ cout<<"<html lang='en'>"<<endl;
                        cout<<"</div>"<<endl;
                       cout<<"</div>"<<endl;
                     cout<<"</div>"<<endl;
+                    } else{
+                      cout<<"<div class='container'>"<<endl;
+                          cout<<"<h6>"<< cardNumber<<"</h6>"<<endl;
+                        cout<<"</div>"<<endl;
+                    }
                   cout<<"</div>"<<endl;
                 cout<<"</div>"<<endl;
               cout<<"</div>"<<endl;

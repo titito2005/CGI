@@ -43,6 +43,7 @@ class ShoppingCartView {
         string errorMessage;
         vector<ShoppingCart> userCart;
         vector<Sell> userItems;
+        string userId; 
         //Methods
 };
 #endif
