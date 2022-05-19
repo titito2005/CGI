@@ -47,3 +47,16 @@ CREATE TABLE shoppingCart(
     foreign key(userId) references user(id),
     foreign key(sellId) references sell(id)
 );
+
+CREATE TABLE shoppingCheckout(
+    id int auto_increment,
+    userId int NOT NULL,
+    cardName varchar(100),
+    cardNumber int,
+    cardExpireMonth varchar(100),
+    cardExpireYear int,
+    cardCVV int,
+    createdAt timestamp default current_timestamp,
+    primary key(id),
+    foreign key(userId) references user(id)
+);
