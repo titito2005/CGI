@@ -199,7 +199,7 @@ cout<<"<html lang='en'>"<<endl;
                   cout<<"</div>"<<endl;
                 cout<<"</div>"<<endl;
               cout<<"</div>"<<endl;
-              //
+              //CHECKOUT & MODAL END HERE
             cout<<"</div>"<<endl;
           cout<<"</div>"<<endl;
         cout<<"</div>"<<endl;
