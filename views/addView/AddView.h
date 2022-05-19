@@ -1,7 +1,15 @@
-#ifndef SELLVIEW_H
-#define SELLVIEW_H
+#ifndef ADDVIEW_H
+#define ADDVIEW_H
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <ctype.h>
 #include <iostream>
+#include <fstream>
+#include <string>
+#include <filesystem>
+#include <unistd.h>
+#include <cstring>
 #include <string>
 
 #include "../../services/parserService/ParserService.h"
@@ -14,24 +22,27 @@ using namespace std;
 
 #define MAX_ARGS 100
 
-class SellView {
+class AddView {
     public:
-        SellView();
-        ~SellView();
-        bool responseGET(char * ip);
-        bool responsePOST(char * ip);
+        AddView();
+        ~AddView();
+        bool responseGET(char *);
+        bool responsePOST(char *);
         void printHTML();
     private:
-        //Variables
-        ParserService *parserService;
-        SellService *sellService;
+          //Variables
+        //VIEWS
         HeaderView *headerView;
         FooterView *footerView;
-        SessionService* sessionService;
+        //SERVICES
+        SessionService *sessionService;
+        ParserService *parserService;
+        SellService * sellService;
+
         bool error;
         string errorMessage;
         bool sesion;
-        Sell *searchSell = NULL;
         //Methods
+
 };
 #endif

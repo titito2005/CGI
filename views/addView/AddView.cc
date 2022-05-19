@@ -1,12 +1,12 @@
-#include "LoginView.h"
+#include "AddView.h"
 
-LoginView::LoginView()
+AddView::AddView()
 {
     error = false;
     //SERVICES
     sessionService = new SessionService();
     parserService = new ParserService();
-    userService = new UserService();
+    sellService = new SellService();
     //VIEWS
     headerView = new HeaderView();
     footerView = new FooterView();
@@ -50,93 +50,66 @@ LoginView::LoginView()
     }
 }
 
-LoginView::~LoginView()
+AddView::~AddView()
 {
 }
 
-bool LoginView::responseGET(char* ip){ 
+bool AddView::responseGET(char* ip){ 
     char *sessionID = parserService->getCookieArg("sessionID");
     //HAY UNA COOKIE
     if(sessionID != NULL){
         if(sessionService->validateSession(ip, sessionID)){
-            //LA COOKIE ES VALIDA NO DEBERIA ENTRAR A LOGIN.
+            //LA COOKIE ES VALIDA PUEDE ENTRAR AL CARRITO
+            sesion=true;
+            printHTML();
+        } else {
+            //NO HAY COOKIE O NO ES VALIDA
             cout << "Location: http://localhost/cgi-bin/home\n\n" << endl;
         }
+    } else {
+        //NO HAY COOKIE O NO ES VALIDA
+        cout << "Location: http://localhost/cgi-bin/home\n\n" << endl;
     }
-    //NO HAY COOKIE O NO ES VALIDA
-    printHTML();
     return true;
 }
 
-bool LoginView::responsePOST(char* ip){
-    //EXPECTED VARIABLES FROM QUERY
-    char* userEmail = parserService->getQueryArg("userEmail");
-    char* userPassword = parserService->getQueryArg("userPassword");
-    if(userEmail != NULL){
-        if(userPassword != NULL){
-            //VERIFICAMOS USER AND PASSWORD.
-            if(userService->verifyPassword(userEmail, userPassword)){
-                //CREAMOS COOKIE.
-                if(createCookie(ip, userEmail)){
-                    //REDIRECCION A HOME.
-                    cout << "Location: http://localhost/cgi-bin/home\n\n" << endl;
-                } else {
-                    error = true;
-                    errorMessage = "Error verificando el usuario.";
-                }
-            }else{
-                //PRINT ERROR VERIFY PASSWORD
-                error = true;
-                errorMessage = "El email y la contraseña no coinciden.";
-            }
-        }else{
-            //PRINT ERROR NO PASSWORD
+bool AddView::responsePOST(char* ip){
+ //EXPECTED VARIABLES FROM QUERY
+    char* GameName = parserService->getQueryArg("GameName");
+    char* GameValue = parserService->getQueryArg("GameValue");
+    char* GameDescription = parserService->getQueryArg("GameDescription");
+
+    if(GameName != NULL && GameValue != NULL && GameDescription != NULL ){
+        if(sellService->addSell(GameName, GameValue, GameDescription)){
+            cout << "Location: http://localhost/cgi-bin/home\n\n" << endl;
+        } else {
             error = true;
-            errorMessage = "No se ha ingresado la contraseña, asegúrese de rellenar todos los espacios.";
+            errorMessage = "Error al agregar juego";
         }
-    }else{
-        //PRINT ERROR NO EMAIL
+    } else {
         error = true;
-        errorMessage = "No se ha ingresado el email, asegúrese de rellenar todos los espacios.";
+        errorMessage = "Hay datos incompletos. Por favor inserte todos los datos solicitados.";
     }
 
-    if(error){
-        //SI HAY ERROR IMPRIME EL HTML DE NUEVO CON LOS ERRORES.
-        printHTML();
-    }
     return true;
 }
 
-bool LoginView::createCookie(char* ip, char* userEmail){
-    string cookie = sessionService->generateCookieString();
-    string userId = userService->getIdByEmail(userEmail);
-    //BORRO COOKIE CON EL ID DEL USUARIO (Por si existe una session anterior)
-    sessionService->deleteSessionByUserId(userId);
-    if(sessionService->setSessionCookie(ip, userId, cookie)){
-        cout << "Set-Cookie:sessionID="<<cookie<<"; SameSite=None; Secure=true;"<< endl;
-        return true;
-    }
-    return false;
-}
-
-void LoginView::printHTML(){
-    //FALTA IMPRIMIR HEADER Y FOOTER
+void AddView::printHTML(){
+     //FALTA IMPRIMIR HEADER Y FOOTER
     cout << "Content-type:text/html\r\n\r\n";
     cout<<"<!doctype html>"<<endl;
     cout<<"<html lang='en'"<<endl;
         cout<<"<head>"<<endl;
             cout<<"<meta charset='utf-8'>"<<endl;
             cout<<"<meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>"<<endl;
-            //CDN PARA BOOTSTRAP
             cout<<"<link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css' integrity='sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T' crossorigin='anonymous'>"<<endl;
-            //STYLES
-            cout<<"<link rel='stylesheet' type='text/css' href='/public/userLogin/userLogin.css'>"<<endl;
+            cout<<"<link rel='stylesheet' type='text/css' href='/public/home/home.css'>"<<endl;
             cout<<"<link rel='stylesheet' type='text/css' href='/public/common/footer.css'>"<<endl;
-            cout<<"<title>Login page</title>"<<endl;
+            cout<<"<title>Add Sell </title>"<<endl;
         cout<<"</head>"<<endl;
         //PRINT HEADER
         cout<<"<body>"<<endl;
-            headerView->printHeaderHTML(false);
+            headerView->printHeaderHTML(sesion);
             cout<<"<div class='main-content'>"<<endl;
                 cout<<"<div class='card mt-20' style='width: 30rem;'>"<<endl;
                     cout<<"<div class='card-body'>"<<endl;
@@ -146,21 +119,25 @@ void LoginView::printHTML(){
                             cout<< errorMessage << endl;
                         cout<<"</div>"<<endl;
                     }
-                        cout<<"<form action='login' method='POST'>"<<endl;
+                        cout<<"<form action='addSell' method='POST'>"<<endl;
                             cout<<"<div class='form-group'>"<<endl;
-                                cout<<"<label for='inputEmail1'>Email</label>"<<endl;
-                                cout<<"<input name='userEmail' type='email' class='form-control' id='inputEmail1' placeholder='Ingrese su correo electrónico'>"<<endl;
+                                cout<<"<label for='inputName'>Nombre del Juego</label>"<<endl;
+                                cout<<"<input name='GameName' type='name' class='form-control' id='inputName' placeholder='Ingrese el nombre del videojuego nombre'>"<<endl;
                             cout<<"</div>"<<endl;
                             cout<<"<div class='form-group'>"<<endl;
-                                cout<<"<label for='inputPassword'>Contraseña</label>"<<endl;
-                                cout<<"<input name='userPassword' type='password' class='form-control' id='inputPassword' placeholder='Ingrese su contraseña'>"<<endl;
+                                cout<<"<label for='inputValue'>Valor del juego </label>"<<endl;
+                                cout<<"<input name='GameValue' type='value' class='form-control' id='inputValue' placeholder='Ingrese el valor del juego'>"<<endl;
                             cout<<"</div>"<<endl;
-                            cout<<"<button type='submit' class='btn btn-primary'>Iniciar sesión</button>"<<endl;
+                            cout<<"<div class='form-group'>"<<endl;
+                                cout<<"<label for='inputDescription'>Descripcion</label>"<<endl;
+                                cout<<"<input name='GameDescription' type='descripcion' class='form-control' id='inputDescription' placeholder='Ingrese la descripcion'>"<<endl;
+                            cout<<"</div>"<<endl;
+                            cout<<"<button type='submit' class='btn btn-primary'>Agregar</button>"<<endl;
                         cout<<"</form>"<<endl;
                     cout<<"</div>"<<endl;
                 cout<<"</div>"<<endl;
             cout<<"</div>"<<endl;
-            footerView->printFooterHTML(false);
+            footerView->printFooterHTML(true);
             cout<<"<script src='https://code.jquery.com/jquery-3.3.1.slim.min.js' integrity='sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo' crossorigin='anonymous'></script>"<<endl;
             cout<<"<script src='https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js' integrity='sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1' crossorigin='anonymous'></script>"<<endl;
             cout<<"<script src='https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js' integrity='sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM' crossorigin='anonymous'></script>"<<endl;
@@ -169,5 +146,5 @@ void LoginView::printHTML(){
 }
 
 int main(){
-    LoginView login;
+    AddView addSell;
 }
