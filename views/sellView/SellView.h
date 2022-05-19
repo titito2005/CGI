@@ -31,7 +31,7 @@ class SellView {
         ShoppingCartService* shoppingCartService;
         bool error;
         string errorMessage;
-        bool sesion;
+        bool sesion=false;
         Sell *searchSell = NULL;
         char* sessionID=NULL;
         //Methods

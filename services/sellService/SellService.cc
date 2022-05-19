@@ -118,7 +118,7 @@ Sell*  SellService::sellByName(string searchName){
 bool SellService::addSell(string GameName, string GameValue, string GameDescription){
     bool addSell = false;
     ///var/www/html/public/img
-    string img="/home/elvis/proyecto/CGI/public/img/index.jpeg";
+    string img="http://localhost/public/img/indice.jpeg";
     string query = "INSERT INTO sell(nameArticle, valueArticle, descriptionArticle, img)VALUES(";
     query.append("'"+GameName+"','"+GameValue+"','"+GameDescription+"','"+img+"')");
     const char *finalQuery = query.c_str();

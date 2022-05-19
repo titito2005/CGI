@@ -3,10 +3,12 @@
 SellView::SellView()
 {
    error = false;
+   sesion=false;
     //SERVICES
     sessionService = new SessionService();
     parserService = new ParserService();
     sellService = new SellService();
+    shoppingCartService = new ShoppingCartService();
     //VIEWS
     headerView = new HeaderView();
     footerView = new FooterView();
@@ -80,6 +82,19 @@ bool SellView::responseGET(char* ip)
 
 bool SellView::responsePOST(char* ip)
 {
+    sessionID = parserService->getCookieArg("sessionID");
+    //HAY UNA COOKIE
+    if(sessionID != NULL){
+        if(sessionService->validateSession(ip, sessionID)){
+            sesion=true;
+        } else {
+            //NO HAY COOKIE O NO ES VALIDA
+            sesion=true;
+        }
+    } else {
+        //NO HAY COOKIE O NO ES VALIDA
+        sesion=true;
+    }
     char* searchName = parserService->getQueryArg("SearchName");
     char* sellId = parserService->getQueryArg("SellId");
     if(searchName != NULL){
@@ -94,8 +109,8 @@ bool SellView::responsePOST(char* ip)
     }
     else if(sellId != NULL){
         if(sessionID!=NULL){
-            Session* userId=sessionService->getSessionByUserCookie(sessionID);
-            shoppingCartService->addShoppingCart(sellId,userId->getUserId());
+            string userId = sessionService->getUserIdByCookie(sessionID);
+            shoppingCartService->addShoppingCart(sellId,userId);
             printHTML();
         }
         else{
@@ -149,7 +164,7 @@ void SellView::printHTML()
                 cout << "<div class='card-body'>" << endl;
                 cout << "<div class=\"card mb-3\">" << endl;
                 cout << "<div class=\"card-body\">" << endl;
-                cout << "<img src=\"/home/elvis/proyecto/CGI/public/img/index.jpeg\"height=\"200px\"width=\"200px\"/>" << endl;
+                cout << "<img src=\""+searchSell->getImg()+"\"height=\"200px\"width=\"200px\"/>" << endl;
                 cout << "<h5 class=\"card-title\">"+searchSell->getnameArticle()+"</h5>" << endl;
                 cout << "<h5 class=\"card-title\">"+searchSell->getvalueArticle()+"</h5>" << endl;
                 cout << "<p class=\"card-text\">"+searchSell->getDescriptionArticle()+"</p>" << endl;
@@ -178,7 +193,7 @@ void SellView::printHTML()
                 cout << "<div class='card-body'>" << endl;
                 cout << "<div class=\"card mb-3\">" << endl;
                 cout << "<div class=\"card-body\">" << endl;
-                cout << "<img src=\"/home/elvis/proyecto/CGI/public/img/index.jpeg\"height=\"200px\"width=\"200px\"/>" << endl;
+                cout << "<img src=\""+searchSell->getImg()+"\"height=\"200px\"width=\"200px\"/>" << endl;
                 cout << "<h5 class=\"card-title\">"+sell->getnameArticle()+"</h5>" << endl;
                 cout << "<h5 class=\"card-title\">"+sell->getvalueArticle()+"</h5>" << endl;
                 cout << "<p class=\"card-text\">"+sell->getDescriptionArticle()+"</p>" << endl;

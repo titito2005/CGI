@@ -123,7 +123,7 @@ void AddView::printHTML(){
                             cout<< errorMessage << endl;
                         cout<<"</div>"<<endl;
                     }
-                        cout<<"<form action='addSell' method='POST'>"<<endl;
+                        cout<<"<form enctype='multipart/form-data' action='addSell' method='POST'>"<<endl;
                             cout<<"<div class='form-group'>"<<endl;
                                 cout<<"<label for='inputName'>Nombre del Juego</label>"<<endl;
                                 cout<<"<input name='GameName' type='name' class='form-control' id='inputName' placeholder='Ingrese el nombre del videojuego nombre'>"<<endl;
