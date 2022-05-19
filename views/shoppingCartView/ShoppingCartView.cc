@@ -149,7 +149,6 @@ cout<<"<html lang='en'>"<<endl;
                 }
                 cout<<"<h6>Servicio: C2000</h6>"<<endl;
                 cout<<"<h6>Total Final: "<<precioTotal +2000<<"</h6>"<<endl;
-              //cout<<"<button type='button' class='btn btn-primary'>Finalizar compra</button>"<<endl;
               //SHOPPING CHECKOUT STARTS HERE
               cout << "<button type='button' class='btn btn-primary' data-toggle='modal' data-target='#exampleModal'>Checkout de compra </button>" << endl;
               //MODAL
@@ -165,11 +164,11 @@ cout<<"<html lang='en'>"<<endl;
                     cout<<"<div class='modal-body'>"<<endl;
                       cout<<"<div class='container'>"<<endl;
                         cout<<"<label for='fname'>Tarjetas aceptadas</label>"<<endl;
-                        cout<<"<div class='icon-container'>'"<<endl;
-                          cout<<"<i class='fa fa-cc-visa' style='color:navy;'></i>'"<<endl;
-                          cout<<"<i class='fa fa-cc-amex' style='color:blue;'></i>'"<<endl;
+                        cout<<"<div class='icon-container'>"<<endl;
+                          cout<<"<i class='fa fa-cc-visa' style='color:navy;'></i>"<<endl;
+                          cout<<"<i class='fa fa-cc-amex' style='color:blue;'></i>"<<endl;
                           cout<<"<i class='fa fa-cc-mastercard' style='color:red;'></i>"<<endl;
-                          cout<<"<i class='fa fa-cc-discover' style='color:orange;></i>"<<endl;
+                          cout<<"<i class='fa fa-cc-discover' style='color:orange;'></i>"<<endl;
                         cout<<"</div>"<<endl;
                         cout<<"<label for='cname'>Nombre de la tarjeta</label>"<<endl;
                         cout<<"<input type='text' id='cname' name='cardname' style='width: 60%;' placeholder='Ingrese el nombre de la tarjeta'>"<<endl;
@@ -188,9 +187,9 @@ cout<<"<html lang='en'>"<<endl;
                       cout<<"</div>"<<endl;
                     cout<<"<label>"<<endl;
                       cout <<"<input type='checkbox' checked='checked' name='sameadr'> Guardar tarjeta de crédito </label>"<<endl;
-                   cout<<"<div class='modal-footer'>"<<endl;
+                     cout<<"<div class='modal-footer'>"<<endl;
                       cout<<"<button type='button' class='btn btn-secondary' data-dismiss='modal'>Volver</button>"<<endl;
-                      cout<<"<button type='button' class='btn btn-primary>Pagar</button>"<<endl;
+                      cout<<"<button type='button' class='btn btn-primary'>Pagar</button>"<<endl;
                     cout<<"</div>"<<endl;
                           cout<<"</div>"<<endl;
                         cout<<"</form>"<<endl;
