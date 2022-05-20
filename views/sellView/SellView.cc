@@ -3,10 +3,12 @@
 SellView::SellView()
 {
    error = false;
+   sesion=false;
     //SERVICES
     sessionService = new SessionService();
     parserService = new ParserService();
     sellService = new SellService();
+    shoppingCartService = new ShoppingCartService();
     //VIEWS
     headerView = new HeaderView();
     footerView = new FooterView();
@@ -56,7 +58,7 @@ SellView::~SellView()
 
 bool SellView::responseGET(char* ip)
 {
-    char *sessionID = parserService->getCookieArg("sessionID");
+    sessionID = parserService->getCookieArg("sessionID");
     //HAY UNA COOKIE
     if(sessionID != NULL){
         if(sessionService->validateSession(ip, sessionID)){
@@ -80,9 +82,23 @@ bool SellView::responseGET(char* ip)
 
 bool SellView::responsePOST(char* ip)
 {
-    char* SearchName = parserService->getQueryArg("SearchName");
-     if(SearchName != NULL){
-        searchSell=sellService->sellByName(SearchName);
+    sessionID = parserService->getCookieArg("sessionID");
+    //HAY UNA COOKIE
+    if(sessionID != NULL){
+        if(sessionService->validateSession(ip, sessionID)){
+            sesion=true;
+        } else {
+            //NO HAY COOKIE O NO ES VALIDA
+            sesion=false;
+        }
+    } else {
+        //NO HAY COOKIE O NO ES VALIDA
+        sesion=false;
+    }
+    char* searchName = parserService->getQueryArg("SearchName");
+    char* sellId = parserService->getQueryArg("SellId");
+    if(searchName != NULL){
+        searchSell=sellService->sellByName(searchName);
         if(searchSell!=NULL){
             printHTML();
         } else {
@@ -90,7 +106,20 @@ bool SellView::responsePOST(char* ip)
             errorMessage = "No se encontro resultados";
             printHTML();
         }
-    } else {
+    }
+    else if(sellId != NULL){
+        if(sessionID!=NULL){
+            string userId = sessionService->getUserIdByCookie(sessionID);
+            shoppingCartService->addShoppingCart(sellId,userId);
+            printHTML();
+        }
+        else{
+            error=true;
+            errorMessage = "error al agregar al carrito";
+            printHTML();
+        }
+    }
+    else {
         error = true;
         errorMessage = "No ingreso datos ";
         printHTML();
@@ -136,10 +165,18 @@ void SellView::printHTML()
                 cout << "<div class='card-body'>" << endl;
                 cout << "<div class=\"card mb-3\">" << endl;
                 cout << "<div class=\"card-body\">" << endl;
-                cout << "<img src=\"/home/elvis/proyecto/CGI/public/img/index.jpeg\"height=\"200px\"width=\"200px\"/>" << endl;
+                cout << "<img src='"+searchSell->getImg()+"'height='200px'width='200px'/>" << endl;
                 cout << "<h5 class=\"card-title\">"+searchSell->getnameArticle()+"</h5>" << endl;
                 cout << "<h5 class=\"card-title\">"+searchSell->getvalueArticle()+"</h5>" << endl;
                 cout << "<p class=\"card-text\">"+searchSell->getDescriptionArticle()+"</p>" << endl;
+                if(sesion){
+                    cout<<"<form action='home' method='POST'>"<<endl;
+                    cout<<"<div class='claseDiv'>"<<endl;
+                    cout<<"<input name='SellId' type='sell' class='form-control' id='sellInput' value=\""+searchSell->getId()+"\">"<<endl;
+                    cout<<"</div>"<<endl;
+                    cout<<"<button type='submit' class='btn btn-primary'>Agregar al carrito</button>"<<endl;
+                    cout<<"</form>"<<endl;
+                }
                 cout << "</div>" << endl;
                 cout << "</div>" << endl;
                 cout << "</div>" << endl;
@@ -157,10 +194,18 @@ void SellView::printHTML()
                 cout << "<div class='card-body'>" << endl;
                 cout << "<div class=\"card mb-3\">" << endl;
                 cout << "<div class=\"card-body\">" << endl;
-                cout << "<img src=\"/home/elvis/proyecto/CGI/public/img/index.jpeg\"height=\"200px\"width=\"200px\"/>" << endl;
+                cout << "<img src='"+sell->getImg()+"'height='200px'width='200px'/>" << endl;
                 cout << "<h5 class=\"card-title\">"+sell->getnameArticle()+"</h5>" << endl;
                 cout << "<h5 class=\"card-title\">"+sell->getvalueArticle()+"</h5>" << endl;
                 cout << "<p class=\"card-text\">"+sell->getDescriptionArticle()+"</p>" << endl;
+                if(sesion){
+                    cout<<"<form action='home' method='POST'>"<<endl;
+                    cout<<"<div class='claseDiv'>"<<endl;
+                    cout<<"<input name='SellId' type='sell' class='form-control' id='sellInput' value=\""+sell->getId()+"\">"<<endl;
+                    cout<<"</div>"<<endl;
+                    cout<<"<button type='submit' class='btn btn-primary'>Agregar al carrito</button>"<<endl;
+                    cout<<"</form>"<<endl;
+                }
                 cout << "</div>" << endl;
                 cout << "</div>" << endl;
                 cout << "</div>" << endl;
@@ -168,7 +213,7 @@ void SellView::printHTML()
                 cout << "</div>" << endl;
             }
         }
-        footerView->printFooterHTML(true);
+        footerView->printFooterHTML(sesion);
         cout << "<script src='https://code.jquery.com/jquery-3.3.1.slim.min.js' integrity='sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo' crossorigin='anonymous'></script>" << endl;
         cout << "<script src='https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js' integrity='sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1' crossorigin='anonymous'></script>" << endl;
         cout << "<script src='https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js' integrity='sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM' crossorigin='anonymous'></script>" << endl;

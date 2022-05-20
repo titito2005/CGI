@@ -26,7 +26,7 @@ ShoppingCartView::ShoppingCartView(){
         if (query_string != NULL){
             for (int pos = 0; pos < query_length; pos++){
                 query_string[pos] = fgetc(stdin);
-            }
+             }
         }
     }
     //PARSE QUERY
@@ -47,6 +47,10 @@ ShoppingCartView::ShoppingCartView(){
         // Handle POST requests
         if (strcmp(request_method, "POST") == 0){
             responsePOST(requestAddr);
+        }
+        // Handle DELETE requests.
+        if (strcmp(request_method, "DELETE") == 0){
+            responseDELETE(requestAddr);
         }
     }
 }
@@ -155,6 +159,21 @@ bool ShoppingCartView::responsePOST(char* ip){
     return true;
 }
 
+bool ShoppingCartView::responseDELETE(char* ip){
+  cout<<"Status: 200 OK"<<endl;
+  cout<<"Content-type:text/html\r\n\r\n";
+  cout<<"OK"<<endl;
+  //cout<<getenv("QUERY_STRING")<<endl;
+  char* variables = parserService->getQueryArg("sellId");
+  if(variables!=NULL){
+      cout<<variables<<endl;;
+  }else{
+    cout<<"No hay id"<<endl;
+  }
+
+  return true;
+}
+
 void ShoppingCartView::printHTML(){
 double precioTotal = 0;
 cout<<"Content-type:text/html\r\n\r\n";
@@ -186,7 +205,7 @@ cout<<"<html lang='en'>"<<endl;
                         cout<<"<h5> Nombre: "<<userItems[i].getnameArticle()<<"</h5>"<<endl;
                         cout<<"<p> Descripción: "<<userItems[i].getDescriptionArticle()<<"</p>"<<endl;
                         cout<<"<h6> Cantidad: "<<userCart[i].getSellCant()<<"</h6>"<<endl;
-                        cout<<"<button type='button' class='btn btn-danger'>Eliminar producto</button>"<<endl;
+                        cout<<"<button onclick='deleteItem("<<userItems[i].getId()<<")' type='button' class='btn btn-danger'>Eliminar</button>"<<endl;
                     cout<<"</div>"<<endl;
                 cout<<"</div>"<<endl;
               }
@@ -279,6 +298,7 @@ cout<<"<html lang='en'>"<<endl;
     //<!-- Optional JavaScript -->
     //<!-- jQuery first, then Popper.js, then Bootstrap JS -->
     footerView->printFooterHTML(true);
+    cout<<"<script src='/public/shoppingCart/shoppingCart.js'>";
     cout<<"<script src='https://code.jquery.com/jquery-3.3.1.slim.min.js' integrity='sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo' crossorigin='anonymous'></script>"<<endl;
     cout<<"<script src='https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js' integrity='sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1' crossorigin='anonymous'></script>"<<endl;
     cout<<"<script src='https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js' integrity='sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM' crossorigin='anonymous'></script>"<<endl;

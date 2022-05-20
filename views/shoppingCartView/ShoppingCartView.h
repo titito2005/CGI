@@ -28,6 +28,7 @@ class ShoppingCartView {
         ~ShoppingCartView();
         bool responseGET(char* ip);
         bool responsePOST(char* ip);
+        bool responseDELETE(char* ip);
         void printHTML();
     private:
         //Variables
