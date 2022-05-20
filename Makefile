@@ -1,70 +1,69 @@
 #Makefile Servidor
 #CREATE LOGIN cgi-bin/login
-login: clean refreshPublicCGI database user sell session shoppingCart sessionService userService sellService parserService shoppingCartService footerView headerView loginView sellView addView logoutView shoppingCartView registerView loginCompleto sellCompleto logoutCompleto shoppingCartCompleto registerCompleto addCompleto
+program: clean refreshPublicCGI database user sell session shoppingCart sessionService userService sellService parserService shoppingCartService footerView headerView loginView sellView addView logoutView shoppingCartView registerView loginCompleto sellCompleto logoutCompleto shoppingCartCompleto registerCompleto addCompleto
 
 #VIEWS
-loginView: views/loginView/LoginView.cc views/loginView/LoginView.h services/sessionService/SessionService.h services/parserService/ParserService.h services/userService/UserService.h views/headerView/HeaderView.h views/footerView/FooterView.h
-	g++ -c views/loginView/LoginView.cc views/loginView/LoginView.h services/sessionService/SessionService.h services/parserService/ParserService.h services/userService/UserService.h views/headerView/HeaderView.h views/footerView/FooterView.h
+loginView: views/loginView/LoginView.cc
+	g++ -c views/loginView/LoginView.cc
 
-sellView: views/sellView/SellView.cc views/sellView/SellView.h services/sessionService/SessionService.h services/shoppingCartService/ShoppingCartService.h services/parserService/ParserService.h services/sellService/SellService.h views/headerView/HeaderView.h views/footerView/FooterView.h models/shoppingCartModel/ShoppingCart.h
-	g++ -c views/sellView/SellView.cc views/sellView/SellView.h services/sessionService/SessionService.h services/shoppingCartService/ShoppingCartService.h services/parserService/ParserService.h services/sellService/SellService.h  views/headerView/HeaderView.h views/footerView/FooterView.h models/shoppingCartModel/ShoppingCart.h
+sellView: views/sellView/SellView.cc
+	g++ -c views/sellView/SellView.cc
 
-addView: views/addView/AddView.cc views/addView/AddView.h services/sessionService/SessionService.h services/parserService/ParserService.h services/sellService/SellService.h views/headerView/HeaderView.h views/footerView/FooterView.h
-	g++ -c views/addView/AddView.cc views/addView/AddView.h services/sessionService/SessionService.h services/parserService/ParserService.h services/sellService/SellService.h  views/headerView/HeaderView.h views/footerView/FooterView.h
+addView: views/addView/AddView.cc
+	g++ -c views/addView/AddView.cc
 
+registerView: views/registerView/RegisterView.cc
+	g++ -c views/registerView/RegisterView.cc
 
-registerView: views/registerView/RegisterView.cc views/registerView/RegisterView.h services/parserService/ParserService.h services/userService/UserService.h views/headerView/HeaderView.h views/footerView/FooterView.h
-	g++ -c views/registerView/RegisterView.cc views/registerView/RegisterView.h services/parserService/ParserService.h views/headerView/HeaderView.h views/footerView/FooterView.h
+footerView: views/footerView/FooterView.cc
+	g++ -c views/footerView/FooterView.cc
 
-footerView: views/footerView/FooterView.cc views/footerView/FooterView.h
-	g++ -c views/footerView/FooterView.cc views/footerView/FooterView.h
+headerView: views/headerView/HeaderView.cc
+	g++ -c views/headerView/HeaderView.cc
 
-headerView: views/headerView/HeaderView.cc views/headerView/HeaderView.h
-	g++ -c views/headerView/HeaderView.cc views/headerView/HeaderView.h
+logoutView: views/logoutView/LogoutView.cc
+	g++ -c views/logoutView/LogoutView.cc
 
-logoutView: views/logoutView/LogoutView.cc views/logoutView/LogoutView.h services/sessionService/SessionService.h services/parserService/ParserService.h
-	g++ -c views/logoutView/LogoutView.cc views/logoutView/LogoutView.h services/sessionService/SessionService.h services/parserService/ParserService.h
-
-shoppingCartView: views/shoppingCartView/ShoppingCartView.cc views/shoppingCartView/ShoppingCartView.h services/sessionService/SessionService.h services/parserService/ParserService.h services/sellService/SellService.h services/shoppingCartService/ShoppingCartService.h models/sellModel/Sell.h models/shoppingCartModel/ShoppingCart.h
-	g++ -c views/shoppingCartView/ShoppingCartView.cc views/shoppingCartView/ShoppingCartView.h services/sessionService/SessionService.h services/parserService/ParserService.h services/sellService/SellService.h services/shoppingCartService/ShoppingCartService.h models/sellModel/Sell.h models/shoppingCartModel/ShoppingCart.h
+shoppingCartView: views/shoppingCartView/ShoppingCartView.cc
+	g++ -c views/shoppingCartView/ShoppingCartView.cc
 #MODELS
-user: models/userModel/User.cc models/userModel/User.h
-	g++ -c models/userModel/User.cc models/userModel/User.h
+user: models/userModel/User.cc
+	g++ -c models/userModel/User.cc
 
-sell: models/sellModel/Sell.cc models/sellModel/Sell.h
-	g++ -c models/sellModel/Sell.cc models/sellModel/Sell.h
+sell: models/sellModel/Sell.cc
+	g++ -c models/sellModel/Sell.cc
 
-session: models/sessionModel/Session.cc models/sessionModel/Session.h
-	g++ -c models/sessionModel/Session.cc models/sessionModel/Session.h
+session: models/sessionModel/Session.cc
+	g++ -c models/sessionModel/Session.cc
 
-shoppingCart: models/shoppingCartModel/ShoppingCart.cc models/shoppingCartModel/ShoppingCart.h
-	g++ -c models/shoppingCartModel/ShoppingCart.cc models/shoppingCartModel/ShoppingCart.h
+shoppingCart: models/shoppingCartModel/ShoppingCart.cc
+	g++ -c models/shoppingCartModel/ShoppingCart.cc
 
-userComment: models/userCommentModel/UserComment.cc models/userCommentModel/UserComment.h
-	g++ -c models/userCommentModel/UserComment.cc models/userCommentModel/UserComment.h
+userComment: models/userCommentModel/UserComment.cc
+	g++ -c models/userCommentModel/UserComment.cc
  
 #SERVICES
-userService: services/userService/UserService.cc services/userService/UserService.h
-	g++ -c services/userService/UserService.cc services/userService/UserService.h -L/usr/lib/mysql -lmysqlclient
+userService: services/userService/UserService.cc
+	g++ -c services/userService/UserService.cc
 
-sellService: services/sellService/SellService.cc services/sellService/SellService.h
-	g++ -c services/sellService/SellService.cc services/sellService/SellService.h -L/usr/lib/mysql -lmysqlclient
+sellService: services/sellService/SellService.cc
+	g++ -c services/sellService/SellService.cc
 
-parserService: services/parserService/ParserService.cc services/parserService/ParserService.h
-	g++ -c services/parserService/ParserService.cc services/parserService/ParserService.h
+parserService: services/parserService/ParserService.cc
+	g++ -c services/parserService/ParserService.cc
 
-sessionService: services/sessionService/SessionService.cc services/sessionService/SessionService.h
-	g++ -c services/sessionService/SessionService.cc services/sessionService/SessionService.h
+sessionService: services/sessionService/SessionService.cc
+	g++ -c services/sessionService/SessionService.cc
 
-shoppingCartService: services/shoppingCartService/ShoppingCartService.cc services/shoppingCartService/ShoppingCartService.h
-	g++ -c services/shoppingCartService/ShoppingCartService.cc services/shoppingCartService/ShoppingCartService.h
+shoppingCartService: services/shoppingCartService/ShoppingCartService.cc
+	g++ -c services/shoppingCartService/ShoppingCartService.cc
 
-userCommentService: services/userCommentService/UserCommentService.cc services/userCommentService/UserCommentService.h
-	g++ -c services/userCommentService/UserCommentService.cc services/userCommentService/UserCommentService.h
+userCommentService: services/userCommentService/UserCommentService.cc
+	g++ -c services/userCommentService/UserCommentService.cc
 
 #DATABASE
-database: services/Database.cc services/Database.h
-	g++ -c services/Database.cc services/Database.h -L/usr/lib/mysql -lmysqlclient
+database: services/Database.cc
+	g++ -c services/Database.cc -L/usr/lib/mysql -lmysqlclient
 
 #PUBLIC FILES ON CGI DIRECTION
 refreshPublicCGI:
