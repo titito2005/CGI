@@ -92,7 +92,7 @@ bool AddView::responsePOST(char* ip){
         }
     } else {
         error = true;
-        errorMessage = img;
+        errorMessage = "no se relleno toda la informacion";
         printHTML();
     }
 
