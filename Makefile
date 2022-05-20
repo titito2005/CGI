@@ -1,6 +1,6 @@
 #Makefile Servidor
 #CREATE LOGIN cgi-bin/login
-login: refreshPublicCGI database user sell session shoppingCart sessionService userService sellService parserService shoppingCartService footerView headerView loginView sellView addView logoutView shoppingCartView registerView loginCompleto sellCompleto logoutCompleto shoppingCartCompleto registerCompleto addCompleto
+login: clean refreshPublicCGI database user sell session shoppingCart sessionService userService sellService parserService shoppingCartService footerView headerView loginView sellView addView logoutView shoppingCartView registerView loginCompleto sellCompleto logoutCompleto shoppingCartCompleto registerCompleto addCompleto
 
 #VIEWS
 loginView: views/loginView/LoginView.cc views/loginView/LoginView.h services/sessionService/SessionService.h services/parserService/ParserService.h services/userService/UserService.h views/headerView/HeaderView.h views/footerView/FooterView.h
@@ -39,6 +39,9 @@ session: models/sessionModel/Session.cc models/sessionModel/Session.h
 
 shoppingCart: models/shoppingCartModel/ShoppingCart.cc models/shoppingCartModel/ShoppingCart.h
 	g++ -c models/shoppingCartModel/ShoppingCart.cc models/shoppingCartModel/ShoppingCart.h
+
+userComment: models/userCommentModel/UserComment.cc models/userCommentModel/UserComment.h
+	g++ -c models/userCommentModel/UserComment.cc models/userCommentModel/UserComment.h
  
 #SERVICES
 userService: services/userService/UserService.cc services/userService/UserService.h
@@ -55,6 +58,9 @@ sessionService: services/sessionService/SessionService.cc services/sessionServic
 
 shoppingCartService: services/shoppingCartService/ShoppingCartService.cc services/shoppingCartService/ShoppingCartService.h
 	g++ -c services/shoppingCartService/ShoppingCartService.cc services/shoppingCartService/ShoppingCartService.h
+
+userCommentService: services/userCommentService/UserCommentService.cc services/userCommentService/UserCommentService.h
+	g++ -c services/userCommentService/UserCommentService.cc services/userCommentService/UserCommentService.h
 
 #DATABASE
 database: services/Database.cc services/Database.h
@@ -83,3 +89,6 @@ logoutCompleto: LogoutView.o ParserService.o SessionService.o Session.o Database
 
 shoppingCartCompleto: ShoppingCartView.o SellService.o ParserService.o ShoppingCartService.o SessionService.o Session.o Sell.o ShoppingCart.o UserService.o User.o Database.o HeaderView.o FooterView.o
 	sudo g++ -o /usr/lib/cgi-bin/cart ShoppingCartView.o SellService.o ParserService.o ShoppingCartService.o SessionService.o Session.o Sell.o ShoppingCart.o UserService.o User.o Database.o HeaderView.o FooterView.o -L/usr/lib/mysql -lmysqlclient
+
+clean:
+	rm -f *.o *.gch

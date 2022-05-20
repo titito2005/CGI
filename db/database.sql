@@ -2,7 +2,7 @@ DROP TABLE userSession;
 DROP TABLE shoppingCart;
 DROP TABLE sell;
 DROP TABLE user;
-
+DROP TABLE userComment;
 
 CREATE TABLE user(
     id int auto_increment,
@@ -47,3 +47,10 @@ CREATE TABLE shoppingCart(
     foreign key(userId) references user(id),
     foreign key(sellId) references sell(id)
 );
+
+CREATE TABLE userComment(
+    id int auto_increment,
+    comment varchar(5000),
+    createdAt timestamp default current_timestamp,
+    primary key(id)
+)
