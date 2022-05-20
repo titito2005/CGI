@@ -59,6 +59,23 @@ bool ShoppingCartService::deleteShoppingCartByUserId(string userId){
     }
     return deleteCart;
 }
+
+bool ShoppingCartService::deleteCartByUserAndItemId(string userId, string itemId){
+    bool deleteCart = false;
+    string query = "DELETE FROM shoppingCart WHERE userId = '";
+    query.append(userId);
+    query.append("'");
+    query.append(" AND sellId = '");
+    query.append(itemId);
+    query.append("'");
+
+    const char *finalQuery = query.c_str();
+    if(!mysql_query(conn, finalQuery)){
+        deleteCart = true;
+    }
+    return deleteCart;
+}
+
 bool ShoppingCartService::addShoppingCart(string idUser, string idSell)
 {
     bool addShoppingCar = false;

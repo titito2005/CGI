@@ -1,5 +1,4 @@
 async function deleteItem(itemId){
-    alert(itemId);
     const params = "sellId="+itemId;
     const response = await fetch("http://localhost/cgi-bin/cart", {
         method: "DELETE",
@@ -8,4 +7,6 @@ async function deleteItem(itemId){
         },
         body: params
     })
+    alert("Producto eliminado del carrito");
+    document.location.reload();
 }

@@ -99,25 +99,38 @@ bool ShoppingCartView::responsePOST(char* ip){
 }
 
 bool ShoppingCartView::responseDELETE(char* ip){
-  cout<<"Status: 200 OK"<<endl;
-  cout<<"Content-type:text/html\r\n\r\n";
-  cout<<"OK"<<endl;
-  //cout<<getenv("QUERY_STRING")<<endl;
-  char* variables = parserService->getQueryArg("sellId");
-  if(variables!=NULL){
-      cout<<variables<<endl;;
-  }else{
-    cout<<"No hay id"<<endl;
-  }
-
-  return true;
+    char *sessionID = parserService->getCookieArg("sessionID");
+    //HAY UNA COOKIE
+    if(sessionID != NULL){
+        if(sessionService->validateSession(ip, sessionID)){
+            //LA COOKIE ES VALIDA PUEDE BORRAR DEL CARRITO
+            string userId = sessionService->getUserIdByCookie(sessionID);
+            if(userId.length()>0){
+                char* sellId = parserService->getQueryArg("sellId");
+                if(sellId!= NULL){
+                    string itemId(sellId);
+                    shoppingCartService->deleteCartByUserAndItemId(userId, itemId);
+                    cout<<"Status: 200 Ok"<<endl;
+                } else {
+                  cout<<"Status: 400 Bad Request"<<endl;
+                }
+            } else {
+              cout<<"Status: 400 Bad Request"<<endl;
+            }
+        } else {
+          cout<<"Status: 400 Bad Request"<<endl;
+        }
+    } else {
+      cout<<"Status: 400 Bad Request"<<endl;
+    }
+    return true;
 }
 
 void ShoppingCartView::printHTML(){
-double precioTotal = 0;
-cout<<"Content-type:text/html\r\n\r\n";
-cout<<"<!DOCTYPE html>"<<endl;
-cout<<"<html lang='en'>"<<endl;
+  double precioTotal = 0;
+  cout<<"Content-type:text/html\r\n\r\n";
+  cout<<"<!DOCTYPE html>"<<endl;
+  cout<<"<html lang='en'>"<<endl;
   cout<<"<head>"<<endl;
     cout<<"<meta charset='utf-8'>"<<endl;
     cout<<"<meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>"<<endl;
@@ -132,7 +145,6 @@ cout<<"<html lang='en'>"<<endl;
     headerView->printHeaderHTML(true);
     cout<<"<div class='container'>"<<endl;
       cout<<"<h4 class='mt-2'>Carrito de compras</h4>"<<endl;
-      cout<<"<a class='mt-2' href='#'>Seguir comprando</a>"<<endl;
       cout<<"<div class='row mt-3 mb-3'>"<<endl;
         cout<<"<div class='col-9'>"<<endl;
 
@@ -148,8 +160,11 @@ cout<<"<html lang='en'>"<<endl;
                     cout<<"</div>"<<endl;
                 cout<<"</div>"<<endl;
               }
+          } else {
+            cout<<"<h4>En este momento no cuentas con productos en tu carrito</h4>"<<endl;
+            cout<<"<h6>¡Vuelve y agrega algunos!</h6>"<<endl;
           }
-          cout<<"<button type='button' class='btn btn-secondary mt-3'>Volver</button>"<<endl;
+          cout<<"<button type='button' class='btn btn-secondary mt-3'><a href='/cgi-bin/home'>Volver</a></button>"<<endl;
         cout<<"</div>"<<endl;
         cout<<"<div class='col-3'>"<<endl;
           cout<<"<div class='card mt-2' style='background-color:#EAEAEA'>"<<endl;
@@ -165,9 +180,14 @@ cout<<"<html lang='en'>"<<endl;
                       precioTotal += cant * precio;
                     cout<<"</div>"<<endl;
                   }
+                  cout<<"<h6>Servicio: C2000</h6>"<<endl;
+                  cout<<"<h6>Total Final: "<<precioTotal +2000<<"</h6>"<<endl;
+                } else {
+                  cout<<"<p>No hay productos actualmente</p>"<<endl;
+                  cout<<"<h6>Servicio: C0</h6>"<<endl;
+                  cout<<"<h6>Total Final: C0</h6>"<<endl; 
                 }
-                cout<<"<h6>Servicio: C2000</h6>"<<endl;
-                cout<<"<h6>Total Final: "<<precioTotal +2000<<"</h6>"<<endl;
+
               cout<<"<button type='button' class='btn btn-primary'>Finalizar compra</button>"<<endl;
             cout<<"</div>"<<endl;
           cout<<"</div>"<<endl;
@@ -182,7 +202,7 @@ cout<<"<html lang='en'>"<<endl;
     cout<<"<script src='https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js' integrity='sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1' crossorigin='anonymous'></script>"<<endl;
     cout<<"<script src='https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js' integrity='sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM' crossorigin='anonymous'></script>"<<endl;
   cout<<"</body>"<<endl;
-cout<<"</html>"<<endl;
+  cout<<"</html>"<<endl;
 }
 
 int main()

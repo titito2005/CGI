@@ -17,6 +17,7 @@ class ShoppingCartService {
         ~ShoppingCartService();
         vector<ShoppingCart> getAllShoppingCartByUserId(string id);
         bool deleteShoppingCartByUserId(string userId);
+        bool deleteCartByUserAndItemId(string userId, string itemId);
         bool addShoppingCart(string idUser, string idSell);
 
     private:
