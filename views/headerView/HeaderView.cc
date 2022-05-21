@@ -22,6 +22,9 @@ void HeaderView::printHeaderHTML(bool loged){
                     cout<<"<a class='nav-link' href='/cgi-bin/addSell'>Agregar producto</a>"<<endl;
                 cout<<"</li>"<<endl;
                 }
+                cout<<"<li class='nav-item active'>"<<endl;
+                    cout<<"<a class='nav-link' href='/cgi-bin/comments'>Comentarios</a>"<<endl;
+                cout<<"</li>"<<endl;  
             cout<<"</ul>"<<endl;
             cout<<"<div class='form-inline my-2 my-lg-0'>"<<endl;
                 cout<<"<ul class='navbar-nav mr-auto'>"<<endl;
