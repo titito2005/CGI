@@ -1,6 +1,6 @@
 #Makefile Servidor
 #CREATE LOGIN cgi-bin/login
-program: clean refreshPublicCGI database user sell session shoppingCart sessionService userService sellService parserService shoppingCartService footerView headerView loginView sellView addView logoutView shoppingCartView registerView loginCompleto sellCompleto logoutCompleto shoppingCartCompleto registerCompleto addCompleto
+program: clean refreshPublicCGI database user sell session shoppingCart userComment userCommentService sessionService userService sellService parserService shoppingCartService footerView headerView loginView sellView addView logoutView shoppingCartView userCommentView registerView loginCompleto userCommentCompleto sellCompleto logoutCompleto shoppingCartCompleto registerCompleto addCompleto
 
 #VIEWS
 loginView: views/loginView/LoginView.cc
@@ -26,6 +26,9 @@ logoutView: views/logoutView/LogoutView.cc
 
 shoppingCartView: views/shoppingCartView/ShoppingCartView.cc
 	g++ -c views/shoppingCartView/ShoppingCartView.cc
+
+userCommentView: views/userCommentView/UserCommentView.cc
+	g++ -c views/userCommentView/UserCommentView.cc
 #MODELS
 user: models/userModel/User.cc
 	g++ -c models/userModel/User.cc
@@ -88,6 +91,9 @@ logoutCompleto: LogoutView.o ParserService.o SessionService.o Session.o Database
 
 shoppingCartCompleto: ShoppingCartView.o SellService.o ParserService.o ShoppingCartService.o SessionService.o Session.o Sell.o ShoppingCart.o UserService.o User.o Database.o HeaderView.o FooterView.o
 	sudo g++ -o /usr/lib/cgi-bin/cart ShoppingCartView.o SellService.o ParserService.o ShoppingCartService.o SessionService.o Session.o Sell.o ShoppingCart.o UserService.o User.o Database.o HeaderView.o FooterView.o -L/usr/lib/mysql -lmysqlclient
+
+userCommentCompleto: UserCommentView.o UserCommentService.o ParserService.o SessionService.o Session.o UserComment.o Database.o HeaderView.o FooterView.o
+	sudo g++ -o /usr/lib/cgi-bin/comments UserCommentView.o UserCommentService.o ParserService.o  SessionService.o Session.o UserComment.o Database.o HeaderView.o FooterView.o -L/usr/lib/mysql -lmysqlclient
 
 clean:
 	rm -f *.o *.gch

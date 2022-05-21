@@ -33,7 +33,7 @@ vector<UserComment> UserCommentService::getAllUserComments(){
             UserComment comment;
             comment.setId(row[0]);
             comment.setComment(row[1]);
-            comment.setCreatedAt(row[4]);
+            comment.setCreatedAt(row[2]);
             userComments.push_back(comment);
         }
         // Release memories
