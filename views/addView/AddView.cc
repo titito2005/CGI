@@ -80,7 +80,6 @@ bool AddView::responsePOST(char* ip){
     char* GameName = parserService->getQueryArg("GameName");
     char* GameValue = parserService->getQueryArg("GameValue");
     char* GameDescription = parserService->getQueryArg("GameDescription");
-    //char* img = parserService->getQueryArg("Img");
 
     if(GameName != NULL && GameValue != NULL && GameDescription != NULL ){
         if(sellService->addSell(GameName, GameValue, GameDescription)){
@@ -92,7 +91,7 @@ bool AddView::responsePOST(char* ip){
         }
     } else {
         error = true;
-        errorMessage = "no se relleno toda la informacion";
+        errorMessage = "error al ingresar los datos";
         printHTML();
     }
 
@@ -124,7 +123,7 @@ void AddView::printHTML(){
                             cout<< errorMessage << endl;
                         cout<<"</div>"<<endl;
                     }
-                        cout<<"<form enctype='multipart/form-data' action='addSell' method='POST'>"<<endl;
+                        cout<<"<form action='addSell' method='POST'>"<<endl;
                             cout<<"<div class='form-group'>"<<endl;
                                 cout<<"<label for='inputName'>Nombre del Juego</label>"<<endl;
                                 cout<<"<input name='GameName' type='name' class='form-control' id='inputName' placeholder='Ingrese el nombre del videojuego nombre'>"<<endl;
@@ -137,7 +136,6 @@ void AddView::printHTML(){
                                 cout<<"<label for='inputDescription'>Descripcion</label>"<<endl;
                                 cout<<"<input name='GameDescription' type='descripcion' class='form-control' id='inputDescription' placeholder='Ingrese la descripcion'>"<<endl;
                             cout<<"</div>"<<endl;
-                            //cout<<"<input name='Img' accept='image/png,image/jpeg' type='file'>"<<endl;
                             cout<<"<button type='submit' class='btn btn-primary'>Agregar</button>"<<endl;
                         cout<<"</form>"<<endl;
                     cout<<"</div>"<<endl;

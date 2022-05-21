@@ -79,8 +79,12 @@ bool ShoppingCartService::deleteCartByUserAndItemId(string userId, string itemId
 bool ShoppingCartService::addShoppingCart(string idUser, string idSell)
 {
     bool addShoppingCar = false;
-    string query = "INSERT INTO shoppingCart (userId, sellId)VALUES(";
-    query.append("'" + idUser + "','" + idSell + "')");
+    string query = "INSERT INTO shoppingCart (userId, sellId) VALUES ('";
+    query.append(idUser);
+    query.append("','");
+    query.append(idSell);
+    query.append("');");
+    //query.append("'" + idUser + "','" + idSell + "');");
     const char *finalQuery = query.c_str();
     if (!mysql_query(conn, finalQuery))
     {
