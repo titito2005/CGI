@@ -98,7 +98,6 @@ bool SellView::responsePOST(char* ip)
         //NO HAY COOKIE O NO ES VALIDA
         sesion=false;
     }
-    if(sesion){
         if(searchName != NULL){
             if (regex_match(searchName, validationText)) { 
                 searchSell=sellService->sellByName(searchName);
@@ -116,7 +115,7 @@ bool SellView::responsePOST(char* ip)
                 printHTML();
             }
         }
-        else if(sellId != NULL){
+        else if(sellId != NULL && sesion){
             if(sessionID!=NULL){
                 string userId = sessionService->getUserIdByCookie(sessionID);
                 if(shoppingCartService->addShoppingCart(userId,sellId)){
@@ -135,16 +134,19 @@ bool SellView::responsePOST(char* ip)
                 printHTML();
             }
         }
-        else {
+        else if(!sesion){
+            error = true;
+            errorMessage = "no se pudo validar la seccion ingrese de nuevo ";
+            printHTML();
+        }
+        else if(searchName == NULL){
             error = true;
             errorMessage = "No ingreso datos ";
             printHTML();
         }
-        
-    }
-    else{
-        printHTML();
-    }
+        else{
+           printHTML(); 
+        }
     
     return true;
 }
@@ -184,7 +186,7 @@ void SellView::printHTML()
                 cout<<"</div>"<<endl;
         }
         else if(searchSell!=NULL){
-                cout << "card border-dark mb-3' style='width: 60rem;'>" << endl;
+                cout << "<div class='card border-dark mb-3' style='width: 60rem;'>" << endl;
                 cout<<"<div class=\"card-body\">"<< endl;
                 cout << "<h5 class=\"card-title\">"+searchSell->getnameArticle()+"</h5>" << endl;
                 cout << "<h5 class=\"card-title\">"+searchSell->getvalueArticle()+"</h5>" << endl;
