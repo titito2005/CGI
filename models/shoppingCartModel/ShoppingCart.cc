@@ -1,11 +1,11 @@
 #include "ShoppingCart.h"
 
 ShoppingCart::ShoppingCart(){
-    string id = "";
-    string userId = "";
-    string sellId = "";
-    string sellCant = "";
-    string createdAt = "";
+    id = "";
+    userId = "";
+    sellId = "";
+    sellCant = "";
+    createdAt = "";
 }
 
 ShoppingCart::~ShoppingCart(){

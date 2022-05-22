@@ -3,7 +3,7 @@ DROP TABLE shoppingCart;
 DROP TABLE shoppingCheckout;
 DROP TABLE sell;
 DROP TABLE user;
-
+DROP TABLE userComment;
 
 CREATE TABLE user(
     id int auto_increment,
@@ -33,7 +33,6 @@ CREATE TABLE sell(
     nameArticle varchar(100),
     valueArticle int,
     descriptionArticle varchar(5000),
-    img varchar(1000),
     createdAt timestamp default current_timestamp,
     primary key(id)
 );
@@ -61,3 +60,10 @@ CREATE TABLE shoppingCheckout(
     primary key(id),
     foreign key(userId) references user(id)
 );
+
+CREATE TABLE userComment(
+    id int auto_increment,
+    comment varchar(5000),
+    createdAt timestamp default current_timestamp,
+    primary key(id)
+)

@@ -83,6 +83,8 @@ bool SellView::responseGET(char* ip)
 bool SellView::responsePOST(char* ip)
 {
     sessionID = parserService->getCookieArg("sessionID");
+    char* searchName = parserService->getQueryArg("SearchName");
+    char* sellId = parserService->getQueryArg("SellId");
     //HAY UNA COOKIE
     if(sessionID != NULL){
         if(sessionService->validateSession(ip, sessionID)){
@@ -95,36 +97,48 @@ bool SellView::responsePOST(char* ip)
         //NO HAY COOKIE O NO ES VALIDA
         sesion=false;
     }
-    char* searchName = parserService->getQueryArg("SearchName");
-    char* sellId = parserService->getQueryArg("SellId");
-    if(searchName != NULL){
-        searchSell=sellService->sellByName(searchName);
-        if(searchSell!=NULL){
-            printHTML();
-        } else {
+
+    if(sesion){
+        if(searchName != NULL){
+            searchSell=sellService->sellByName(searchName);
+            if(searchSell!=NULL){
+                printHTML();
+            } else {
+                error = true;
+                errorMessage = "No se encontro resultados";
+                printHTML();
+            }
+        }
+        else if(sellId != NULL){
+            if(sessionID!=NULL){
+                string userId = sessionService->getUserIdByCookie(sessionID);
+                if(shoppingCartService->addShoppingCart(userId,sellId)){
+                    printHTML();
+                }
+                else{
+                    error = true;
+                    errorMessage = "error al agregar al carrito";
+                    printHTML();
+                }
+            
+            }
+            else{
+                error=true;
+                errorMessage = "no se pudo validar la seccion ingrese de nuevo ";
+                printHTML();
+            }
+        }
+        else {
             error = true;
-            errorMessage = "No se encontro resultados";
+            errorMessage = "No ingreso datos ";
             printHTML();
         }
+        
     }
-    else if(sellId != NULL){
-        if(sessionID!=NULL){
-            string userId = sessionService->getUserIdByCookie(sessionID);
-            shoppingCartService->addShoppingCart(sellId,userId);
-            printHTML();
-        }
-        else{
-            error=true;
-            errorMessage = "error al agregar al carrito";
-            printHTML();
-        }
-    }
-    else {
-        error = true;
-        errorMessage = "No ingreso datos ";
+    else{
         printHTML();
     }
-
+    
     return true;
 }
 
@@ -161,11 +175,7 @@ void SellView::printHTML()
         }
         else if(searchSell!=NULL){
                 cout << "<div class='main-content'>" << endl;
-                cout << "<div class='card mt-20' style='width: 30rem;'>" << endl;
-                cout << "<div class='card-body'>" << endl;
-                cout << "<div class=\"card mb-3\">" << endl;
-                cout << "<div class=\"card-body\">" << endl;
-                cout << "<img src='"+searchSell->getImg()+"'height='200px'width='200px'/>" << endl;
+                cout << "<div class='card mt-40' style='width: 60rem;'>" << endl;
                 cout << "<h5 class=\"card-title\">"+searchSell->getnameArticle()+"</h5>" << endl;
                 cout << "<h5 class=\"card-title\">"+searchSell->getvalueArticle()+"</h5>" << endl;
                 cout << "<p class=\"card-text\">"+searchSell->getDescriptionArticle()+"</p>" << endl;
@@ -179,9 +189,6 @@ void SellView::printHTML()
                 }
                 cout << "</div>" << endl;
                 cout << "</div>" << endl;
-                cout << "</div>" << endl;
-                cout << "</div>" << endl;
-                cout << "</div>" << endl;
         }
         else{
             Sell *sell = NULL;
@@ -190,11 +197,7 @@ void SellView::printHTML()
             {   
                 sell = sellService->getById(i);
                 cout << "<div class='main-content'>" << endl;
-                cout << "<div class='card mt-20' style='width: 30rem;'>" << endl;
-                cout << "<div class='card-body'>" << endl;
-                cout << "<div class=\"card mb-3\">" << endl;
-                cout << "<div class=\"card-body\">" << endl;
-                cout << "<img src='"+sell->getImg()+"'height='200px'width='200px'/>" << endl;
+                cout << "<div class='card mt-40' style='width: 60rem;'>" << endl;
                 cout << "<h5 class=\"card-title\">"+sell->getnameArticle()+"</h5>" << endl;
                 cout << "<h5 class=\"card-title\">"+sell->getvalueArticle()+"</h5>" << endl;
                 cout << "<p class=\"card-text\">"+sell->getDescriptionArticle()+"</p>" << endl;
@@ -206,9 +209,6 @@ void SellView::printHTML()
                     cout<<"<button type='submit' class='btn btn-primary'>Agregar al carrito</button>"<<endl;
                     cout<<"</form>"<<endl;
                 }
-                cout << "</div>" << endl;
-                cout << "</div>" << endl;
-                cout << "</div>" << endl;
                 cout << "</div>" << endl;
                 cout << "</div>" << endl;
             }
