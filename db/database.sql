@@ -32,7 +32,6 @@ CREATE TABLE sell(
     nameArticle varchar(100),
     valueArticle int,
     descriptionArticle varchar(5000),
-    img varchar(1000),
     createdAt timestamp default current_timestamp,
     primary key(id)
 );

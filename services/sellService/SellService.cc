@@ -35,8 +35,7 @@ Sell* SellService::getSellById(char* id){
             findSell->setnameArticle(row[1]);
             findSell->setvalueArticle(row[2]);
             findSell->setDescriptionArticle(row[3]);
-            findSell->setImg(row[4]);
-            findSell->setCreatedAt(row[5]);
+            findSell->setCreatedAt(row[4]);
         }
         // Release memories
         mysql_free_result(res);
@@ -64,8 +63,7 @@ Sell* SellService::getById(int id){
             findSell->setnameArticle(row[1]);
             findSell->setvalueArticle(row[2]);
             findSell->setDescriptionArticle(row[3]);
-            findSell->setImg(row[4]);
-            findSell->setCreatedAt(row[5]);
+            findSell->setCreatedAt(row[4]);
         }
         // Release memories
         mysql_free_result(res);
@@ -106,8 +104,7 @@ Sell*  SellService::sellByName(string searchName){
             findSell->setnameArticle(row[1]);
             findSell->setvalueArticle(row[2]);
             findSell->setDescriptionArticle(row[3]);
-            findSell->setImg(row[4]);
-            findSell->setCreatedAt(row[5]);
+            findSell->setCreatedAt(row[4]);
         }
         // Release memories
         mysql_free_result(res);
@@ -117,10 +114,8 @@ Sell*  SellService::sellByName(string searchName){
 
 bool SellService::addSell(string GameName, string GameValue, string GameDescription){
     bool addSell = false;
-    ///var/www/html/public/img
-    string img="http://localhost/public/img/indice.jpeg";
-    string query = "INSERT INTO sell(nameArticle, valueArticle, descriptionArticle, img)VALUES(";
-    query.append("'"+GameName+"','"+GameValue+"','"+GameDescription+"','"+img+"')");
+    string query = "INSERT INTO sell(nameArticle, valueArticle, descriptionArticle)VALUES(";
+    query.append("'"+GameName+"','"+GameValue+"','"+GameDescription+"')");
     const char *finalQuery = query.c_str();
     if (!mysql_query(conn, finalQuery)){
         addSell = true;

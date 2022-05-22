@@ -176,7 +176,6 @@ void SellView::printHTML()
         else if(searchSell!=NULL){
                 cout << "<div class='main-content'>" << endl;
                 cout << "<div class='card mt-40' style='width: 60rem;'>" << endl;
-                cout << "<img src='"+searchSell->getImg()+"'height='200px'width='200px'/>" << endl;
                 cout << "<h5 class=\"card-title\">"+searchSell->getnameArticle()+"</h5>" << endl;
                 cout << "<h5 class=\"card-title\">"+searchSell->getvalueArticle()+"</h5>" << endl;
                 cout << "<p class=\"card-text\">"+searchSell->getDescriptionArticle()+"</p>" << endl;
@@ -199,7 +198,6 @@ void SellView::printHTML()
                 sell = sellService->getById(i);
                 cout << "<div class='main-content'>" << endl;
                 cout << "<div class='card mt-40' style='width: 60rem;'>" << endl;
-                cout << "<img src='"+sell->getImg()+"'height='200px'width='200px'/>" << endl;
                 cout << "<h5 class=\"card-title\">"+sell->getnameArticle()+"</h5>" << endl;
                 cout << "<h5 class=\"card-title\">"+sell->getvalueArticle()+"</h5>" << endl;
                 cout << "<p class=\"card-text\">"+sell->getDescriptionArticle()+"</p>" << endl;
