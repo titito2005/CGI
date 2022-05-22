@@ -152,11 +152,10 @@ void ShoppingCartView::printHTML(){
               for(int i = 0; i<userItems.size(); i++){
                 cout<<"<div class='card mt-2' style='background-color:#EAEAEA'>"<<endl;
                     cout<<"<div class='card-body d-flex justify-content-between'>"<<endl;
-                        cout<<"<img src='' alt='hola'>"<<endl;
-                        cout<<"<h5> Nombre: "<<userItems[i].getnameArticle()<<"</h5>"<<endl;
-                        cout<<"<p> Descripción: "<<userItems[i].getDescriptionArticle()<<"</p>"<<endl;
-                        cout<<"<h6> Cantidad: "<<userCart[i].getSellCant()<<"</h6>"<<endl;
-                        cout<<"<button onclick='deleteItem("<<userItems[i].getId()<<")' type='button' class='btn btn-danger'>Eliminar</button>"<<endl;
+                        cout<<"<h5 class='ml-2 mr-2'>"<<userItems[i].getnameArticle()<<"</h5>"<<endl;
+                        cout<<"<p class='ml-1 mr-1'>"<<userItems[i].getDescriptionArticle()<<"</p>"<<endl;
+                        cout<<"<h6 class='ml-1 mr-1'> Cantidad: "<<userCart[i].getSellCant()<<"</h6>"<<endl;
+                        cout<<"<button onclick='deleteItem("<<userItems[i].getId()<<")' type='button' class='btn btn-danger ml-1 mr-1'>Eliminar</button>"<<endl;
                     cout<<"</div>"<<endl;
                 cout<<"</div>"<<endl;
               }
