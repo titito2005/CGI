@@ -85,6 +85,7 @@ bool SellView::responsePOST(char* ip)
     sessionID = parserService->getCookieArg("sessionID");
     char* searchName = parserService->getQueryArg("SearchName");
     char* sellId = parserService->getQueryArg("SellId");
+    regex validationText("[a-zA-Z0-9 ,.-:_#$%()=!¿?¡@]*");
     //HAY UNA COOKIE
     if(sessionID != NULL){
         if(sessionService->validateSession(ip, sessionID)){
@@ -97,15 +98,21 @@ bool SellView::responsePOST(char* ip)
         //NO HAY COOKIE O NO ES VALIDA
         sesion=false;
     }
-
     if(sesion){
         if(searchName != NULL){
-            searchSell=sellService->sellByName(searchName);
-            if(searchSell!=NULL){
-                printHTML();
-            } else {
+            if (regex_match(searchName, validationText)) { 
+                searchSell=sellService->sellByName(searchName);
+                if(searchSell!=NULL){
+                    printHTML();
+                } else {
+                    error = true;
+                    errorMessage = "No se encontro resultados";
+                    printHTML();
+                }
+            }
+            else{
                 error = true;
-                errorMessage = "No se encontro resultados";
+                errorMessage = "error caracteres no validos solo permite letras, numeros y los caracteres .,-:_#$%()=!¿?¡@";
                 printHTML();
             }
         }
@@ -156,10 +163,12 @@ void SellView::printHTML()
         cout << "<link rel='stylesheet' type='text/css' href='/public/home/home.css'>" << endl;
         cout<<"<link rel='stylesheet' type='text/css' href='/public/common/footer.css'>"<<endl;
         cout << "<title>home page</title>" << endl;
-    cout << "</head>" << endl;
-    // PRINT HEADER
-    cout << "<body>" << endl;
+        cout << "</head>" << endl;
+        // PRINT HEADER
+        cout << "<body>" << endl;
         headerView->printHeaderHTML(sesion);
+        cout << "<div class='main-content'>" << endl;
+        cout << "<div class='card border-primary mb-3' style='width: 60rem;'>" << endl;
         cout<<"<form action='home' method='POST'>"<<endl;
             cout<<"<div class='form-group'>"<<endl;
             cout<<"<label for='inputSearch'>Buscar</label>"<<endl;
@@ -167,6 +176,7 @@ void SellView::printHTML()
             cout<<"</div>"<<endl;
             cout<<"<button type='submit' class='btn btn-primary'>Buscar</button>"<<endl;
         cout<<"</form>"<<endl;
+        cout<<"</div>"<<endl;
 
         if(error){
                 cout<<"<div class='alert alert-warning' role='alert'>"<<endl;
@@ -174,8 +184,8 @@ void SellView::printHTML()
                 cout<<"</div>"<<endl;
         }
         else if(searchSell!=NULL){
-                cout << "<div class='main-content'>" << endl;
-                cout << "<div class='card mt-40' style='width: 60rem;'>" << endl;
+                cout << "card border-dark mb-3' style='width: 60rem;'>" << endl;
+                cout<<"<div class=\"card-body\">"<< endl;
                 cout << "<h5 class=\"card-title\">"+searchSell->getnameArticle()+"</h5>" << endl;
                 cout << "<h5 class=\"card-title\">"+searchSell->getvalueArticle()+"</h5>" << endl;
                 cout << "<p class=\"card-text\">"+searchSell->getDescriptionArticle()+"</p>" << endl;
@@ -196,8 +206,8 @@ void SellView::printHTML()
             for (int i = 1; i <= SellCount; i++)
             {   
                 sell = sellService->getById(i);
-                cout << "<div class='main-content'>" << endl;
-                cout << "<div class='card mt-40' style='width: 60rem;'>" << endl;
+                cout << "<div class='card border-dark mb-3' style='width: 60rem;'>" << endl;
+                cout<<"<div class=\"card-body\">"<< endl;
                 cout << "<h5 class=\"card-title\">"+sell->getnameArticle()+"</h5>" << endl;
                 cout << "<h5 class=\"card-title\">"+sell->getvalueArticle()+"</h5>" << endl;
                 cout << "<p class=\"card-text\">"+sell->getDescriptionArticle()+"</p>" << endl;
@@ -211,8 +221,11 @@ void SellView::printHTML()
                 }
                 cout << "</div>" << endl;
                 cout << "</div>" << endl;
+
+
             }
         }
+        cout << "</div>" << endl;
         footerView->printFooterHTML(sesion);
         cout << "<script src='https://code.jquery.com/jquery-3.3.1.slim.min.js' integrity='sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo' crossorigin='anonymous'></script>" << endl;
         cout << "<script src='https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js' integrity='sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1' crossorigin='anonymous'></script>" << endl;
