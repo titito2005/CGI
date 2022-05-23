@@ -44,7 +44,7 @@ class ShoppingCartView {
         string errorMessage;
         vector<ShoppingCart> userCart;
         vector<Sell> userItems;
-        string userId; 
+        string userId_checkout; 
         //Methods
 };
 #endif

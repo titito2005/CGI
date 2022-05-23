@@ -65,7 +65,8 @@ bool ShoppingCartView::responseGET(char* ip){
     if(sessionID != NULL){
         if(sessionService->validateSession(ip, sessionID)){
             //LA COOKIE ES VALIDA PUEDE ENTRAR AL CARRITO
-            userId = sessionService->getUserIdByCookie(sessionID);
+            string userId = sessionService->getUserIdByCookie(sessionID);
+            userId_checkout = userId;
             if(userId.length()>0){
                 //OBTENGO EL SHOPPING CART DEL USUARIO.
                 userCart =  shoppingCartService->getAllShoppingCartByUserId(userId);
@@ -109,24 +110,24 @@ bool ShoppingCartView::responsePOST(char* ip){
     //STRING FOR ENCRYPTION
     string encryptCVV = "";
     //VERIFY THAT FORM HAS COMPLETE DATA
-    if(cardName != NULL && cardNumber != NULL && cardExpireMonth != NULL && cardExpireYear != NULL && cardCVV != NULL ){
+  /*  if(cardName != NULL && cardNumber != NULL && cardExpireMonth != NULL && cardExpireYear != NULL && cardCVV != NULL ){
       //VERIFICATIONS OF DATA FORMAT OF THE FORM
       if (regex_match(cardName, validationCardName)){
         if (regex_match(cardNumber, validationCardOnlyNumbers)){
           if (regex_match(cardExpireMonth, validationCardMonth)){
             if (regex_match(cardExpireYear, validationCardOnlyNumbers) && regex_match(cardCVV, validationCardOnlyNumbers)){
-               //ENCRYPTION OF PASSWORD FOR INSERTION IN DB
+  */             //ENCRYPTION OF PASSWORD FOR INSERTION IN DB
                 encryptCVV = shoppingCheckoutService->encryptionCardData(cardCVV);
-
-                //INSERT THE NEW USER DATA TO THE DB
-                if(shoppingCheckoutService->insertCardData(userId, cardName, cardNumber, cardExpireMonth, cardExpireYear, encryptCVV)){
-                  cout << "Compra exitosa:D" <<endl;
-                  cout << "Location: http://localhost/cgi-bin/home\n\n" << endl; 
-                } else {
-                    error = true;
-                    errorMessage = "Error guardando tarjeta";
-                  }
-            } else {
+                
+                  if(shoppingCheckoutService->insertCardData(userId_checkout, cardName, cardNumber, cardExpireMonth, cardExpireYear, encryptCVV)){
+                    //cout << "Compra exitosa:D" <<endl;
+                    cout << "Location: http://localhost/cgi-bin/home\n\n" << endl; 
+                  } else {
+                      error = true;
+                      errorMessage = "Error guardando tarjeta";
+                // }
+                }
+    /*        } else {
                 // VERIFIES THAT EXPIREYEAR AND THE CVV ARE ONLY NUMBERS
                 error = true;
                 errorMessage = "EL año de vencimiento y el CVV deben ser solo números";
@@ -145,12 +146,12 @@ bool ShoppingCartView::responsePOST(char* ip){
         //VERIFEIES THAT THE CARD NAME HAS ONLY LETTERS
         error = true;
         errorMessage = "El nombre debe contener solo letras";
-      }
-    } else {
+   */   //}
+  /*  } else {
       //PRINT ERROR INCOMPLETE DATA
         error = true;
         errorMessage = "Hay datos incompletos. Por favor inserte todos los datos.";
-    }
+    }*/
 
     if(error){
         //VERIFY ERRORS AND PRINT THEM
@@ -267,8 +268,7 @@ void ShoppingCartView::printHTML(){
                     // 
                     //char* _userId = const_cast<char*>(userId.c_str());
                     //string cardNumber = shoppingCheckoutService->getCardByUserId(_userId);
-                    //if (cardNumber.empty()){
-                      cout<<"<form class= 'form-group' action='cart' method='POST'>"<<endl;
+                    //if (cardNumber.empty())
                       cout<<"<div class='container'>"<<endl;
                         cout<<"<label for='fname'>Tarjetas aceptadas</label>"<<endl;
                         cout<<"<div class='icon-container'>"<<endl;
@@ -277,6 +277,7 @@ void ShoppingCartView::printHTML(){
                           cout<<"<i class='fa fa-cc-mastercard' style='color:red;'></i>"<<endl;
                           cout<<"<i class='fa fa-cc-discover' style='color:orange;'></i>"<<endl;
                         cout<<"</div>"<<endl;
+                         cout<<"<form class= 'form-group' action='cart' method='POST'>"<<endl;
                         cout<<"<label for='cname'>Nombre de la tarjeta</label>"<<endl;
                         cout<<"<input type='text' id='cname' name='cardname' style='width: 60%;' placeholder='Ingrese el nombre de la tarjeta'>"<<endl;
                         cout<<"<br>"<<endl; 
@@ -292,9 +293,10 @@ void ShoppingCartView::printHTML(){
                         cout<<"<label for='cvv'>CVV</label>"<<endl;
                         cout<<"<input type='text' id='cvv' name='cvv' style='width: 60%;' placeholder='Ingrese el CVV, por ejemplo '123''>"<<endl;   
                         cout<<"<label>"<<endl;
+                        cout<<userId_checkout<<endl;
                         cout <<"<input type='checkbox' checked='checked' name='sameadr'> Guardar tarjeta de crédito </label>"<<endl;
                      cout<<"<div class='modal-footer'>"<<endl;
-                      cout<<"<button type='button' class='btn btn-secondary' data-dismiss='modal'>Volver</button>"<<endl;
+                      cout<<"<button data-dismiss='modal' aria-label='Close' class='btn btn-secondary mt-3'>Cancelar</button>"<<endl;
                       cout<<"<button type='submit' class='btn btn-primary'>Pagar</button>"<<endl;
                     cout<<"</div>"<<endl;
                           cout<<"</div>"<<endl;
@@ -312,7 +314,7 @@ void ShoppingCartView::printHTML(){
                 cout<<"</div>"<<endl;
               cout<<"</div>"<<endl;
               //CHECKOUT & MODAL END HERE
-
+              
             cout<<"</div>"<<endl;
           cout<<"</div>"<<endl;
         cout<<"</div>"<<endl;
