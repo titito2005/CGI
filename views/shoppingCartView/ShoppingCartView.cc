@@ -97,7 +97,7 @@ bool ShoppingCartView::responseGET(char* ip){
 
 bool ShoppingCartView::responsePOST(char* ip){
      //EXPECTED VARIABLES FROM QUERY
-    char* cardName = parserService->getQueryArg("cardName");
+    char* cardName = parserService->getQueryArg("cardname");
     char* cardNumber = parserService->getQueryArg("cardNumber");
     char* cardExpireMonth = parserService->getQueryArg("cardExpireMonth");
     char* cardExpireYear = parserService->getQueryArg("cardExpireYear");
@@ -110,23 +110,23 @@ bool ShoppingCartView::responsePOST(char* ip){
     //STRING FOR ENCRYPTION
     string encryptCVV = "";
     //VERIFY THAT FORM HAS COMPLETE DATA
-  /*  if(cardName != NULL && cardNumber != NULL && cardExpireMonth != NULL && cardExpireYear != NULL && cardCVV != NULL ){
-      //VERIFICATIONS OF DATA FORMAT OF THE FORM
+  if(cardName != NULL && cardNumber != NULL && cardExpireMonth != NULL && cardExpireYear != NULL && cardCVV != NULL ){
+     /*  //VERIFICATIONS OF DATA FORMAT OF THE FORM
       if (regex_match(cardName, validationCardName)){
         if (regex_match(cardNumber, validationCardOnlyNumbers)){
           if (regex_match(cardExpireMonth, validationCardMonth)){
             if (regex_match(cardExpireYear, validationCardOnlyNumbers) && regex_match(cardCVV, validationCardOnlyNumbers)){
   */             //ENCRYPTION OF PASSWORD FOR INSERTION IN DB
-                encryptCVV = shoppingCheckoutService->encryptionCardData(cardCVV);
+               // encryptCVV = shoppingCheckoutService->encryptionCardData(cardCVV);
                 
-                  if(shoppingCheckoutService->insertCardData(userId_checkout, cardName, cardNumber, cardExpireMonth, cardExpireYear, encryptCVV)){
+                  //if(shoppingCheckoutService->insertCardData(userId_checkout, cardName, cardNumber, cardExpireMonth, cardExpireYear, encryptCVV)){
                     //cout << "Compra exitosa:D" <<endl;
                     cout << "Location: http://localhost/cgi-bin/home\n\n" << endl; 
-                  } else {
-                      error = true;
-                      errorMessage = "Error guardando tarjeta";
+                  //} else {
+                     // error = true;
+                      //errorMessage = "Error guardando tarjeta";
                 // }
-                }
+                //}
     /*        } else {
                 // VERIFIES THAT EXPIREYEAR AND THE CVV ARE ONLY NUMBERS
                 error = true;
@@ -151,11 +151,13 @@ bool ShoppingCartView::responsePOST(char* ip){
       //PRINT ERROR INCOMPLETE DATA
         error = true;
         errorMessage = "Hay datos incompletos. Por favor inserte todos los datos.";
-    }*/
+   */ 
+     }
 
-    if(error){
+    else{
         //VERIFY ERRORS AND PRINT THEM
-        printHTML();
+        //printHTML();
+          cout << "Location: http://localhost/cgi-bin/cart\n\n" << endl; 
     }
     return true;
 }
@@ -277,34 +279,45 @@ void ShoppingCartView::printHTML(){
                           cout<<"<i class='fa fa-cc-mastercard' style='color:red;'></i>"<<endl;
                           cout<<"<i class='fa fa-cc-discover' style='color:orange;'></i>"<<endl;
                         cout<<"</div>"<<endl;
-                         cout<<"<form class= 'form-group' action='cart' method='POST'>"<<endl;
-                        cout<<"<label for='cname'>Nombre de la tarjeta</label>"<<endl;
-                        cout<<"<input type='text' id='cname' name='cardname' style='width: 60%;' placeholder='Ingrese el nombre de la tarjeta'>"<<endl;
-                        cout<<"<br>"<<endl; 
-                        cout<<"<label for='ccnum'>Número de la tarjeta</label>"<<endl;
-                        cout<<"<input type='text' id='ccnum' name='cardnumber' style='width: 60%;' placeholder='Ingrese el número de la tarjeta'>"<<endl;
-                        cout<<"<br>"<<endl; 
-                        cout<<"<label for='expmonth'>Mes de vencimiento</label>"<<endl;
-                        cout<<"<input type='text' id='expmonth' name='expmonth' style='width: 60%;' placeholder='Ingrese el mes de vencimiento'>"<<endl;
-                        cout<<"<br>"<<endl;  
-                        cout<<"<label for='expyear'>Año de vencimiento</label>"<<endl;
-                        cout<<"<input type='text' id='expyear' name='expyear' style='width: 60%;' placeholder='Ingrese el año de vencimiento'>"<<endl;
-                        cout<<"<br>"<<endl; 
-                        cout<<"<label for='cvv'>CVV</label>"<<endl;
-                        cout<<"<input type='text' id='cvv' name='cvv' style='width: 60%;' placeholder='Ingrese el CVV, por ejemplo '123''>"<<endl;   
-                        cout<<"<label>"<<endl;
-                        cout<<userId_checkout<<endl;
+
+                          cout<<"<form action='cart' method='POST'>"<<endl;
+                            cout<<"<div class='form-group'>"<<endl;
+                                cout<<"<label for='inputName'>Nombre de la tarjeta</label>"<<endl;
+                                cout<<"<input name='cardname' type='name' class='form-control' id='inputName'  style='width: 60%;' placeholder='Ingrese el nombre de la tarjeta'>"<<endl;
+                            cout<<"</div>"<<endl;
+
+                            cout<<"<div class='form-group'>"<<endl;
+                                cout<<"<label for='inputcardnumber'>Número de la tarjeta</label>"<<endl;
+                                cout<<"<input name='cardNumber' type='number' class='form-control'  id='inputcardnumber' style='width: 60%;' placeholder='Ingrese el número de la tarjeta'>"<<endl;
+                            cout<<"</div>"<<endl;
+
+                            cout<<"<div class='form-group'>"<<endl;
+                                cout<<"<label for='inputexpmonth'>Mes de vencimiento</label>"<<endl;
+                                cout<<"<input name='cardExpireMonth' type='month' class='form-control' id='inputexpmonth'  style='width: 60%;' placeholder='Ingrese el mes de vencimiento'>"<<endl;
+                            cout<<"</div>"<<endl;
+
+                            cout<<"<div class='form-group'>"<<endl;
+                                cout<<"<label for='inputexpyear'>Año de vencimiento</label>"<<endl;
+                                cout<<"<input name='cardExpireYear' type='year' class='form-control' id='inputexpyear'  style='width: 60%;' placeholder='Ingrese el año de vencimiento'>"<<endl;
+                            cout<<"</div>"<<endl;
+
+                            cout<<"<div class='form-group'>"<<endl;
+                                cout<<"<label for='inputcvv'>CVV</label>"<<endl;
+                                cout<<"<input name='cardCVV' type='cvv' class='form-control' id='inputcvv'  style='width: 60%;' placeholder='Ingrese el CVV, por ejemplo '123''>"<<endl;
+                            cout<<"</div>"<<endl;     
+
+                        //cout<<"<label>"<<endl;
+                        //cout<<userId_checkout<<endl;
                         cout <<"<input type='checkbox' checked='checked' name='sameadr'> Guardar tarjeta de crédito </label>"<<endl;
                      cout<<"<div class='modal-footer'>"<<endl;
                       cout<<"<button data-dismiss='modal' aria-label='Close' class='btn btn-secondary mt-3'>Cancelar</button>"<<endl;
                       cout<<"<button type='submit' class='btn btn-primary'>Pagar</button>"<<endl;
                     cout<<"</div>"<<endl;
-                          cout<<"</div>"<<endl;
+                    cout<<"</div>"<<endl;
                         cout<<"</form>"<<endl;
                        cout<<"</div>"<<endl;
                       cout<<"</div>"<<endl;
                     cout<<"</div>"<<endl;
-                  cout<<"</form>"<<endl;
                     //} else{
                     //  cout<<"<div class='container'>"<<endl;
                       //    cout<<"<h6>"<< cardNumber<<"</h6>"<<endl;
