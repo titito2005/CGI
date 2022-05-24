@@ -159,6 +159,9 @@ bool ShoppingCartView::responsePOST(char* ip){
           error = true;
           errorMessage = "Hay datos incompletos. Por favor inserte todos los datos.";        
         }
+    } else {
+      //ya existe tarjeta
+       cout << "Location: http://localhost/cgi-bin/home\n\n" << endl;
     }
 
     if(error){
