@@ -110,6 +110,13 @@ bool ShoppingCartView::responsePOST(char* ip){
     string encryptCVV = "";
     string userId = "";
 
+    if(sessionID != NULL){
+        if(sessionService->validateSession(ip, sessionID)){
+            //LA COOKIE ES VALIDA PUEDE ENTRAR AL CARRITO
+            userId = sessionService->getUserIdByCookie(sessionID);
+        }
+    }
+
     //VERIFY THAT FORM HAS COMPLETE DATA
     if(cardName != NULL && cardNumber != NULL && cardExpireMonth != NULL && cardExpireYear != NULL && cardCVV != NULL ){
         /*  //VERIFICATIONS OF DATA FORMAT OF THE FORM
@@ -118,15 +125,16 @@ bool ShoppingCartView::responsePOST(char* ip){
               if (regex_match(cardExpireMonth, validationCardMonth)){
                 if (regex_match(cardExpireYear, validationCardOnlyNumbers) && regex_match(cardCVV, validationCardOnlyNumbers)){
       */             //ENCRYPTION OF PASSWORD FOR INSERTION IN DB
-                  // encryptCVV = shoppingCheckoutService->encryptionCardData(cardCVV);
+                  encryptCVV = shoppingCheckoutService->encryptionCardData(cardCVV);
                     
-                      //if(shoppingCheckoutService->insertCardData(userId_checkout, cardName, cardNumber, cardExpireMonth, cardExpireYear, encryptCVV)){
+                      if(shoppingCheckoutService->insertCardData(userId, cardName, cardNumber, cardExpireMonth, cardExpireYear, encryptCVV)){
                         //cout << "Compra exitosa:D" <<endl;
                         cout << "Location: http://localhost/cgi-bin/home\n\n" << endl; 
-                      //} else {
-                        // error = true;
-                          //errorMessage = "Error guardando tarjeta";
-                    // }
+                      } else {
+                        //error = true;
+                        //errorMessage = "Error guardando tarjeta";
+                        cout << "Location: http://localhost/cgi-bin/comments\n\n" << endl; 
+                     }
                     //}
         /*        } else {
                     // VERIFIES THAT EXPIREYEAR AND THE CVV ARE ONLY NUMBERS
