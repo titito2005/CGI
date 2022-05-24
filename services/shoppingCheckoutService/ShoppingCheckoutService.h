@@ -22,7 +22,7 @@ class ShoppingCheckoutService {
         ShoppingCheckoutService();
         ~ShoppingCheckoutService();
         ShoppingCheckout* getCheckoutByUserId(char* id);
-        bool insertCardData(string userId, string cardName, string cardNumber, string cardExpireMonth, string cardExpireYear, string cardCVV);
+        bool insertCardData(string idUser, string name, string number, string month, string year, string cvv);
         string encryptionCardData(string stringToBeEncrypted);
         string getCardByUserId(char* userId);
         

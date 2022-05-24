@@ -45,10 +45,10 @@ ShoppingCheckout* ShoppingCheckoutService::getCheckoutByUserId(char* userId){
     return checkout;
 }
 //arreglo
-bool ShoppingCheckoutService::insertCardData(string userId, string cardName, string cardNumber, string cardExpireMonth, string cardExpireYear, string cardCVV){
+bool ShoppingCheckoutService::insertCardData(string idUser, string name, string number, string month, string year, string cvv){
     bool insertNewCardData = false;
     string query = "INSERT INTO shoppingCheckout(userId,cardName,cardNumber,cardExpireMonth,cardExpireYear,cardCVV) VALUES (";
-    query.append("'"+userId+"','"+cardName+"','"+cardNumber+"','"+cardExpireMonth+"','"+cardExpireYear+"','"+cardCVV+"');");
+    query.append("'"+idUser+"','"+name+"','"+number+"','"+month+"','"+year+"','"+cvv+"');");
     const char *finalQuery = query.c_str();
     if (!mysql_query(conn, finalQuery)){
         insertNewCardData = true;
