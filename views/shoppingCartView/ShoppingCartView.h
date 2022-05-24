@@ -41,6 +41,8 @@ class ShoppingCartView {
         FooterView *footerView;
 
         bool error;
+        bool shoppingSuccesfull;
+        bool existentCreditCard;
         string errorMessage;
         vector<ShoppingCart> userCart;
         vector<Sell> userItems;
