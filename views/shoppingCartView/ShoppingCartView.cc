@@ -329,7 +329,7 @@ void ShoppingCartView::printHTML(){
                      // }
                       cout<<"<div class='modal-footer'>"<<endl;
                       cout<<"<button data-dismiss='modal' aria-label='Close' class='btn btn-secondary mt-3'>Cancelar</button>"<<endl;
-                      cout<<"<button onclick='openModal("<<error<<")' type='submit' class='btn btn-primary mt-3'>Pagar</button>"<<endl;
+                      cout<<"<button type='submit' class='btn btn-primary mt-3'>Pagar</button>"<<endl;
                     cout<<"</div>"<<endl;
                     cout<<"</div>"<<endl;
                         cout<<"</form>"<<endl;
@@ -352,7 +352,9 @@ void ShoppingCartView::printHTML(){
     footerView->printFooterHTML(true);
     cout<<"<script src='https://code.jquery.com/jquery-3.3.1.slim.min.js' integrity='sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo' crossorigin='anonymous'></script>"<<endl;
     cout<<"<script src='/public/shoppingCart/shoppingCart.js'></script>"<<endl;
-    cout<<"<script src='/public/shoppingCheckout/shoppingCheckout.js'></script>"<<endl;
+    if (error){
+      cout<<"<script src='/public/shoppingCheckout/shoppingCheckout.js'></script>"<<endl;
+    }
     cout<<"<script src='https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js' integrity='sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1' crossorigin='anonymous'></script>"<<endl;
     cout<<"<script src='https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js' integrity='sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM' crossorigin='anonymous'></script>"<<endl;
   cout<<"</body>"<<endl;

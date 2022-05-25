@@ -1,7 +1,4 @@
-(async function openModal(error){
-    if (error = true){
-        $(function(){
-            $('#exampleModal').modal()
-        });
-    }
-}());
+$(document).ready(function()   {        
+     $('#exampleModal').modal('show')
+});
+    
