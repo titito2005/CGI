@@ -1,14 +1,14 @@
 #include "ShoppingCheckout.h"
 
 ShoppingCheckout::ShoppingCheckout(){
-    string id = "";
-    string userId = "";
-    string cardName = "";
-    string cardNumber = "";
-    string cardExpireMonth = "";
-    string cardExpireYear = "";
-    string cardCVV = "";
-    string createdAt = "";
+    id = "";
+    userId = "";
+    cardName = "";
+    cardNumber = "";
+    cardExpireMonth = "";
+    cardExpireYear = "";
+    cardCVV = "";
+    createdAt = "";
 }
 
 ShoppingCheckout::~ShoppingCheckout(){

@@ -93,14 +93,14 @@ bool ShoppingCartView::responseGET(char* ip){
         cout << "Location: http://localhost/cgi-bin/home\n\n" << endl;
     }
 
-    //
-    char* _userId = const_cast<char*>(userIdCheckout.c_str());
+    // REVISAR ESTO!!!!
+    /*char* _userId = const_cast<char*>(userIdCheckout.c_str());
     creditCard = shoppingCheckoutService->getCardByUserId(_userId);
-    if (shoppingCheckoutService->verifyExistenceOfCardByUser(_userId)){
-      existentCreditCard = true;
-    } else {
+    if (creditCard.length() == 0){
       existentCreditCard = false;
-    }
+    } else {
+      existentCreditCard = true;
+    } */
 
     return true;
 }
@@ -120,7 +120,8 @@ bool ShoppingCartView::responsePOST(char* ip){
     //STRING FOR USERID AND ENCRYPT VARIABLE
     string encryptCVV = "";
 
-    if (existentCreditCard = false){
+    //if (existentCreditCard = false){
+
         //VERIFY THAT FORM HAS COMPLETE DATA
         if(cardName != NULL && cardNumber != NULL && cardExpireMonth != NULL && cardExpireYear != NULL && cardCVV != NULL ){
           //VERIFY FORMAT OF CARD NAME
@@ -159,10 +160,10 @@ bool ShoppingCartView::responsePOST(char* ip){
           error = true;
           errorMessage = "Hay datos incompletos. Por favor inserte todos los datos.";        
         }
-    } else {
+    /*} else {
       //ya existe tarjeta
        cout << "Location: http://localhost/cgi-bin/home\n\n" << endl;
-    }
+    }*/
 
     if(error){
       //VERIFY ERRORS AND PRINT THEM
@@ -263,7 +264,7 @@ void ShoppingCartView::printHTML(){
                 }
                 
             //SHOPPING CHECKOUT STARTS HERE
-              cout << "<button type='button' class='btn btn-primary' data-toggle='modal' data-target='#exampleModal'>Checkout de compra </button>" << endl;
+             cout << "<button type='button' class='btn btn-primary' data-toggle='modal' data-target='#exampleModal'>Checkout de compra </button>" << endl;
               //MODAL
               cout<<"<div class='modal fade' id='exampleModal' tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='false'>"<<endl;
                 cout<<"<div class='modal-dialog' role='document'>"<<endl;
@@ -275,14 +276,20 @@ void ShoppingCartView::printHTML(){
                       cout<<"</button>"<<endl;
                     cout<<"</div>"<<endl;
                     cout<<"<div class='modal-body'>"<<endl;
-                   
-                    if(existentCreditCard = true) { //Si existe la tarjeta
-                      cout<<"<div class='container'>"<<endl;
+                    
+                    //if(existentCreditCard = true) { //Si existe la tarjeta
+                   /*   cout<<"<div class='container'>"<<endl;
                        cout<<"<label for='fname'>Usted ya tiene una tarjeta registrada. Esta es:</label>"<<endl;
-                       cout << "<p>" <<creditCard<< "</p>"<<endl;
+                       cout << "<p>" << creditCard << "</p>"<<endl;
                        cout<<"<label for='fname1'>Seleccione pagar si desea continuar.</label>"<<endl;
-                      cout<<"</div>"<<endl;
-                    } else {                      //no tiene tarjeta
+                      cout<<"</div>"<<endl; */
+                    //} else {                      //no tiene tarjeta
+                    //VERIFIES ERRORS AND PRINT THEM AS WARNINGS
+                    if(error){
+                        cout<<"<div class='alert alert-warning' role='alert'>"<<endl;
+                            cout<< errorMessage << endl;
+                        cout<<"</div>"<<endl;
+                    }
                       cout<<"<div class='container'>"<<endl;
                         cout<<"<label for='fname'>Tarjetas aceptadas</label>"<<endl;
                         cout<<"<div class='icon-container'>"<<endl;
@@ -319,10 +326,10 @@ void ShoppingCartView::printHTML(){
                             cout<<"</div>"<<endl;     
 
                         //cout <<"<input type='checkbox' checked='checked' name='sameadr'> Guardar tarjeta de crédito </label>"<<endl;
-                      }
+                     // }
                       cout<<"<div class='modal-footer'>"<<endl;
                       cout<<"<button data-dismiss='modal' aria-label='Close' class='btn btn-secondary mt-3'>Cancelar</button>"<<endl;
-                      cout<<"<button type='submit' class='btn btn-primary mt-3'>Pagar</button>"<<endl;
+                      cout<<"<button onclick='openModal()' type='submit' class='btn btn-primary mt-3'>Pagar</button>"<<endl;
                     cout<<"</div>"<<endl;
                     cout<<"</div>"<<endl;
                         cout<<"</form>"<<endl;
@@ -344,7 +351,8 @@ void ShoppingCartView::printHTML(){
     //<!-- jQuery first, then Popper.js, then Bootstrap JS -->
     footerView->printFooterHTML(true);
     cout<<"<script src='https://code.jquery.com/jquery-3.3.1.slim.min.js' integrity='sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo' crossorigin='anonymous'></script>"<<endl;
-    cout<<"<script src='/public/shoppingCart/shoppingCart.js'>";
+    cout<<"<script src='/public/shoppingCart/shoppingCart.js'></script>"<<endl;
+    cout<<"<script src='/public/shoppingCheckout/shoppingCheckout.js'></script>"<<endl;
     cout<<"<script src='https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js' integrity='sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1' crossorigin='anonymous'></script>"<<endl;
     cout<<"<script src='https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js' integrity='sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM' crossorigin='anonymous'></script>"<<endl;
   cout<<"</body>"<<endl;

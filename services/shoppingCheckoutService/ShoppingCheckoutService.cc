@@ -110,9 +110,12 @@ bool ShoppingCheckoutService::verifyExistenceOfCardByUser(char* userId){
 
     if (checkout != NULL) {  //userId sí existe en shoppingCheckout, por lo tanto si tiene tarjeta registrada
         tempUser = checkout->getUserId();
-        if (tempUser == userId){
-            exist = true;
-        }
+        if (!tempUser.empty())
+            if (tempUser != userId){
+                exist = false;
+            } else {
+                exist = true;
+            }
     }
 
     return exist; 
