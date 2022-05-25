@@ -329,7 +329,7 @@ void ShoppingCartView::printHTML(){
                      // }
                       cout<<"<div class='modal-footer'>"<<endl;
                       cout<<"<button data-dismiss='modal' aria-label='Close' class='btn btn-secondary mt-3'>Cancelar</button>"<<endl;
-                      cout<<"<button onclick='openModal()' type='submit' class='btn btn-primary mt-3'>Pagar</button>"<<endl;
+                      cout<<"<button onclick='openModal("<<error<<")' type='submit' class='btn btn-primary mt-3'>Pagar</button>"<<endl;
                     cout<<"</div>"<<endl;
                     cout<<"</div>"<<endl;
                         cout<<"</form>"<<endl;
