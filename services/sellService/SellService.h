@@ -3,6 +3,8 @@
 #include <mysql/mysql.h>  // require libmysqlclient-dev
 #include <cstring>
 #include <stdio.h>
+#include <iostream>
+#include <string>
 
 #include "../../models/sellModel/Sell.h"
 #include "../Database.h"
