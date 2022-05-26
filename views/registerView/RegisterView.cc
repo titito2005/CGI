@@ -5,6 +5,7 @@ RegisterView::RegisterView()
     error = false;
     parserService = new ParserService();
     userService = new UserService();
+    sessionService = new SessionService();
     headerView = new HeaderView();
     footerView = new FooterView();
     // Read environment variables
@@ -61,7 +62,7 @@ bool RegisterView::responseGET(char* ip){
             //IF THE COOKIE IS VALID, IT SHOULDN'T ENTER IN LOGIN
             cout << "Location: http://localhost/cgi-bin/home\n\n" << endl;
         }
-    }
+    } 
     printHTML();
     return true;
 }

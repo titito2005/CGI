@@ -44,7 +44,6 @@ class ShoppingCartView {
         bool shoppingSuccesfull;
         bool existentCreditCard;
         string creditCard;
-        string userIdCheckout;
         string errorMessage;
         vector<ShoppingCart> userCart;
         vector<Sell> userItems;

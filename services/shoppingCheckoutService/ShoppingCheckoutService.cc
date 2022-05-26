@@ -45,36 +45,11 @@ ShoppingCheckout* ShoppingCheckoutService::getCheckoutByUserId(char* userId){
     return checkout;
 }
 
-ShoppingCheckout* ShoppingCheckoutService::getUserIdExistence(char* userId){
-    MYSQL_ROW row;
-    ShoppingCheckout* checkout = NULL;
-    char* query = "SELECT userId FROM shoppingCheckout WHERE userId = ";
-    char* finalQuery = (char *) malloc(3 + strlen(query)+ strlen(userId));
-    strcpy(finalQuery, query);
-    strcat(finalQuery, "'");
-    strcat(finalQuery, userId);
-    strcat(finalQuery, "'");
-    //Return 0 for success
-    if (!mysql_query(conn, finalQuery)) {
-        res = mysql_use_result(conn);
-        // Fetch a result set
-        if ((row = mysql_fetch_row(res)) != NULL){
-            checkout = new ShoppingCheckout();
-            //checkout->setId(row[0]);
-            checkout->setUserId(row[0]);
-        }
-        // Release memories
-        mysql_free_result(res);
-    }
-    free(finalQuery);
-    return checkout;
-}
-
 //arreglo
 bool ShoppingCheckoutService::insertCardData(string idUser, string name, string number, string month, string year, string cvv){
     bool insertNewCardData = false;
     string query = "INSERT INTO shoppingCheckout(userId,cardName,cardNumber,cardExpireMonth,cardExpireYear,cardCVV) VALUES (";
-    query.append("'"+idUser+"','"+name+"','"+number+"','"+month+"','"+year+"','"+cvv+"');");
+    query.append("'"+idUser+"','"+name+"','"+number+"','"+month+"','"+year+"','"+cvv+"')");
     const char *finalQuery = query.c_str();
     if (!mysql_query(conn, finalQuery)){
         insertNewCardData = true;
@@ -101,22 +76,4 @@ string ShoppingCheckoutService::getCardByUserId(char* userId){
         card = checkout->getCardNumber();
     }
     return card;
-}
-
-bool ShoppingCheckoutService::verifyExistenceOfCardByUser(char* userId){
-    bool exist = false;
-    string tempUser = "";
-    ShoppingCheckout* checkout = getUserIdExistence(userId);
-
-    if (checkout != NULL) {  //userId sí existe en shoppingCheckout, por lo tanto si tiene tarjeta registrada
-        tempUser = checkout->getUserId();
-        if (!tempUser.empty())
-            if (tempUser != userId){
-                exist = false;
-            } else {
-                exist = true;
-            }
-    }
-
-    return exist; 
 }

@@ -22,11 +22,9 @@ class ShoppingCheckoutService {
         ShoppingCheckoutService();
         ~ShoppingCheckoutService();
         ShoppingCheckout* getCheckoutByUserId(char* id);
-        ShoppingCheckout* getUserIdExistence(char* userId);
         bool insertCardData(string idUser, string name, string number, string month, string year, string cvv);
         string encryptionCardData(string stringToBeEncrypted);
         string getCardByUserId(char* userId);
-        bool verifyExistenceOfCardByUser(char* userId);
         
     private:
         Database* db;
