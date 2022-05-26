@@ -78,22 +78,22 @@ loginCompleto: LoginView.o ParserService.o SessionService.o Session.o UserServic
 	sudo g++ -o /var/www/cgi-bin/login -I/usr/include/mysql LoginView.o ParserService.o Session.o SessionService.o UserService.o User.o Database.o HeaderView.o FooterView.o -I/usr/include/mysql -L/usr/lib64/mysql -lmysqlclient -lpthread -lz -lm -ldl -lssl -lcrypto
 
 sellCompleto: SellView.o ParserService.o SessionService.o Session.o ShoppingCartService.o SellService.o Sell.o ShoppingCart.o Database.o HeaderView.o FooterView.o
-	sudo g++ -o /var/www/cgi-bin/home SellView.o ParserService.o Session.o ShoppingCartService.o SessionService.o SellService.o Sell.o ShoppingCart.o Database.o HeaderView.o FooterView.o -I/usr/include/mysql -L/usr/lib64/mysql
+	sudo g++ -o /var/www/cgi-bin/home SellView.o ParserService.o Session.o ShoppingCartService.o SessionService.o SellService.o Sell.o ShoppingCart.o Database.o HeaderView.o FooterView.o -I/usr/include/mysql -L/usr/lib64/mysql -lmysqlclient -lpthread -lz -lm -ldl -lssl -lcrypto
 
 addCompleto: AddView.o ParserService.o SessionService.o Session.o  SellService.o Sell.o Database.o HeaderView.o FooterView.o
-	sudo g++ -o /var/www/cgi-bin/addSell AddView.o ParserService.o Session.o SessionService.o SellService.o Sell.o Database.o HeaderView.o FooterView.o -I/usr/include/mysql -L/usr/lib64/mysql
+	sudo g++ -o /var/www/cgi-bin/addSell AddView.o ParserService.o Session.o SessionService.o SellService.o Sell.o Database.o HeaderView.o FooterView.o -I/usr/include/mysql -L/usr/lib64/mysql -lmysqlclient -lpthread -lz -lm -ldl -lssl -lcrypto
 
 registerCompleto: RegisterView.o ParserService.o UserService.o User.o Database.o HeaderView.o FooterView.o
-	sudo g++ -o /var/www/cgi-bin/userRegister RegisterView.o ParserService.o UserService.o User.o Database.o HeaderView.o FooterView.o -I/usr/include/mysql -L/usr/lib64/mysql
+	sudo g++ -o /var/www/cgi-bin/userRegister RegisterView.o ParserService.o UserService.o User.o Database.o HeaderView.o FooterView.o -I/usr/include/mysql -L/usr/lib64/mysql -lmysqlclient -lpthread -lz -lm -ldl -lssl -lcrypto
 
 logoutCompleto: LogoutView.o ParserService.o SessionService.o Session.o Database.o
-	sudo g++ -o /var/www/cgi-bin/logout LogoutView.o ParserService.o SessionService.o Session.o Database.o -I/usr/include/mysql -L/usr/lib64/mysql
+	sudo g++ -o /var/www/cgi-bin/logout LogoutView.o ParserService.o SessionService.o Session.o Database.o -I/usr/include/mysql -L/usr/lib64/mysql -lmysqlclient -lpthread -lz -lm -ldl -lssl -lcrypto
 
 shoppingCartCompleto: ShoppingCartView.o SellService.o ParserService.o ShoppingCartService.o SessionService.o Session.o Sell.o ShoppingCart.o UserService.o User.o Database.o HeaderView.o FooterView.o
-	sudo g++ -o /var/www/cgi-bin/cart ShoppingCartView.o SellService.o ParserService.o ShoppingCartService.o SessionService.o Session.o Sell.o ShoppingCart.o UserService.o User.o Database.o HeaderView.o FooterView.o -I/usr/include/mysql -L/usr/lib64/mysql
+	sudo g++ -o /var/www/cgi-bin/cart ShoppingCartView.o SellService.o ParserService.o ShoppingCartService.o SessionService.o Session.o Sell.o ShoppingCart.o UserService.o User.o Database.o HeaderView.o FooterView.o -I/usr/include/mysql -L/usr/lib64/mysql -lmysqlclient -lpthread -lz -lm -ldl -lssl -lcrypto
 
 userCommentCompleto: UserCommentView.o UserCommentService.o ParserService.o SessionService.o Session.o UserComment.o Database.o HeaderView.o FooterView.o
-	sudo g++ -o /var/www/cgi-bin/comments UserCommentView.o UserCommentService.o ParserService.o  SessionService.o Session.o UserComment.o Database.o HeaderView.o FooterView.o -I/usr/include/mysql -L/usr/lib64/mysql
+	sudo g++ -o /var/www/cgi-bin/comments UserCommentView.o UserCommentService.o ParserService.o  SessionService.o Session.o UserComment.o Database.o HeaderView.o FooterView.o -I/usr/include/mysql -L/usr/lib64/mysql -lmysqlclient -lpthread -lz -lm -ldl -lssl -lcrypto
 
 clean:
 	rm -f *.o *.gch
