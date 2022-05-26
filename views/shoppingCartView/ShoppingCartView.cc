@@ -106,7 +106,6 @@ bool ShoppingCartView::responseGET(char* ip){
 }
 
 bool ShoppingCartView::responsePOST(char* ip){
-  cout<<"Content-type:text/html\r\n\r\n";
     char *sessionID = parserService->getCookieArg("sessionID");
     //HAY UNA COOKIE
     if(sessionID != NULL){
@@ -135,15 +134,13 @@ bool ShoppingCartView::responsePOST(char* ip){
                 //STRING FOR USERID AND ENCRYPT VARIABLE
                 string encryptCVV = "";
 
-                cout<<checkbox<<endl;
-
                 if (!existentCreditCard){
                     //VERIFY THAT FORM HAS COMPLETE DATA
                     if(cardName != NULL && cardNumber != NULL && cardExpireMonth != NULL && cardExpireYear != NULL && cardCVV != NULL ){
                     
                             //ENCRYPTION OF PASSWORD FOR INSERTION IN DB
                             encryptCVV = shoppingCheckoutService->encryptionCardData(cardCVV);
-                            cout<< encryptCVV <<endl;
+                            
                             //INSERTS CARD CREDENTIALS IN DATABASE
                             if(shoppingCheckoutService->insertCardData(userId, cardName, cardNumber, cardExpireMonth, cardExpireYear, encryptCVV)){
                               cout << "Location: http://localhost/cgi-bin/home\n\n" << endl; 
@@ -338,8 +335,8 @@ void ShoppingCartView::printHTML(){
                                 cout<<"<input name='cardCVV' type='cvv' class='form-control' id='inputcvv'  style='width: 100%;' placeholder='Ingrese el CVV, por ejemplo '123''>"<<endl;
                             cout<<"</div>"<<endl;     
 
-                            cout<<"<div class='form-check'>"<<endl;
-                              cout<<"<input name='checkbox' class='form-check-input' type='checkbox' value='' id='flexCheckDefault'>"<<endl;
+                            cout<<"<div class='form-group'>"<<endl;
+                              cout<<"<input name='checkbox' class='form-check-input' type='checkbox' value='1' id='flexCheckDefault'>"<<endl;
                               cout<<"<label class='form-check-label' for='flexCheckDefault'> Guardar tarjeta de crédito </label>"<<endl;
                             cout<<"</div>"<<endl;
 
