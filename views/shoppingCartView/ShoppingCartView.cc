@@ -137,17 +137,21 @@ bool ShoppingCartView::responsePOST(char* ip){
                 if (!existentCreditCard){
                     //VERIFY THAT FORM HAS COMPLETE DATA
                     if(cardName != NULL && cardNumber != NULL && cardExpireMonth != NULL && cardExpireYear != NULL && cardCVV != NULL ){
-                    
                             //ENCRYPTION OF PASSWORD FOR INSERTION IN DB
                             encryptCVV = shoppingCheckoutService->encryptionCardData(cardCVV);
-                            
-                            //INSERTS CARD CREDENTIALS IN DATABASE
-                            if(shoppingCheckoutService->insertCardData(userId, cardName, cardNumber, cardExpireMonth, cardExpireYear, encryptCVV)){
-                              cout << "Location: http://localhost/cgi-bin/home\n\n" << endl; 
+                            //CHECKBOX IS CHECKED
+                            if (checkbox != NULL){
+                                //INSERTS CARD CREDENTIALS IN DATABASE
+                                if(shoppingCheckoutService->insertCardData(userId, cardName, cardNumber, cardExpireMonth, cardExpireYear, encryptCVV)){
+                                  cout << "Location: http://localhost/cgi-bin/home\n\n" << endl; 
+                                } else {
+                                  error = true;
+                                  errorMessage = "Error guardando tarjeta";
+                                }
                             } else {
-                              error = true;
-                              errorMessage = "Error guardando tarjeta";
-                            }    
+                              //CHECKBOX IS NOT CHECKED
+                              cout << "Location: http://localhost/cgi-bin/home\n\n" << endl; 
+                            }
                     } else{
                       //PRINT ERROR INCOMPLETE DATA
                       error = true;
