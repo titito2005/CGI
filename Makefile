@@ -66,7 +66,7 @@ userCommentService: services/userCommentService/UserCommentService.cc
 
 #DATABASE
 database: services/Database.cc
-	g++ -c services/Database.cc -L/usr/lib/mysql -lmysqlclient
+	g++ -c services/Database.cc -L/usr/lib64/mysql -lmysqlclient
 
 #PUBLIC FILES ON CGI DIRECTION
 refreshPublicCGI:
@@ -75,25 +75,25 @@ refreshPublicCGI:
 
 #PRUEBA LOGIN VIEW (IGNORAR)
 loginCompleto: LoginView.o ParserService.o SessionService.o Session.o UserService.o User.o Database.o HeaderView.o FooterView.o
-	sudo g++ -o /var/www/cgi-bin/login LoginView.o ParserService.o Session.o SessionService.o UserService.o User.o Database.o HeaderView.o FooterView.o -L/usr/lib/mysql -lmysqlclient
+	sudo g++ -o /var/www/cgi-bin/login LoginView.o ParserService.o Session.o SessionService.o UserService.o User.o Database.o HeaderView.o FooterView.o -L/usr/lib64/mysql -lmysqlclient
 
 sellCompleto: SellView.o ParserService.o SessionService.o Session.o ShoppingCartService.o SellService.o Sell.o ShoppingCart.o Database.o HeaderView.o FooterView.o
-	sudo g++ -o /var/www/cgi-bin/home SellView.o ParserService.o Session.o ShoppingCartService.o SessionService.o SellService.o Sell.o ShoppingCart.o Database.o HeaderView.o FooterView.o -L/usr/lib/mysql -lmysqlclient
+	sudo g++ -o /var/www/cgi-bin/home SellView.o ParserService.o Session.o ShoppingCartService.o SessionService.o SellService.o Sell.o ShoppingCart.o Database.o HeaderView.o FooterView.o -L/usr/lib64/mysql -lmysqlclient
 
 addCompleto: AddView.o ParserService.o SessionService.o Session.o  SellService.o Sell.o Database.o HeaderView.o FooterView.o
-	sudo g++ -o /var/www/cgi-bin/addSell AddView.o ParserService.o Session.o SessionService.o SellService.o Sell.o Database.o HeaderView.o FooterView.o -L/usr/lib/mysql -lmysqlclient
+	sudo g++ -o /var/www/cgi-bin/addSell AddView.o ParserService.o Session.o SessionService.o SellService.o Sell.o Database.o HeaderView.o FooterView.o -L/usr/lib64/mysql -lmysqlclient
 
 registerCompleto: RegisterView.o ParserService.o UserService.o User.o Database.o HeaderView.o FooterView.o
-	sudo g++ -o /var/www/cgi-bin/userRegister RegisterView.o ParserService.o UserService.o User.o Database.o HeaderView.o FooterView.o -L/usr/lib/mysql -lmysqlclient
+	sudo g++ -o /var/www/cgi-bin/userRegister RegisterView.o ParserService.o UserService.o User.o Database.o HeaderView.o FooterView.o -L/usr/lib64/mysql -lmysqlclient
 
 logoutCompleto: LogoutView.o ParserService.o SessionService.o Session.o Database.o
-	sudo g++ -o /var/www/cgi-bin/logout LogoutView.o ParserService.o SessionService.o Session.o Database.o -L/usr/lib/mysql -lmysqlclient
+	sudo g++ -o /var/www/cgi-bin/logout LogoutView.o ParserService.o SessionService.o Session.o Database.o -L/usr/lib64/mysql -lmysqlclient
 
 shoppingCartCompleto: ShoppingCartView.o SellService.o ParserService.o ShoppingCartService.o SessionService.o Session.o Sell.o ShoppingCart.o UserService.o User.o Database.o HeaderView.o FooterView.o
-	sudo g++ -o /var/www/cgi-bin/cart ShoppingCartView.o SellService.o ParserService.o ShoppingCartService.o SessionService.o Session.o Sell.o ShoppingCart.o UserService.o User.o Database.o HeaderView.o FooterView.o -L/usr/lib/mysql -lmysqlclient
+	sudo g++ -o /var/www/cgi-bin/cart ShoppingCartView.o SellService.o ParserService.o ShoppingCartService.o SessionService.o Session.o Sell.o ShoppingCart.o UserService.o User.o Database.o HeaderView.o FooterView.o -L/usr/lib64/mysql -lmysqlclient
 
 userCommentCompleto: UserCommentView.o UserCommentService.o ParserService.o SessionService.o Session.o UserComment.o Database.o HeaderView.o FooterView.o
-	sudo g++ -o /var/www/cgi-bin/comments UserCommentView.o UserCommentService.o ParserService.o  SessionService.o Session.o UserComment.o Database.o HeaderView.o FooterView.o -L/usr/lib/mysql -lmysqlclient
+	sudo g++ -o /var/www/cgi-bin/comments UserCommentView.o UserCommentService.o ParserService.o  SessionService.o Session.o UserComment.o Database.o HeaderView.o FooterView.o -L/usr/lib64/mysql -lmysqlclient
 
 clean:
 	rm -f *.o *.gch
