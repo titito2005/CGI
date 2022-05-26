@@ -102,27 +102,17 @@ bool ShoppingCartView::responseGET(char* ip){
         //NO HAY COOKIE O NO ES VALIDA
         cout << "Location: http://localhost/cgi-bin/home\n\n" << endl;
     }
-
-    // REVISAR ESTO!!!!
-    /*char* _userId = const_cast<char*>(userIdCheckout.c_str());
-    creditCard = shoppingCheckoutService->getCardByUserId(_userId);
-    if (creditCard.length() == 0){
-      existentCreditCard = false;
-    } else {
-      existentCreditCard = true;
-    } */
-
     return true;
 }
 
 bool ShoppingCartView::responsePOST(char* ip){
-    //EXPECTED VARIABLES FROM QUERY AND SESSIONID
-    char *sessionID = parserService->getCookieArg("sessionID");
+    //EXPECTED VARIABLES FROM QUERY 
     char* cardName = parserService->getQueryArg("cardName");
     char* cardNumber = parserService->getQueryArg("cardNumber");
     char* cardExpireMonth = parserService->getQueryArg("cardExpireMonth");
     char* cardExpireYear = parserService->getQueryArg("cardExpireYear");
     char* cardCVV = parserService->getQueryArg("cardCVV");
+    char* checkbox = parserService->getQueryArg("checkbox");
     //REGEX VALIDATIONS FOR REGISTER FORM
     regex validationCardName("[ +\\w+]+");
     regex validationCardMonth("[\\w+]");
@@ -152,7 +142,7 @@ bool ShoppingCartView::responsePOST(char* ip){
               } else {
                 //PRINT ERROR MONTH FORMAT
                 error = true;
-                errorMessage = "El nombre de la tarjeta solo debe contener letras. Por favor ingreselo de nuevo.";
+                errorMessage = "El mes de la tarjeta solo debe contener letras. Por favor ingreselo de nuevo.";
               }
             } else {
               //PRINT ERROR NUMBER & CVV FORMAT
@@ -336,6 +326,10 @@ void ShoppingCartView::printHTML(){
                             cout<<"</div>"<<endl;     
 
                         //cout <<"<input type='checkbox' checked='checked' name='sameadr'> Guardar tarjeta de crédito </label>"<<endl;
+                            cout<<"<div class='form-check'>"<<endl;
+                              cout<<"<input name='checkbox' class='form-check-input' type='checkbox' value='' id='flexCheckDefault'>"<<endl;
+                              cout<<"<label class='form-check-label' for='flexCheckDefault'> Guardar tarjeta de crédito </label>"<<endl;
+                            cout<<"</div>"<<endl;
                       }
                       cout<<"<div class='modal-footer'>"<<endl;
                       cout<<"<button data-dismiss='modal' aria-label='Close' class='btn btn-secondary mt-3'>Cancelar</button>"<<endl;
