@@ -66,7 +66,7 @@ userCommentService: services/userCommentService/UserCommentService.cc
 
 #DATABASE
 database: services/Database.cc
-	g++ -c services/Database.cc -I/usr/include/mysql -L/usr/lib64/mysql
+	g++ -c services/Database.cc -I/usr/include/mysql -L/usr/lib64/mysql -lmysqlclient -lpthread -lz -lm -ldl -lssl -lcrypto
 
 #PUBLIC FILES ON CGI DIRECTION
 refreshPublicCGI:
@@ -75,7 +75,7 @@ refreshPublicCGI:
 
 #PRUEBA LOGIN VIEW (IGNORAR)
 loginCompleto: LoginView.o ParserService.o SessionService.o Session.o UserService.o User.o Database.o HeaderView.o FooterView.o
-	sudo g++ -o /var/www/cgi-bin/login -I/usr/include/mysql LoginView.o ParserService.o Session.o SessionService.o UserService.o User.o Database.o HeaderView.o FooterView.o -I/usr/include/mysql -L/usr/lib64/mysql
+	sudo g++ -o /var/www/cgi-bin/login -I/usr/include/mysql LoginView.o ParserService.o Session.o SessionService.o UserService.o User.o Database.o HeaderView.o FooterView.o -I/usr/include/mysql -L/usr/lib64/mysql -lmysqlclient -lpthread -lz -lm -ldl -lssl -lcrypto
 
 sellCompleto: SellView.o ParserService.o SessionService.o Session.o ShoppingCartService.o SellService.o Sell.o ShoppingCart.o Database.o HeaderView.o FooterView.o
 	sudo g++ -o /var/www/cgi-bin/home SellView.o ParserService.o Session.o ShoppingCartService.o SessionService.o SellService.o Sell.o ShoppingCart.o Database.o HeaderView.o FooterView.o -I/usr/include/mysql -L/usr/lib64/mysql
