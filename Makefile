@@ -66,7 +66,7 @@ userCommentService: services/userCommentService/UserCommentService.cc
 
 #DATABASE
 database: services/Database.cc
-	g++ -c services/Database.cc  $(mysql_config --cflags) $(mysql_config --libs)
+	g++ -c services/Database.cc $(mysql_config --cflags) $(mysql_config --libs)
 
 #PUBLIC FILES ON CGI DIRECTION
 refreshPublicCGI:
@@ -75,25 +75,25 @@ refreshPublicCGI:
 
 #PRUEBA LOGIN VIEW (IGNORAR)
 loginCompleto: LoginView.o ParserService.o SessionService.o Session.o UserService.o User.o Database.o HeaderView.o FooterView.o
-	sudo g++ -o /var/www/cgi-bin/login LoginView.o ParserService.o Session.o SessionService.o UserService.o User.o Database.o HeaderView.o FooterView.o  $(mysql_config --cflags) $(mysql_config --libs)
+	sudo g++ -o /var/www/cgi-bin/login LoginView.o ParserService.o Session.o SessionService.o UserService.o User.o Database.o HeaderView.o FooterView.o $(mysql_config --cflags) $(mysql_config --libs)
 
 sellCompleto: SellView.o ParserService.o SessionService.o Session.o ShoppingCartService.o SellService.o Sell.o ShoppingCart.o Database.o HeaderView.o FooterView.o
-	sudo g++ -o /var/www/cgi-bin/home SellView.o ParserService.o Session.o ShoppingCartService.o SessionService.o SellService.o Sell.o ShoppingCart.o Database.o HeaderView.o FooterView.o  $(mysql_config --cflags) $(mysql_config --libs)
+	sudo g++ -o /var/www/cgi-bin/home SellView.o ParserService.o Session.o ShoppingCartService.o SessionService.o SellService.o Sell.o ShoppingCart.o Database.o HeaderView.o FooterView.o $(mysql_config --cflags) $(mysql_config --libs)
 
 addCompleto: AddView.o ParserService.o SessionService.o Session.o  SellService.o Sell.o Database.o HeaderView.o FooterView.o
-	sudo g++ -o /var/www/cgi-bin/addSell AddView.o ParserService.o Session.o SessionService.o SellService.o Sell.o Database.o HeaderView.o FooterView.o  $(mysql_config --cflags) $(mysql_config --libs)
+	sudo g++ -o /var/www/cgi-bin/addSell AddView.o ParserService.o Session.o SessionService.o SellService.o Sell.o Database.o HeaderView.o FooterView.o $(mysql_config --cflags) $(mysql_config --libs)
 
 registerCompleto: RegisterView.o ParserService.o UserService.o User.o Database.o HeaderView.o FooterView.o
-	sudo g++ -o /var/www/cgi-bin/userRegister RegisterView.o ParserService.o UserService.o User.o Database.o HeaderView.o FooterView.o  $(mysql_config --cflags) $(mysql_config --libs)
+	sudo g++ -o /var/www/cgi-bin/userRegister RegisterView.o ParserService.o UserService.o User.o Database.o HeaderView.o FooterView.o $(mysql_config --cflags) $(mysql_config --libs)
 
 logoutCompleto: LogoutView.o ParserService.o SessionService.o Session.o Database.o
-	sudo g++ -o /var/www/cgi-bin/logout LogoutView.o ParserService.o SessionService.o Session.o Database.o  $(mysql_config --cflags) $(mysql_config --libs)
+	sudo g++ -o /var/www/cgi-bin/logout LogoutView.o ParserService.o SessionService.o Session.o Database.o $(mysql_config --cflags) $(mysql_config --libs)
 
 shoppingCartCompleto: ShoppingCartView.o SellService.o ParserService.o ShoppingCartService.o SessionService.o Session.o Sell.o ShoppingCart.o UserService.o User.o Database.o HeaderView.o FooterView.o
-	sudo g++ -o /var/www/cgi-bin/cart ShoppingCartView.o SellService.o ParserService.o ShoppingCartService.o SessionService.o Session.o Sell.o ShoppingCart.o UserService.o User.o Database.o HeaderView.o FooterView.o  $(mysql_config --cflags) $(mysql_config --libs)
+	sudo g++ -o /var/www/cgi-bin/cart ShoppingCartView.o SellService.o ParserService.o ShoppingCartService.o SessionService.o Session.o Sell.o ShoppingCart.o UserService.o User.o Database.o HeaderView.o FooterView.o $(mysql_config --cflags) $(mysql_config --libs)
 
 userCommentCompleto: UserCommentView.o UserCommentService.o ParserService.o SessionService.o Session.o UserComment.o Database.o HeaderView.o FooterView.o
-	sudo g++ -o /var/www/cgi-bin/comments UserCommentView.o UserCommentService.o ParserService.o  SessionService.o Session.o UserComment.o Database.o HeaderView.o FooterView.o  $(mysql_config --cflags) $(mysql_config --libs)
+	sudo g++ -o /var/www/cgi-bin/comments UserCommentView.o UserCommentService.o ParserService.o  SessionService.o Session.o UserComment.o Database.o HeaderView.o FooterView.o $(mysql_config --cflags) $(mysql_config --libs)
 
 clean:
 	rm -f *.o *.gch
