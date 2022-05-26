@@ -3,7 +3,6 @@
 
 #include <iostream>
 #include <string>
-#include <regex>
 
 #include "../../services/parserService/ParserService.h"
 #include "../../services/sellService/SellService.h"
