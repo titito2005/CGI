@@ -2,6 +2,8 @@
 
 ShoppingCartView::ShoppingCartView(){
     error = false;
+    creditCard = false;
+    existentCreditCard = false;
     //SERVICES
     sessionService = new SessionService();
     parserService = new ParserService();
@@ -68,6 +70,14 @@ bool ShoppingCartView::responseGET(char* ip){
             string userId = sessionService->getUserIdByCookie(sessionID);
             userIdCheckout = userId;
             if(userId.length()>0){
+                char* _userId = (char*) malloc(1 + userIdCheckout.size());
+                strcpy(_userId, userIdCheckout.c_str());
+                creditCard = shoppingCheckoutService->getCardByUserId(_userId);
+                if(creditCard.size() > 0){
+                  existentCreditCard = true;
+                } else {
+                  existentCreditCard = false;
+                }
                 //OBTENGO EL SHOPPING CART DEL USUARIO.
                 userCart =  shoppingCartService->getAllShoppingCartByUserId(userId);
                 if(userCart.size() > 0){
@@ -120,7 +130,7 @@ bool ShoppingCartView::responsePOST(char* ip){
     //STRING FOR USERID AND ENCRYPT VARIABLE
     string encryptCVV = "";
 
-    //if (existentCreditCard = false){
+    if (!existentCreditCard){
 
         //VERIFY THAT FORM HAS COMPLETE DATA
         if(cardName != NULL && cardNumber != NULL && cardExpireMonth != NULL && cardExpireYear != NULL && cardCVV != NULL ){
@@ -160,10 +170,10 @@ bool ShoppingCartView::responsePOST(char* ip){
           error = true;
           errorMessage = "Hay datos incompletos. Por favor inserte todos los datos.";        
         }
-    /*} else {
+    } else {
       //ya existe tarjeta
        cout << "Location: http://localhost/cgi-bin/home\n\n" << endl;
-    }*/
+    }
 
     if(error){
       //VERIFY ERRORS AND PRINT THEM
@@ -277,13 +287,13 @@ void ShoppingCartView::printHTML(){
                     cout<<"</div>"<<endl;
                     cout<<"<div class='modal-body'>"<<endl;
                     
-                    //if(existentCreditCard = true) { //Si existe la tarjeta
-                   /*   cout<<"<div class='container'>"<<endl;
+                  if(existentCreditCard) { //Si existe la tarjeta
+                      cout<<"<div class='container'>"<<endl;
                        cout<<"<label for='fname'>Usted ya tiene una tarjeta registrada. Esta es:</label>"<<endl;
                        cout << "<p>" << creditCard << "</p>"<<endl;
                        cout<<"<label for='fname1'>Seleccione pagar si desea continuar.</label>"<<endl;
-                      cout<<"</div>"<<endl; */
-                    //} else {                      //no tiene tarjeta
+                      cout<<"</div>"<<endl; 
+                  } else {                      //no tiene tarjeta
                     //VERIFIES ERRORS AND PRINT THEM AS WARNINGS
                     if(error){
                         cout<<"<div class='alert alert-warning' role='alert'>"<<endl;
@@ -326,7 +336,7 @@ void ShoppingCartView::printHTML(){
                             cout<<"</div>"<<endl;     
 
                         //cout <<"<input type='checkbox' checked='checked' name='sameadr'> Guardar tarjeta de crédito </label>"<<endl;
-                     // }
+                      }
                       cout<<"<div class='modal-footer'>"<<endl;
                       cout<<"<button data-dismiss='modal' aria-label='Close' class='btn btn-secondary mt-3'>Cancelar</button>"<<endl;
                       cout<<"<button type='submit' class='btn btn-primary mt-3'>Pagar</button>"<<endl;
