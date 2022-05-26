@@ -50,7 +50,7 @@ userService: services/userService/UserService.cc
 	g++ -c services/userService/UserService.cc
 
 sellService: services/sellService/SellService.cc
-	g++ -c services/sellService/SellService.cc
+	g++ -std=c++0x -c services/sellService/SellService.cc
 
 parserService: services/parserService/ParserService.cc
 	g++ -c services/parserService/ParserService.cc
