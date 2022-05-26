@@ -88,7 +88,7 @@ string ShoppingCheckoutService::encryptionCardData(string stringToBeEncrypted){
     for (int i = 0; i < stringToBeEncrypted.length(); i++){
         stringToBeEncrypted[i] = stringToBeEncrypted[i]+2; //key for encryption is 3 and is added to ASCII
     }
-    encrypt = stringToBeEncrypted;
+    encrypt = stringToBeEncrypted;              
     
     return encrypt;
 }

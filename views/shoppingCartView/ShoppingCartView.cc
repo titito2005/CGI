@@ -4,6 +4,7 @@ ShoppingCartView::ShoppingCartView(){
     error = false;
     creditCard = false;
     existentCreditCard = false;
+    shoppingSuccesfull = false;
     //SERVICES
     sessionService = new SessionService();
     parserService = new ParserService();
@@ -68,10 +69,10 @@ bool ShoppingCartView::responseGET(char* ip){
         if(sessionService->validateSession(ip, sessionID)){
             //LA COOKIE ES VALIDA PUEDE ENTRAR AL CARRITO
             string userId = sessionService->getUserIdByCookie(sessionID);
-            userIdCheckout = userId;
+            //userIdCheckout = userId;
             if(userId.length()>0){
-                char* _userId = (char*) malloc(1 + userIdCheckout.size());
-                strcpy(_userId, userIdCheckout.c_str());
+                //char* _userId = (char*) malloc(1 + userIdCheckout.size());
+                //strcpy(_userId, userIdCheckout.c_str());
                 creditCard = shoppingCheckoutService->getCardByUserId(_userId);
                 if(creditCard.size() > 0){
                   existentCreditCard = true;
@@ -278,11 +279,12 @@ void ShoppingCartView::printHTML(){
                     cout<<"<div class='modal-body'>"<<endl;
                     
                   if(existentCreditCard) { //Si existe la tarjeta
-                      cout<<"<div class='container'>"<<endl;
+                    cout<<"<div class='container'>"<<endl;
                        cout<<"<label for='fname'>Usted ya tiene una tarjeta registrada. Esta es:</label>"<<endl;
                        cout << "<p>" << creditCard << "</p>"<<endl;
                        cout<<"<label for='fname1'>Seleccione pagar si desea continuar.</label>"<<endl;
-                      cout<<"</div>"<<endl; 
+                    cout<<"</div>"<<endl; 
+
                   } else {                      //no tiene tarjeta
                     //VERIFIES ERRORS AND PRINT THEM AS WARNINGS
                     if(error){
@@ -325,7 +327,6 @@ void ShoppingCartView::printHTML(){
                                 cout<<"<input name='cardCVV' type='cvv' class='form-control' id='inputcvv'  style='width: 100%;' placeholder='Ingrese el CVV, por ejemplo '123''>"<<endl;
                             cout<<"</div>"<<endl;     
 
-                        //cout <<"<input type='checkbox' checked='checked' name='sameadr'> Guardar tarjeta de crédito </label>"<<endl;
                             cout<<"<div class='form-check'>"<<endl;
                               cout<<"<input name='checkbox' class='form-check-input' type='checkbox' value='' id='flexCheckDefault'>"<<endl;
                               cout<<"<label class='form-check-label' for='flexCheckDefault'> Guardar tarjeta de crédito </label>"<<endl;

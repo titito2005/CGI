@@ -43,7 +43,6 @@ class ShoppingCartView {
         bool error;
         bool shoppingSuccesfull;
         bool existentCreditCard;
-        bool checkboxChecked;
         string creditCard;
         string userIdCheckout;
         string errorMessage;
