@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <iostream>
 #include <string>
+#include <stdlib.h>
 
 #include "../../models/sellModel/Sell.h"
 #include "../Database.h"
