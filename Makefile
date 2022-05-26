@@ -75,7 +75,7 @@ refreshPublicCGI:
 
 #PRUEBA LOGIN VIEW (IGNORAR)
 loginCompleto: LoginView.o ParserService.o SessionService.o Session.o UserService.o User.o Database.o HeaderView.o FooterView.o
-	sudo g++ -o /var/www/cgi-bin/login -I/usr/include/mysql LoginView.o ParserService.o Session.o SessionService.o UserService.o User.o Database.o HeaderView.o FooterView.o -lmysqlclient
+	sudo g++ -o /var/www/cgi-bin/login -I/usr/include/mysql LoginView.o ParserService.o Session.o SessionService.o UserService.o User.o Database.o HeaderView.o FooterView.o -I/usr/include/mysql -lmysqlclient
 
 sellCompleto: SellView.o ParserService.o SessionService.o Session.o ShoppingCartService.o SellService.o Sell.o ShoppingCart.o Database.o HeaderView.o FooterView.o
 	sudo g++ -o /var/www/cgi-bin/home SellView.o ParserService.o Session.o ShoppingCartService.o SessionService.o SellService.o Sell.o ShoppingCart.o Database.o HeaderView.o FooterView.o -I/usr/include/mysql -lmysqlclient
