@@ -80,20 +80,30 @@ bool AddView::responsePOST(char* ip){
     char* GameName = parserService->getQueryArg("GameName");
     char* GameValue = parserService->getQueryArg("GameValue");
     char* GameDescription = parserService->getQueryArg("GameDescription");
-
-    if(GameName != NULL && GameValue != NULL && GameDescription != NULL ){
-        if(sellService->addSell(GameName, GameValue, GameDescription)){
-            cout << "Location: http://localhost/cgi-bin/home\n\n" << endl;
+    regex validationText("[a-zA-Z0-9 ,.-:_#$%()=!¿?¡@]*");
+    regex validationValue("[0-9]+");
+    if (regex_match(GameName, validationText)&& regex_match(GameValue, validationValue) && regex_match(GameDescription, validationText)) { 
+        if(GameName != NULL && GameValue != NULL && GameDescription != NULL ){
+            if(sellService->addSell(GameName, GameValue, GameDescription)){
+                cout << "Location: http://localhost/cgi-bin/home\n\n" << endl;
+            } else {
+                error = true;
+                errorMessage = "Error al agregar juego limite de caracteres debe ser el nombre menor a 100 y descripcion menor a 5000";
+                printHTML();
+            }
         } else {
             error = true;
-            errorMessage = "Error al agregar juego";
+            errorMessage = "error al ingresar los datos";
             printHTML();
         }
-    } else {
-        error = true;
-        errorMessage = "error al ingresar los datos";
-        printHTML();
     }
+    else{
+         error = true;
+         errorMessage = "error caracteres no validos (valor solo permite numeros) (nombre y descripcion solo permite letras, numeros y los caracteres .,-:_#$%()=!¿?¡@)";
+         printHTML();
+    }
+
+   
 
     return true;
 }
