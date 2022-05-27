@@ -27,7 +27,7 @@ void FooterView::printFooterHTML(bool loged){
         cout<<"</div>"<<endl;
         cout<<"<div class='text-center p-3' style='background-color: rgba(0, 0, 0, 0.2);'>"<<endl;
             cout<<"© 2022 Copyright:"<<endl;
-            cout<<"<a class='text-white' href='#'>REAKY's GAME STORE</a>"<<endl;
+            cout<<"<a class='text-white' href='#'>FREAKY's GAME STORE</a>"<<endl;
         cout<<"</div>"<<endl;
     cout<<"</footer>"<<endl;
 }
