@@ -77,3 +77,9 @@ string ShoppingCheckoutService::getCardByUserId(char* userId){
     }
     return card;
 }
+
+int ShoppingCheckoutService::getRandomPayment(){
+    int paymentForm = rand() % 2;
+
+    return paymentForm;
+}

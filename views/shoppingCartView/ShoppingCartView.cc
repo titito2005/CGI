@@ -5,6 +5,7 @@ ShoppingCartView::ShoppingCartView(){
     creditCard = false;
     existentCreditCard = false;
     shoppingSuccesfull = false;
+    payment = 0;
     //SERVICES
     sessionService = new SessionService();
     parserService = new ParserService();
@@ -134,6 +135,9 @@ bool ShoppingCartView::responsePOST(char* ip){
                 //STRING FOR USERID AND ENCRYPT VARIABLE
                 string encryptCVV = "";
 
+                //INITIALIZE FOR RANDOM ACCEPTANCE OF PAYMENT
+                payment = shoppingCheckoutService->getRandomPayment();
+                    
                 if (!existentCreditCard){
                     //VERIFY THAT FORM HAS COMPLETE DATA
                     if(cardName != NULL && cardNumber != NULL && cardExpireMonth != NULL && cardExpireYear != NULL && cardCVV != NULL ){
@@ -142,8 +146,7 @@ bool ShoppingCartView::responsePOST(char* ip){
                             //CHECKBOX IS CHECKED
                             if (checkbox != NULL){
                                 //INSERTS CARD CREDENTIALS IN DATABASE
-                                if(shoppingCheckoutService->insertCardData(userId, cardName, cardNumber, cardExpireMonth, cardExpireYear, encryptCVV)){
-                                  //cout << "Location: http://localhost/cgi-bin/home\n\n" << endl; 
+                                if(shoppingCheckoutService->insertCardData(userId, cardName, cardNumber, cardExpireMonth, cardExpireYear, encryptCVV)){ 
                                   shoppingSuccesfull = true;
                                 } else {
                                   error = true;
@@ -161,7 +164,6 @@ bool ShoppingCartView::responsePOST(char* ip){
                     }
                 } else {
                   //THE CARD IS ALREADY REGISTERED
-                  //cout << "Location: http://localhost/cgi-bin/home\n\n" << endl;
                   shoppingSuccesfull = true;
                 }
 
@@ -287,11 +289,18 @@ void ShoppingCartView::printHTML(){
                     
                   if(existentCreditCard) { //Si existe la tarjeta
 
-                    if(shoppingSuccesfull){ //Compra fue exitosa
-                       cout<<"<div class='alert alert-success' role='alert'>"<<endl;
+                    if(shoppingSuccesfull){ //Compra fue exitosa (1) o no (0)
+                      if(payment == 1){
+                        cout<<"<div class='alert alert-success' role='alert'>"<<endl;
                             cout<< "<h6>¡Gracias por la compra!</h6>" << endl;
                             cout<< "<p>Su compra fue realizada de manera exitosa.</p>" << endl;
                         cout<<"</div>"<<endl;
+                      } else {
+                        cout<<"<div class='alert alert-danger' role='alert'>"<<endl;
+                            cout<< "<h6>¡Ups, fondos insuficientes!</h6>" << endl;
+                            cout<< "<p>Su compra no ha podido ser realizada de manera correcta.</p>" << endl;
+                        cout<<"</div>"<<endl;
+                      }
                     } else {
                       cout<<"<form action='cart' method='POST'>"<<endl;
 
@@ -311,10 +320,17 @@ void ShoppingCartView::printHTML(){
                   } else {  //No ha registrado tarjeta
 
                     if(shoppingSuccesfull){ //Compra fue exitosa
-                       cout<<"<div class='alert alert-success' role='alert'>"<<endl;
+                       if(payment == 1){
+                        cout<<"<div class='alert alert-success' role='alert'>"<<endl;
                             cout<< "<h6>¡Gracias por la compra!</h6>" << endl;
                             cout<< "<p>Su compra fue realizada de manera exitosa.</p>" << endl;
                         cout<<"</div>"<<endl;
+                      } else {
+                        cout<<"<div class='alert alert-danger' role='alert'>"<<endl;
+                            cout<< "<h6>¡Ups, fondos insuficientes!</h6>" << endl;
+                            cout<< "<p>Su compra no ha podido ser realizada de manera correcta.</p>" << endl;
+                        cout<<"</div>"<<endl;
+                      }
                     } else {
 
                       //VERIFIES ERRORS AND PRINT THEM AS WARNINGS

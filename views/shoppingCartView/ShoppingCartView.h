@@ -43,6 +43,7 @@ class ShoppingCartView {
         bool error;
         bool shoppingSuccesfull;
         bool existentCreditCard;
+        int payment;
         string creditCard;
         string errorMessage;
         vector<ShoppingCart> userCart;

@@ -6,7 +6,7 @@
 #include <iostream>
 #include <stdio.h>
 #include <cstring>
-#include <cstring>
+#include <cstdlib>
 #include <unistd.h>
 
 #include "../../models/shoppingCheckoutModel/ShoppingCheckout.h"
@@ -25,6 +25,7 @@ class ShoppingCheckoutService {
         bool insertCardData(string idUser, string name, string number, string month, string year, string cvv);
         string encryptionCardData(string stringToBeEncrypted);
         string getCardByUserId(char* userId);
+        int getRandomPayment();
         
     private:
         Database* db;
