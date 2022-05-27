@@ -1,6 +1,6 @@
 #Makefile Servidor
 #CREATE LOGIN cgi-bin/login
-program: clean refreshPublicCGI database user sell session shoppingCart userComment userCommentService sessionService userService sellService parserService shoppingCartService footerView headerView loginView sellView addView logoutView shoppingCartView userCommentView registerView loginCompleto userCommentCompleto sellCompleto logoutCompleto shoppingCartCompleto registerCompleto addCompleto
+program: clean refreshPublicCGI database user sell session shoppingCart userComment shoppingCheckout userCommentService sessionService userService sellService parserService shoppingCartService shoppingCheckoutService footerView headerView loginView sellView addView logoutView shoppingCartView userCommentView registerView loginCompleto userCommentCompleto sellCompleto logoutCompleto shoppingCartCompleto registerCompleto addCompleto
 
 #VIEWS
 loginView: views/loginView/LoginView.cc
@@ -44,13 +44,16 @@ shoppingCart: models/shoppingCartModel/ShoppingCart.cc
 
 userComment: models/userCommentModel/UserComment.cc
 	g++ -c models/userCommentModel/UserComment.cc
+
+shoppingCheckout: models/shoppingCheckoutModel/ShoppingCheckout.cc
+	g++ -c models/shoppingCheckoutModel/ShoppingCheckout.cc
  
 #SERVICES
 userService: services/userService/UserService.cc
 	g++ -c services/userService/UserService.cc
 
 sellService: services/sellService/SellService.cc
-	g++ -std=c++0x -c services/sellService/SellService.cc
+	g++ -c services/sellService/SellService.cc
 
 parserService: services/parserService/ParserService.cc
 	g++ -c services/parserService/ParserService.cc
@@ -63,6 +66,9 @@ shoppingCartService: services/shoppingCartService/ShoppingCartService.cc
 
 userCommentService: services/userCommentService/UserCommentService.cc
 	g++ -c services/userCommentService/UserCommentService.cc
+
+shoppingCheckoutService: services/shoppingCheckoutService/ShoppingCheckoutService.cc
+	g++ -c services/shoppingCheckoutService/ShoppingCheckoutService.cc
 
 #DATABASE
 database: services/Database.cc
@@ -89,8 +95,8 @@ registerCompleto: RegisterView.o ParserService.o UserService.o User.o Database.o
 logoutCompleto: LogoutView.o ParserService.o SessionService.o Session.o Database.o
 	sudo g++ -o /var/www/cgi-bin/logout LogoutView.o ParserService.o SessionService.o Session.o Database.o -I/usr/include/mysql -L/usr/lib64/mysql -lmysqlclient -lpthread -lz -lm -ldl -lssl -lcrypto
 
-shoppingCartCompleto: ShoppingCartView.o SellService.o ParserService.o ShoppingCartService.o SessionService.o Session.o Sell.o ShoppingCart.o UserService.o User.o Database.o HeaderView.o FooterView.o
-	sudo g++ -o /var/www/cgi-bin/cart ShoppingCartView.o SellService.o ParserService.o ShoppingCartService.o SessionService.o Session.o Sell.o ShoppingCart.o UserService.o User.o Database.o HeaderView.o FooterView.o -I/usr/include/mysql -L/usr/lib64/mysql -lmysqlclient -lpthread -lz -lm -ldl -lssl -lcrypto
+shoppingCartCompleto: ShoppingCartView.o SellService.o ParserService.o ShoppingCartService.o SessionService.o ShoppingCheckoutService.o Session.o Sell.o ShoppingCart.o ShoppingCheckout.o UserService.o User.o Database.o HeaderView.o FooterView.o
+	sudo g++ -o /var/www/cgi-bin/cart ShoppingCartView.o SellService.o ParserService.o ShoppingCartService.o SessionService.o ShoppingCheckoutService.o Session.o Sell.o ShoppingCart.o ShoppingCheckout.o UserService.o User.o Database.o HeaderView.o FooterView.o -I/usr/include/mysql -L/usr/lib64/mysql -lmysqlclient -lpthread -lz -lm -ldl -lssl -lcrypto
 
 userCommentCompleto: UserCommentView.o UserCommentService.o ParserService.o SessionService.o Session.o UserComment.o Database.o HeaderView.o FooterView.o
 	sudo g++ -o /var/www/cgi-bin/comments UserCommentView.o UserCommentService.o ParserService.o  SessionService.o Session.o UserComment.o Database.o HeaderView.o FooterView.o -I/usr/include/mysql -L/usr/lib64/mysql -lmysqlclient -lpthread -lz -lm -ldl -lssl -lcrypto

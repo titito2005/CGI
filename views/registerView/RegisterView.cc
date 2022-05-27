@@ -5,6 +5,7 @@ RegisterView::RegisterView()
     error = false;
     parserService = new ParserService();
     userService = new UserService();
+    sessionService = new SessionService();
     headerView = new HeaderView();
     footerView = new FooterView();
     // Read environment variables
@@ -40,7 +41,7 @@ RegisterView::RegisterView()
     if (request_method != NULL){
         // Handle GET requests
         if (strcmp(request_method, "GET") == 0){
-            responseGET();
+            responseGET(requestAddr);
         }
         // Handle POST requests
         if (strcmp(request_method, "POST") == 0){
@@ -53,7 +54,15 @@ RegisterView::~RegisterView()
 {
 }
 
-bool RegisterView::responseGET(){
+bool RegisterView::responseGET(char* ip){
+    char *sessionID = parserService->getCookieArg("sessionID");
+    //THERE IS A COOKIE 
+    if(sessionID != NULL){
+        if(sessionService->validateSession(ip, sessionID)){
+            //IF THE COOKIE IS VALID, IT SHOULDN'T ENTER IN LOGIN
+            cout << "Location: http://localhost/cgi-bin/home\n\n" << endl;
+        }
+    } 
     printHTML();
     return true;
 }

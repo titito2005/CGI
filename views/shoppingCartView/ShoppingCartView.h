@@ -7,11 +7,13 @@
 //MODELS
 #include "../../models/sellModel/Sell.h"
 #include "../../models/shoppingCartModel/ShoppingCart.h"
+#include "../../models/shoppingCheckoutModel/ShoppingCheckout.h"
 //SERVICES
 #include "../../services/parserService/ParserService.h"
 #include "../../services/sellService/SellService.h"
 #include "../../services/sessionService/SessionService.h"
 #include "../../services/shoppingCartService/ShoppingCartService.h"
+#include "../../services/shoppingCheckoutService/ShoppingCheckoutService.h"
 //VIEWS
 #include "../headerView/HeaderView.h"
 #include "../footerView/FooterView.h"
@@ -34,10 +36,15 @@ class ShoppingCartView {
         SellService *sellService;
         ShoppingCartService* shoppingCartService;
         SessionService* sessionService;
+        ShoppingCheckoutService* shoppingCheckoutService;
         HeaderView *headerView;
         FooterView *footerView;
 
         bool error;
+        bool shoppingSuccesfull;
+        bool existentCreditCard;
+        int payment;
+        string creditCard;
         string errorMessage;
         vector<ShoppingCart> userCart;
         vector<Sell> userItems;
