@@ -64,12 +64,12 @@ bool AddView::responseGET(char* ip){
             printHTML();
         } else {
             //NO HAY COOKIE O NO ES VALIDA
-            cout << "Location: http://localhost/cgi-bin/home\n\n" << endl;
+            cout << "Location: http://172.24.131.194/cgi-bin/home\n\n" << endl;
             //printHTML();
         }
     } else {
         //NO HAY COOKIE O NO ES VALIDA
-        cout << "Location: http://localhost/cgi-bin/home\n\n" << endl;
+        cout << "Location: http://172.24.131.194/cgi-bin/home\n\n" << endl;
         //printHTML();
     }
     return true;
@@ -85,7 +85,7 @@ bool AddView::responsePOST(char* ip){
     if (regex_match(GameName, validationText)&& regex_match(GameValue, validationValue) && regex_match(GameDescription, validationText)) { 
         if(GameName != NULL && GameValue != NULL && GameDescription != NULL ){
             if(sellService->addSell(GameName, GameValue, GameDescription)){
-                cout << "Location: http://localhost/cgi-bin/home\n\n" << endl;
+                cout << "Location: http://172.24.131.194/cgi-bin/home\n\n" << endl;
             } else {
                 error = true;
                 errorMessage = "Error al agregar juego limite de caracteres debe ser el nombre menor a 100 y descripcion menor a 5000";

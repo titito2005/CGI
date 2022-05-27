@@ -60,7 +60,7 @@ bool RegisterView::responseGET(char* ip){
     if(sessionID != NULL){
         if(sessionService->validateSession(ip, sessionID)){
             //IF THE COOKIE IS VALID, IT SHOULDN'T ENTER IN LOGIN
-            cout << "Location: http://localhost/cgi-bin/home\n\n" << endl;
+            cout << "Location: http://172.24.131.194/cgi-bin/home\n\n" << endl;
         }
     } 
     printHTML();
@@ -97,7 +97,7 @@ bool RegisterView::responsePOST(){
 
                         //INSERT THE NEW USER DATA TO THE DB
                         if(userService->insertUserRegister(userName, userLastNames, userEmail, encryptPassword, userPhoneNumber, userDirection)){
-                            cout << "Location: http://localhost/cgi-bin/home\n\n" << endl;
+                            cout << "Location: http://172.24.131.194/cgi-bin/home\n\n" << endl;
                             } else {
                                 error = true;
                                 errorMessage = "Error registrando el usuario.";

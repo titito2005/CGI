@@ -67,13 +67,13 @@ bool SellView::responseGET(char* ip)
             printHTML();
         } else {
             //NO HAY COOKIE O NO ES VALIDA
-            //cout << "Location: http://localhost/cgi-bin/home\n\n" << endl;
+            //cout << "Location: http://172.24.131.194/cgi-bin/home\n\n" << endl;
             sesion=false;
             printHTML();
         }
     } else {
         //NO HAY COOKIE O NO ES VALIDA
-        //cout << "Location: http://localhost/cgi-bin/home\n\n" << endl;
+        //cout << "Location: http://172.24.131.194/cgi-bin/home\n\n" << endl;
         sesion=false;
         printHTML();
     }

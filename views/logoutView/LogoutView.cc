@@ -58,13 +58,13 @@ bool LogoutView::responseGET(char* ip){
         }
     }
     //REDIRIGIMOS A HOME
-    cout << "Location: http://localhost/cgi-bin/home\n\n" << endl;
+    cout << "Location: http://172.24.131.194/cgi-bin/home\n\n" << endl;
     return true;
 }
 
 bool LogoutView::responsePOST(char* ip){
     //NO HAY POST, REDIRIGIMOS A HOME.
-    cout << "Location: http://localhost/cgi-bin/home\n\n" << endl;
+    cout << "Location: http://172.24.131.194/cgi-bin/home\n\n" << endl;
     return true;
 }
 

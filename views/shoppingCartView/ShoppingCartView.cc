@@ -97,11 +97,11 @@ bool ShoppingCartView::responseGET(char* ip){
             printHTML();
         } else {
             //NO HAY COOKIE O NO ES VALIDA
-            cout << "Location: http://localhost/cgi-bin/home\n\n" << endl;
+            cout << "Location: http://172.24.131.194/cgi-bin/home\n\n" << endl;
         }
     } else {
         //NO HAY COOKIE O NO ES VALIDA
-        cout << "Location: http://localhost/cgi-bin/home\n\n" << endl;
+        cout << "Location: http://172.24.131.194/cgi-bin/home\n\n" << endl;
     }
     return true;
 }
@@ -154,7 +154,7 @@ bool ShoppingCartView::responsePOST(char* ip){
                                 }
                             } else {
                               //CHECKBOX IS NOT CHECKED
-                             // cout << "Location: http://localhost/cgi-bin/home\n\n" << endl; 
+                             // cout << "Location: http://172.24.131.194/cgi-bin/home\n\n" << endl; 
                              shoppingSuccesfull = true;
                             }
                     } else{
@@ -174,11 +174,11 @@ bool ShoppingCartView::responsePOST(char* ip){
             }
           } else {
             //NO HAY COOKIE O NO ES VALIDA
-            cout << "Location: http://localhost/cgi-bin/home\n\n" << endl;
+            cout << "Location: http://172.24.131.194/cgi-bin/home\n\n" << endl;
          }
     } else {
         //NO HAY COOKIE O NO ES VALIDA
-        cout << "Location: http://localhost/cgi-bin/home\n\n" << endl;
+        cout << "Location: http://172.24.131.194/cgi-bin/home\n\n" << endl;
     }
   return true;
 }
