@@ -113,7 +113,7 @@ bool LoginView::createCookie(char* ip, char* userEmail){
     //BORRO COOKIE CON EL ID DEL USUARIO (Por si existe una session anterior)
     sessionService->deleteSessionByUserId(userId);
     if(sessionService->setSessionCookie(ip, userId, cookie)){
-        cout << "Set-Cookie:sessionID="<<cookie<<"; SameSite=None; Secure=true;"<< endl;
+        cout << "Set-Cookie:sessionID="<<cookie<<"; SameSite=None; Secure=false;"<< endl;
         return true;
     }
     return false;
