@@ -41,7 +41,7 @@ CREATE TABLE shoppingCart(
     id int auto_increment,
     userId int NOT NULL,
     sellId int NOT NULL,
-    sellCant int DEFAULT (1),
+    sellCant int DEFAULT 1,
     createdAt timestamp default current_timestamp,
     primary key(id),
     foreign key(userId) references user(id),
