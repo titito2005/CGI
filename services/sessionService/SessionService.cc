@@ -88,9 +88,7 @@ bool SessionService::validateSession(char* ip, char* cookie){
     bool validateSession = false;
     Session *findSession = getSessionByUserCookie(cookie);
     if(findSession != NULL){
-        if(findSession->getIp().compare(ip) == 0){
-            validateSession = true;
-        }
+        validateSession = true;
     }
     return validateSession;
 }
