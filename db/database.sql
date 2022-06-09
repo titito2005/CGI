@@ -19,7 +19,7 @@ CREATE TABLE user(
 
 CREATE TABLE userSession(
     id int auto_increment,
-    ip varchar(10) NOT NULL,
+    ip varchar(20) NOT NULL,
     userId int NOT NULL,
     loginCookie varchar(100) NOT NULL,
     createdAt timestamp default current_timestamp,
