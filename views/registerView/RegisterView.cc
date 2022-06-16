@@ -163,11 +163,11 @@ void RegisterView::printHTML(){
                         cout<<"<form action='userRegister' method='POST'>"<<endl;
                             cout<<"<div class='form-group'>"<<endl;
                                 cout<<"<label for='inputName'>Nombre</label>"<<endl;
-                                cout<<"<input required name='userName' type='text' minlength='3' maxlength='30' class='form-control' id='inputName' placeholder='Ingrese su nombre'>"<<endl;
+                                cout<<"<input required name='userName' type='text' minlength='2' maxlength='30' class='form-control' id='inputName' placeholder='Ingrese su nombre'>"<<endl;
                             cout<<"</div>"<<endl;
                             cout<<"<div class='form-group'>"<<endl;
                                 cout<<"<label for='inputLastNames'>Apellidos</label>"<<endl;
-                                cout<<"<input required name='userLastNames' type='text' minlength='3' maxlength='30' class='form-control' id='inputLastNames' placeholder='Ingrese sus dos apellidos'>"<<endl;
+                                cout<<"<input required name='userLastNames' type='text' minlength='2' maxlength='30' class='form-control' id='inputLastNames' placeholder='Ingrese sus dos apellidos'>"<<endl;
                             cout<<"</div>"<<endl;
                             cout<<"<div class='form-group'>"<<endl;
                                 cout<<"<label for='inputEmail'>Email</label>"<<endl;
@@ -179,7 +179,7 @@ void RegisterView::printHTML(){
                             cout<<"</div>"<<endl;
                             cout<<"<div class='form-group'>"<<endl;
                                 cout<<"<label for='inputPhoneNumber'>Teléfono</label>"<<endl;
-                                cout<<"<input required name='userPhoneNumber' type='number' minlength='8' class='form-control' id='inputPhoneNumber' placeholder='Ingrese su número de teléfono'>"<<endl;
+                                cout<<"<input required name='userPhoneNumber' type='text' minlength='8' class='form-control' id='inputPhoneNumber' placeholder='Ingrese su número de teléfono'>"<<endl;
                             cout<<"</div>"<<endl;
                             cout<<"<div class='form-group'>"<<endl;
                                 cout<<"<label for='inputDirection'>Dirección</label>"<<endl;
