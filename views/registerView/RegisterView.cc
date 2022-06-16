@@ -98,7 +98,7 @@ bool RegisterView::responsePOST(){
 
                         if (regex_match(userDirection, validationText)) {
                             
-                            if (regex_search(userPassword, validatePassword)) {
+                            if (regex_match(userPassword, validatePassword)) {
                                 //ENCRYPTION OF PASSWORD FOR INSERTION IN DB
                                 encryptPassword = userService->encryption(userPassword);
 
