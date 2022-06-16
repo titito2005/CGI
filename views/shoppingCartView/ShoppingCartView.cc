@@ -369,8 +369,8 @@ void ShoppingCartView::printHTML(){
                               cout<<"</div>"<<endl;     
 
                               cout<<"<div class='form-group'>"<<endl;
-                                cout<<"<input name='checkbox' class='form-check-input' type='checkbox' value='1' id='flexCheckDefault'>"<<endl;
-                                cout<<"<label class='form-check-label ml-2' for='flexCheckDefault'> Guardar tarjeta de crédito </label>"<<endl;
+                                cout<<"<input name='checkbox' class='form-check-input ml-3' type='checkbox' value='1' id='flexCheckDefault'>"<<endl;
+                                cout<<"<label class='form-check-label' for='flexCheckDefault'> Guardar tarjeta de crédito </label>"<<endl;
                               cout<<"</div>"<<endl;
 
                               cout<<"<div class='modal-footer'>"<<endl;
