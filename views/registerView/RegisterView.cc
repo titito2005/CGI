@@ -81,7 +81,7 @@ bool RegisterView::responsePOST(){
     regex validationEmail("(\\w+)(\\.|_)?(\\w*)@(\\w+)(\\.(\\w+))+");
     regex validationPhoneNumber("[0-9]+");
     regex validationText("[a-zA-Z0-9 áéíóúñÑ]*");
-    regex validatePassword ("^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,20}$");
+    regex validatePassword ("^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$");
     //STRING FOR ENCRYPTION
     string encryptPassword = "";
 
