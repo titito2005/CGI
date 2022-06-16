@@ -144,8 +144,8 @@ bool ShoppingCartView::responsePOST(char* ip){
                   //VERIFY THAT FORM HAS COMPLETE DATA
                   if(cardName != NULL && cardNumber != NULL && cardExpireMonth != NULL && cardExpireYear != NULL && cardCVV != NULL ){
                     if (regex_match(cardNumber, validationOnlyNumbers)) {
-                      if (regex_match(cardCVV, validationOnlyNumbers)) {
-                        if (regex_match(cardExpireYear, validationOnlyNumbers)) {
+                      if (regex_match(cardExpireYear, validationOnlyNumbers)) {cardCVV
+                        if (regex_match(cardCVV, validationOnlyNumbers)) {
                           //ENCRYPTION OF PASSWORD FOR INSERTION IN DB
                           encryptCVV = shoppingCheckoutService->encryptionCardData(cardCVV);
                           //CHECKBOX IS CHECKED
@@ -163,11 +163,11 @@ bool ShoppingCartView::responsePOST(char* ip){
                           }
                         } else {
                           error = true;
-                          errorMessage = "El año de vencimiento sólo debe incluir valores numéricos.";  
+                          errorMessage = "El CVV debe incluir sólo valores numéricos.";  
                         }
                       } else {
                         error = true;
-                        errorMessage = "El CVV debe incluir sólo valores numéricos.";  
+                        errorMessage = "El año de vencimiento sólo debe incluir valores numéricos.";  
                       }
                     } else {
                       error = true;
