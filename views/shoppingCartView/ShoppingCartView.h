@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <regex>
 //MODELS
 #include "../../models/sellModel/Sell.h"
 #include "../../models/shoppingCartModel/ShoppingCart.h"

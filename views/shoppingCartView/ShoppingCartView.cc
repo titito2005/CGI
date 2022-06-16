@@ -128,6 +128,8 @@ bool ShoppingCartView::responsePOST(char* ip){
               char* cardExpireYear = parserService->getQueryArg("cardExpireYear");
               char* cardCVV = parserService->getQueryArg("cardCVV");
               char* checkbox = parserService->getQueryArg("checkbox");
+
+              regex validationOnlyNumbers("[0-9]+");
               //STRING FOR USERID AND ENCRYPT VARIABLE
               string encryptCVV = "";
 
@@ -137,21 +139,31 @@ bool ShoppingCartView::responsePOST(char* ip){
               if (!existentCreditCard){
                   //VERIFY THAT FORM HAS COMPLETE DATA
                   if(cardName != NULL && cardNumber != NULL && cardExpireMonth != NULL && cardExpireYear != NULL && cardCVV != NULL ){
-                          //ENCRYPTION OF PASSWORD FOR INSERTION IN DB
-                          encryptCVV = shoppingCheckoutService->encryptionCardData(cardCVV);
-                          //CHECKBOX IS CHECKED
-                          if (checkbox != NULL){
-                              //INSERTS CARD CREDENTIALS IN DATABASE
-                              if(shoppingCheckoutService->insertCardData(userId, cardName, cardNumber, cardExpireMonth, cardExpireYear, encryptCVV)){ 
-                                shoppingSuccesfull = true;
-                              } else {
-                                error = true;
-                                errorMessage = "Error guardando tarjeta";
-                              }
-                          } else {
-                            //CHECKBOX IS NOT CHECKED
-                            shoppingSuccesfull = true;
-                          }
+                    if (regex_match(cardNumber, validationOnlyNumbers) {
+                      if (regex_match(cardCVV, validationOnlyNumbers) {
+                        //ENCRYPTION OF PASSWORD FOR INSERTION IN DB
+                        encryptCVV = shoppingCheckoutService->encryptionCardData(cardCVV);
+                        //CHECKBOX IS CHECKED
+                        if (checkbox != NULL){
+                            //INSERTS CARD CREDENTIALS IN DATABASE
+                            if(shoppingCheckoutService->insertCardData(userId, cardName, cardNumber, cardExpireMonth, cardExpireYear, encryptCVV)){ 
+                              shoppingSuccesfull = true;
+                            } else {
+                              error = true;
+                              errorMessage = "Error guardando tarjeta";
+                            }
+                        } else {
+                          //CHECKBOX IS NOT CHECKED
+                          shoppingSuccesfull = true;
+                        }
+                      }else{
+                        error = true;
+                        errorMessage = "El CVV debe incluir sólo valores numéricos.";  
+                      }
+                    } else {
+                      error = true;
+                      errorMessage = "El número de la tarjeta sólo debe incluir valores numéricos.";   
+                    }
                   } else{
                     //PRINT ERROR INCOMPLETE DATA
                     error = true;
