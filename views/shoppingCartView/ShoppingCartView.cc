@@ -129,7 +129,7 @@ bool ShoppingCartView::responsePOST(char* ip){
               char* cardCVV = parserService->getQueryArg("cardCVV");
               char* checkbox = parserService->getQueryArg("checkbox");
 
-              regex validationOnlyNumbers("[0-9]+");
+              regex validationOnlyNumbers("^[0-9]+$");
               //STRING FOR USERID AND ENCRYPT VARIABLE
               string encryptCVV = "";
 
@@ -381,7 +381,7 @@ void ShoppingCartView::printHTML(){
                               cout<<"</div>"<<endl;     
 
                               cout<<"<div class='form-group'>"<<endl;
-                                cout<<"<input name='checkbox' class='form-check-input ml-3' type='checkbox' value='1' id='flexCheckDefault'>"<<endl;
+                                cout<<"<input name='checkbox' class='form-check-input' type='checkbox' value='1' id='flexCheckDefault'>"<<endl;
                                 cout<<"<label class='form-check-label' for='flexCheckDefault'> Guardar tarjeta de crédito </label>"<<endl;
                               cout<<"</div>"<<endl;
 
