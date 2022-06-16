@@ -134,6 +134,8 @@ bool ShoppingCartView::responsePOST(char* ip){
               char* checkbox = parserService->getQueryArg("checkbox");
 
               regex validationOnlyNumbers("[0-9]+");
+              regex validateNames("[\w íéóúáñ]+");
+              regex validateMonth ("^([1-9]|1[012])$");
               //STRING FOR USERID AND ENCRYPT VARIABLE
               string encryptCVV = "";
 
@@ -146,20 +148,30 @@ bool ShoppingCartView::responsePOST(char* ip){
                     if (regex_match(cardNumber, validationOnlyNumbers)) {
                       if (regex_match(cardExpireYear, validationOnlyNumbers)) {cardCVV
                         if (regex_match(cardCVV, validationOnlyNumbers)) {
-                          //ENCRYPTION OF PASSWORD FOR INSERTION IN DB
-                          encryptCVV = shoppingCheckoutService->encryptionCardData(cardCVV);
-                          //CHECKBOX IS CHECKED
-                          if (checkbox != NULL){
-                              //INSERTS CARD CREDENTIALS IN DATABASE
-                              if(shoppingCheckoutService->insertCardData(userId, cardName, cardNumber, cardExpireMonth, cardExpireYear, encryptCVV)){ 
-                                shoppingSuccesfull = true;
+                          if (regex_match(cardName, validateNames)) {
+                            if (regex_match(cardExpireMonth, validateMonth)) {
+                              //ENCRYPTION OF PASSWORD FOR INSERTION IN DB
+                              encryptCVV = shoppingCheckoutService->encryptionCardData(cardCVV);
+                              //CHECKBOX IS CHECKED
+                              if (checkbox != NULL){
+                                  //INSERTS CARD CREDENTIALS IN DATABASE
+                                  if(shoppingCheckoutService->insertCardData(userId, cardName, cardNumber, cardExpireMonth, cardExpireYear, encryptCVV)){ 
+                                    shoppingSuccesfull = true;
+                                  } else {
+                                    error = true;
+                                    errorMessage = "Error guardando tarjeta";
+                                  }
                               } else {
-                                error = true;
-                                errorMessage = "Error guardando tarjeta";
+                                //CHECKBOX IS NOT CHECKED
+                                shoppingSuccesfull = true;
                               }
+                            } else {
+                              error = true;
+                              errorMessage = "El mes de vencimiento debe contener un número entre el 1 y 12.";         
+                            }
                           } else {
-                            //CHECKBOX IS NOT CHECKED
-                            shoppingSuccesfull = true;
+                            error = true;
+                            errorMessage = "El nombre de la tarjeta debe incluir sólo letras.";    
                           }
                         } else {
                           error = true;
@@ -376,7 +388,7 @@ void ShoppingCartView::printHTML(){
 
                               cout<<"<div class='form-group'>"<<endl;
                                   cout<<"<label for='inputexpmonth'>Mes de vencimiento</label>"<<endl;
-                                  cout<<"<input required name='cardExpireMonth' type='text' minlength='2' maxlength='20' class='form-control' id='inputexpmonth'  style='width: 100%;' placeholder='Ingrese el mes de vencimiento'>"<<endl;
+                                  cout<<"<input required name='cardExpireMonth' type='text' minlength='2' maxlength='20' class='form-control' id='inputexpmonth'  style='width: 100%;' placeholder='Ingrese el mes de vencimiento 1-12'>"<<endl;
                               cout<<"</div>"<<endl;
 
                               cout<<"<div class='form-group'>"<<endl;
