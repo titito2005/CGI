@@ -82,7 +82,7 @@ bool SellView::responsePOST(char* ip)
     sessionID = parserService->getCookieArg("sessionID");
     char* searchName = parserService->getQueryArg("SearchName");
     char* sellId = parserService->getQueryArg("SellId");
-    regex validationText("[a-zA-Z0-9 ,áéíóúÑñ");
+    regex validationText("[a-zA-Z0-9 áéíóúñÑ]*");
     //HAY UNA COOKIE
     if(sessionID != NULL){
         if(sessionService->validateSession(ip, sessionID)){
