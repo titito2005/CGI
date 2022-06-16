@@ -7,10 +7,10 @@ DROP TABLE userComment;
 
 CREATE TABLE user(
     id int auto_increment,
-    firstName varchar(100),
-    lastName varchar(100),
-    email varchar(100),
-    userPassword varchar(100),
+    firstName varchar(30),
+    lastName varchar(30),
+    email varchar(50),
+    userPassword varchar(20),
     createdAt timestamp default current_timestamp,
     phoneNumber int,
     direction varchar(100),
@@ -51,9 +51,9 @@ CREATE TABLE shoppingCart(
 CREATE TABLE shoppingCheckout(
     id int auto_increment,
     userId int NOT NULL,
-    cardName varchar(100),
+    cardName varchar(50),
     cardNumber int,
-    cardExpireMonth varchar(100),
+    cardExpireMonth varchar(20),
     cardExpireYear int,
     cardCVV int,
     createdAt timestamp default current_timestamp,
@@ -63,7 +63,7 @@ CREATE TABLE shoppingCheckout(
 
 CREATE TABLE userComment(
     id int auto_increment,
-    comment varchar(5000),
+    comment varchar(500),
     createdAt timestamp default current_timestamp,
     primary key(id)
 )

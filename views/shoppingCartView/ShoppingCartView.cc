@@ -6,6 +6,7 @@ ShoppingCartView::ShoppingCartView(){
     existentCreditCard = false;
     shoppingSuccesfull = false;
     payment = 0;
+    errorMessage = "";
     //SERVICES
     sessionService = new SessionService();
     parserService = new ParserService();
@@ -76,8 +77,6 @@ bool ShoppingCartView::responseGET(char* ip){
                 creditCard = shoppingCheckoutService->getCardByUserId(_userId);
                 if(creditCard.size() > 0){
                   existentCreditCard = true;
-                } else {
-                  existentCreditCard = false;
                 }
                 //OBTENGO EL SHOPPING CART DEL USUARIO.
                 userCart =  shoppingCartService->getAllShoppingCartByUserId(userId);
@@ -121,61 +120,57 @@ bool ShoppingCartView::responsePOST(char* ip){
               creditCard = shoppingCheckoutService->getCardByUserId(_userId);
               if(creditCard.size() > 0){
                 existentCreditCard = true;
-              } else {
-                existentCreditCard = false;
               }
-            
-                //EXPECTED VARIABLES FROM QUERY 
-                char* cardName = parserService->getQueryArg("cardName");
-                char* cardNumber = parserService->getQueryArg("cardNumber");
-                char* cardExpireMonth = parserService->getQueryArg("cardExpireMonth");
-                char* cardExpireYear = parserService->getQueryArg("cardExpireYear");
-                char* cardCVV = parserService->getQueryArg("cardCVV");
-                char* checkbox = parserService->getQueryArg("checkbox");
-                //STRING FOR USERID AND ENCRYPT VARIABLE
-                string encryptCVV = "";
+              //EXPECTED VARIABLES FROM QUERY 
+              char* cardName = parserService->getQueryArg("cardName");
+              char* cardNumber = parserService->getQueryArg("cardNumber");
+              char* cardExpireMonth = parserService->getQueryArg("cardExpireMonth");
+              char* cardExpireYear = parserService->getQueryArg("cardExpireYear");
+              char* cardCVV = parserService->getQueryArg("cardCVV");
+              char* checkbox = parserService->getQueryArg("checkbox");
+              //STRING FOR USERID AND ENCRYPT VARIABLE
+              string encryptCVV = "";
 
-                //INITIALIZE FOR RANDOM ACCEPTANCE OF PAYMENT
-                payment = shoppingCheckoutService->getRandomPayment();
-                    
-                if (!existentCreditCard){
-                    //VERIFY THAT FORM HAS COMPLETE DATA
-                    if(cardName != NULL && cardNumber != NULL && cardExpireMonth != NULL && cardExpireYear != NULL && cardCVV != NULL ){
-                            //ENCRYPTION OF PASSWORD FOR INSERTION IN DB
-                            encryptCVV = shoppingCheckoutService->encryptionCardData(cardCVV);
-                            //CHECKBOX IS CHECKED
-                            if (checkbox != NULL){
-                                //INSERTS CARD CREDENTIALS IN DATABASE
-                                if(shoppingCheckoutService->insertCardData(userId, cardName, cardNumber, cardExpireMonth, cardExpireYear, encryptCVV)){ 
-                                  shoppingSuccesfull = true;
-                                } else {
-                                  error = true;
-                                  errorMessage = "Error guardando tarjeta";
-                                }
-                            } else {
-                              //CHECKBOX IS NOT CHECKED
-                             // cout << "Location: http://172.24.131.194/cgi-bin/home\n\n" << endl; 
-                             shoppingSuccesfull = true;
-                            }
-                    } else{
-                      //PRINT ERROR INCOMPLETE DATA
-                      error = true;
-                      errorMessage = "Hay datos incompletos. Por favor inserte todos los datos.";        
-                    }
-                } else {
-                  //THE CARD IS ALREADY REGISTERED
-                  shoppingSuccesfull = true;
-                }
+              //INITIALIZE FOR RANDOM ACCEPTANCE OF PAYMENT
+              payment = shoppingCheckoutService->getRandomPayment();
+                  
+              if (!existentCreditCard){
+                  //VERIFY THAT FORM HAS COMPLETE DATA
+                  if(cardName != NULL && cardNumber != NULL && cardExpireMonth != NULL && cardExpireYear != NULL && cardCVV != NULL ){
+                          //ENCRYPTION OF PASSWORD FOR INSERTION IN DB
+                          encryptCVV = shoppingCheckoutService->encryptionCardData(cardCVV);
+                          //CHECKBOX IS CHECKED
+                          if (checkbox != NULL){
+                              //INSERTS CARD CREDENTIALS IN DATABASE
+                              if(shoppingCheckoutService->insertCardData(userId, cardName, cardNumber, cardExpireMonth, cardExpireYear, encryptCVV)){ 
+                                shoppingSuccesfull = true;
+                              } else {
+                                error = true;
+                                errorMessage = "Error guardando tarjeta";
+                              }
+                          } else {
+                            //CHECKBOX IS NOT CHECKED
+                            shoppingSuccesfull = true;
+                          }
+                  } else{
+                    //PRINT ERROR INCOMPLETE DATA
+                    error = true;
+                    errorMessage = "Hay datos incompletos. Por favor inserte todos los datos.";        
+                  }
+              } else {
+                //THE CARD IS ALREADY REGISTERED
+                shoppingSuccesfull = true;
+              }
 
-                if(error == true || shoppingSuccesfull == true){
-                  //VERIFY ERRORS AND PRINT THEM || VERIFY CORRECT PAYMENT
-                  printHTML();
-                }
+              if(error == true || shoppingSuccesfull == true){
+                //VERIFY ERRORS AND PRINT THEM || VERIFY CORRECT PAYMENT
+                printHTML();
+              }
             }
-          } else {
-            //NO HAY COOKIE O NO ES VALIDA
-            cout << "Location: http://172.24.131.194/cgi-bin/home\n\n" << endl;
-         }
+        } else {
+          //NO HAY COOKIE O NO ES VALIDA
+          cout << "Location: http://172.24.131.194/cgi-bin/home\n\n" << endl;
+        }
     } else {
         //NO HAY COOKIE O NO ES VALIDA
         cout << "Location: http://172.24.131.194/cgi-bin/home\n\n" << endl;
@@ -350,27 +345,27 @@ void ShoppingCartView::printHTML(){
                             cout<<"<form action='cart' method='POST'>"<<endl;
                               cout<<"<div class='form-group'>"<<endl;
                                   cout<<"<label for='inputName'>Nombre de la tarjeta</label>"<<endl;
-                                  cout<<"<input name='cardName' type='name' class='form-control' id='inputName'  style='width: 100%;' placeholder='Ingrese el nombre de la tarjeta'>"<<endl;
+                                  cout<<"<input name='cardName' type='text' maxlength='50' class='form-control' id='inputName'  style='width: 100%;' placeholder='Ingrese el nombre de la tarjeta'>"<<endl;
                               cout<<"</div>"<<endl;
 
                               cout<<"<div class='form-group'>"<<endl;
                                   cout<<"<label for='inputcardnumber'>Número de la tarjeta</label>"<<endl;
-                                  cout<<"<input name='cardNumber' type='cardNumber' class='form-control'  id='inputcardnumber' style='width: 100%;' placeholder='Ingrese el número de la tarjeta'>"<<endl;
+                                  cout<<"<input required name='cardNumber' type='number' maxlength='20' class='form-control'  id='inputcardnumber' style='width: 100%;' placeholder='Ingrese el número de la tarjeta'>"<<endl;
                               cout<<"</div>"<<endl;
 
                               cout<<"<div class='form-group'>"<<endl;
                                   cout<<"<label for='inputexpmonth'>Mes de vencimiento</label>"<<endl;
-                                  cout<<"<input name='cardExpireMonth' type='month' class='form-control' id='inputexpmonth'  style='width: 100%;' placeholder='Ingrese el mes de vencimiento'>"<<endl;
+                                  cout<<"<input required name='cardExpireMonth' type='text' maxlength='20' class='form-control' id='inputexpmonth'  style='width: 100%;' placeholder='Ingrese el mes de vencimiento'>"<<endl;
                               cout<<"</div>"<<endl;
 
                               cout<<"<div class='form-group'>"<<endl;
                                   cout<<"<label for='inputexpyear'>Año de vencimiento</label>"<<endl;
-                                  cout<<"<input name='cardExpireYear' type='year' class='form-control' id='inputexpyear'  style='width: 100%;' placeholder='Ingrese el año de vencimiento'>"<<endl;
+                                  cout<<"<input required name='cardExpireYear' type='number' maxlength='4' minlength='4' class='form-control' id='inputexpyear'  style='width: 100%;' placeholder='Ingrese el año de vencimiento'>"<<endl;
                               cout<<"</div>"<<endl;
 
                               cout<<"<div class='form-group'>"<<endl;
                                   cout<<"<label for='inputcvv'>CVV</label>"<<endl;
-                                  cout<<"<input name='cardCVV' type='cvv' class='form-control' id='inputcvv'  style='width: 100%;' placeholder='Ingrese el CVV, por ejemplo '123''>"<<endl;
+                                  cout<<"<input required name='cardCVV' type='number' maxlength='4' class='form-control' id='inputcvv'  style='width: 100%;' placeholder='Ingrese el CVV, por ejemplo '123''>"<<endl;
                               cout<<"</div>"<<endl;     
 
                               cout<<"<div class='form-group'>"<<endl;

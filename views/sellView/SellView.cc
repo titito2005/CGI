@@ -2,8 +2,9 @@
 
 SellView::SellView()
 {
-   error = false;
-   sesion=false;
+    error = false;
+    sesion = false;
+    errorMessage = "";
     //SERVICES
     sessionService = new SessionService();
     parserService = new ParserService();
@@ -66,14 +67,10 @@ bool SellView::responseGET(char* ip)
             sesion=true;
             printHTML();
         } else {
-            //NO HAY COOKIE O NO ES VALIDA
-            //cout << "Location: http://172.24.131.194/cgi-bin/home\n\n" << endl;
             sesion=false;
             printHTML();
         }
     } else {
-        //NO HAY COOKIE O NO ES VALIDA
-        //cout << "Location: http://172.24.131.194/cgi-bin/home\n\n" << endl;
         sesion=false;
         printHTML();
     }
@@ -126,7 +123,6 @@ bool SellView::responsePOST(char* ip)
                     errorMessage = "error al agregar al carrito";
                     printHTML();
                 }
-            
             }
             else{
                 error=true;
@@ -174,7 +170,7 @@ void SellView::printHTML()
         cout<<"<form action='home' method='POST'>"<<endl;
             cout<<"<div class='form-group'>"<<endl;
             cout<<"<label for='inputSearch'>Buscar</label>"<<endl;
-            cout<<"<input name='SearchName' type='search' class='form-control' id='inputSearch' placeholder='Ingrese el nombre del videojuego a buscar'>"<<endl;
+            cout<<"<input name='SearchName' type='text' maxlength='15' class='form-control' id='inputSearch' placeholder='Ingrese el nombre del videojuego a buscar'>"<<endl;
             cout<<"</div>"<<endl;
             cout<<"<button type='submit' class='btn btn-primary'>Buscar</button>"<<endl;
         cout<<"</form>"<<endl;

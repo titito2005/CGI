@@ -15,7 +15,6 @@
 #include "../footerView/FooterView.h"
 
 using namespace std;
-
 #define MAX_ARGS 100
 
 class UserCommentView {
@@ -32,9 +31,6 @@ class UserCommentView {
         SessionService* sessionService;
         HeaderView *headerView;
         FooterView *footerView;
-
         bool userLoged;
-        string errorMessage;
-        //Methods
 };
 #endif

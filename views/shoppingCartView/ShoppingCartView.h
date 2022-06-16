@@ -19,7 +19,6 @@
 #include "../footerView/FooterView.h"
 
 using namespace std;
-
 #define MAX_ARGS 100
 
 class ShoppingCartView {
@@ -39,7 +38,6 @@ class ShoppingCartView {
         ShoppingCheckoutService* shoppingCheckoutService;
         HeaderView *headerView;
         FooterView *footerView;
-
         bool error;
         bool shoppingSuccesfull;
         bool existentCreditCard;

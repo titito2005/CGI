@@ -3,6 +3,7 @@
 RegisterView::RegisterView()
 {
     error = false;
+    errorMessage = "";
     parserService = new ParserService();
     userService = new UserService();
     sessionService = new SessionService();
@@ -136,7 +137,6 @@ bool RegisterView::responsePOST(){
 }
 
 void RegisterView::printHTML(){
-    
     cout << "Content-type:text/html\r\n\r\n";
     cout<<"<!doctype html>"<<endl;
     cout<<"<html lang='en'"<<endl;
@@ -163,27 +163,27 @@ void RegisterView::printHTML(){
                         cout<<"<form action='userRegister' method='POST'>"<<endl;
                             cout<<"<div class='form-group'>"<<endl;
                                 cout<<"<label for='inputName'>Nombre</label>"<<endl;
-                                cout<<"<input name='userName' type='name' class='form-control' id='inputName' placeholder='Ingrese su nombre'>"<<endl;
+                                cout<<"<input required name='userName' type='text' minlength='3' maxlength='30' class='form-control' id='inputName' placeholder='Ingrese su nombre'>"<<endl;
                             cout<<"</div>"<<endl;
                             cout<<"<div class='form-group'>"<<endl;
                                 cout<<"<label for='inputLastNames'>Apellidos</label>"<<endl;
-                                cout<<"<input name='userLastNames' type='lastNames' class='form-control' id='inputLastNames' placeholder='Ingrese sus dos apellidos'>"<<endl;
+                                cout<<"<input required name='userLastNames' type='text' minlength='3' maxlength='30' class='form-control' id='inputLastNames' placeholder='Ingrese sus dos apellidos'>"<<endl;
                             cout<<"</div>"<<endl;
                             cout<<"<div class='form-group'>"<<endl;
                                 cout<<"<label for='inputEmail'>Email</label>"<<endl;
-                                cout<<"<input name='userEmail' type='email' class='form-control' id='inputEmail' placeholder='Ingrese su correo electrónico'>"<<endl;
+                                cout<<"<input required name='userEmail' type='email' minlength='5' maxlength='50' class='form-control' id='inputEmail' placeholder='Ingrese su correo electrónico'>"<<endl;
                             cout<<"</div>"<<endl;
                             cout<<"<div class='form-group'>"<<endl;
                                 cout<<"<label for='inputPassword'>Contraseña</label>"<<endl;
-                                cout<<"<input name='userPassword' type='password' class='form-control' id='inputPassword' placeholder='Ingrese su contraseña'>"<<endl;
+                                cout<<"<input required name='userPassword' type='password' minlength='8' maxlength='20' class='form-control' id='inputPassword' placeholder='Ingrese su contraseña'>"<<endl;
                             cout<<"</div>"<<endl;
                             cout<<"<div class='form-group'>"<<endl;
                                 cout<<"<label for='inputPhoneNumber'>Teléfono</label>"<<endl;
-                                cout<<"<input name='userPhoneNumber' type='phoneNumber' class='form-control' id='inputPhoneNumber' placeholder='Ingrese su número de teléfono'>"<<endl;
+                                cout<<"<input required name='userPhoneNumber' type='number' minlength='8' class='form-control' id='inputPhoneNumber' placeholder='Ingrese su número de teléfono'>"<<endl;
                             cout<<"</div>"<<endl;
                             cout<<"<div class='form-group'>"<<endl;
                                 cout<<"<label for='inputDirection'>Dirección</label>"<<endl;
-                                cout<<"<input name='userDirection' type='direction' class='form-control' id='inputDirection' placeholder='Ingrese su dirección'>"<<endl;
+                                cout<<"<input required name='userDirection' type='text' minlength='5' maxlength='100' class='form-control' id='inputDirection' placeholder='Ingrese su dirección'>"<<endl;
                             cout<<"</div>"<<endl;
                             cout<<"<button type='submit' class='btn btn-primary'>Registrarse</button>"<<endl;
                         cout<<"</form>"<<endl;

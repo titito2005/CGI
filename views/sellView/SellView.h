@@ -8,11 +8,11 @@
 #include "../../services/parserService/ParserService.h"
 #include "../../services/sellService/SellService.h"
 #include "../../services/sessionService/SessionService.h"
+#include "../../services/shoppingCartService/ShoppingCartService.h"
 #include "../headerView/HeaderView.h"
 #include "../footerView/FooterView.h"
-#include "../../services/shoppingCartService/ShoppingCartService.h"
-using namespace std;
 
+using namespace std;
 #define MAX_ARGS 100
 
 class SellView {
