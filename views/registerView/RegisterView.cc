@@ -81,7 +81,7 @@ bool RegisterView::responsePOST(){
     regex validationEmail("(\\w+)(\\.|_)?(\\w*)@(\\w+)(\\.(\\w+))+");
     regex validationPhoneNumber("[0-9]+");
     regex validationText("[a-zA-Z0-9 áéíóúñÑ]*");
-    regex validatePassword ("^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$");
+    regex validatePassword ("^.*(?=.{8,})(?=.*[a-zA-Z])(?=.*\d)(?=.*[!#$%&? ]).*$");
     //STRING FOR ENCRYPTION
     string encryptPassword = "";
 
@@ -98,7 +98,7 @@ bool RegisterView::responsePOST(){
 
                         if (regex_match(userDirection, validationText)) {
                             
-                            if (regex_match(userPassword, validatePassword)) {
+                            if (regex_search(userPassword, validatePassword)) {
                                 //ENCRYPTION OF PASSWORD FOR INSERTION IN DB
                                 encryptPassword = userService->encryption(userPassword);
 
@@ -192,6 +192,7 @@ void RegisterView::printHTML(){
                             cout<<"<div class='form-group'>"<<endl;
                                 cout<<"<label for='inputPassword'>Contraseña</label>"<<endl;
                                 cout<<"<input required name='userPassword' type='password' minlength='8' maxlength='20' class='form-control' id='inputPassword' placeholder='Ingrese su contraseña'>"<<endl;
+                                cout<<"<p> La contraseña debe incluir mínimo 8 caracteres, letras mayúsculas y minúsculas, números y caracteres especiales. </p>" <<endl;
                             cout<<"</div>"<<endl;
                             cout<<"<div class='form-group'>"<<endl;
                                 cout<<"<label for='inputPhoneNumber'>Teléfono</label>"<<endl;
