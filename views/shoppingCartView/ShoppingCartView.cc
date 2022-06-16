@@ -77,6 +77,8 @@ bool ShoppingCartView::responseGET(char* ip){
                 creditCard = shoppingCheckoutService->getCardByUserId(_userId);
                 if(creditCard.size() > 0){
                   existentCreditCard = true;
+                }  else {
+                  existentCreditCard = false;
                 }
                 //OBTENGO EL SHOPPING CART DEL USUARIO.
                 userCart =  shoppingCartService->getAllShoppingCartByUserId(userId);
@@ -120,6 +122,8 @@ bool ShoppingCartView::responsePOST(char* ip){
               creditCard = shoppingCheckoutService->getCardByUserId(_userId);
               if(creditCard.size() > 0){
                 existentCreditCard = true;
+              } else {
+                existentCreditCard = false;
               }
               //EXPECTED VARIABLES FROM QUERY 
               char* cardName = parserService->getQueryArg("cardName");
@@ -136,7 +140,7 @@ bool ShoppingCartView::responsePOST(char* ip){
               //INITIALIZE FOR RANDOM ACCEPTANCE OF PAYMENT
               payment = shoppingCheckoutService->getRandomPayment();
                   
-              if (!existentCreditCard){
+              if (!existentCreditCard) {
                   //VERIFY THAT FORM HAS COMPLETE DATA
                   if(cardName != NULL && cardNumber != NULL && cardExpireMonth != NULL && cardExpireYear != NULL && cardCVV != NULL ){
                     if (regex_match(cardNumber, validationOnlyNumbers)) {
@@ -161,11 +165,12 @@ bool ShoppingCartView::responsePOST(char* ip){
                           error = true;
                           errorMessage = "El año de vencimiento sólo debe incluir valores numéricos.";  
                         }
-                      }else{
+                      } else {
                         error = true;
                         errorMessage = "El CVV debe incluir sólo valores numéricos.";  
                       }
                     } else {
+                      shoppingSuccesfull = false;
                       error = true;
                       errorMessage = "El número de la tarjeta sólo debe incluir valores numéricos.";   
                     }
