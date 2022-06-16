@@ -116,7 +116,7 @@ void UserCommentView::printHTML(){
                 cout<<"<div class='modal-body'>"<<endl;
                 cout<<"<form class='form-group' action='comments' method='POST'>"<<endl;
                     cout<<"<label for='exampleFormControlTextarea1'>Ingrese su comentario</label>"<<endl;
-                    cout<<"<textarea required name='comment' class='form-control' id='exampleFormControlTextarea1' rows='3' placeholder='Ingrese su comentario' minlength='10' maxlength='500'></textarea>"<<endl;
+                    cout<<"<textarea required name='comment' class='form-control' id='exampleFormControlTextarea1' rows='3' placeholder='Ingrese su comentario' minlength='10' maxlength='1000'></textarea>"<<endl;
                     cout<<"<button data-dismiss='modal' aria-label='Close' class='btn btn-secondary mt-3'>Cancelar</button>"<<endl;
                     cout<<"<button type='submit' class='btn btn-primary mt-3'>Enviar comentario</button>"<<endl;
                 cout<<"</form>"<<endl;

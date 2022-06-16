@@ -32,7 +32,7 @@ CREATE TABLE sell(
     id int auto_increment,
     nameArticle varchar(100),
     valueArticle int,
-    descriptionArticle varchar(5000),
+    descriptionArticle varchar(1000),
     createdAt timestamp default current_timestamp,
     primary key(id)
 );
@@ -63,7 +63,7 @@ CREATE TABLE shoppingCheckout(
 
 CREATE TABLE userComment(
     id int auto_increment,
-    comment varchar(500),
+    comment varchar(1000),
     createdAt timestamp default current_timestamp,
     primary key(id)
 )

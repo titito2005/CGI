@@ -80,7 +80,7 @@ bool AddView::responsePOST(char* ip){
     char* GameName = parserService->getQueryArg("GameName");
     char* GameValue = parserService->getQueryArg("GameValue");
     char* GameDescription = parserService->getQueryArg("GameDescription");
-    regex validationText("[a-zA-Z0-9 ,.-:_#$%()=!¿?¡@]*");
+    regex validationText("[a-zA-Z0-9 áéíóúñÑ]*");
     regex validationValue("[0-9]+");
     if (regex_match(GameName, validationText)&& regex_match(GameValue, validationValue) && regex_match(GameDescription, validationText)) { 
         if(GameName != NULL && GameValue != NULL && GameDescription != NULL ){
@@ -88,18 +88,18 @@ bool AddView::responsePOST(char* ip){
                 cout << "Location: http://172.24.131.194/cgi-bin/home\n\n" << endl;
             } else {
                 error = true;
-                errorMessage = "Error al agregar juego limite de caracteres debe ser el nombre menor a 100 y descripcion menor a 5000";
+                errorMessage = "Error al agregar juego limite de caracteres debe ser el nombre menor a 100 y descripcion menor a 5000.";
                 printHTML();
             }
         } else {
             error = true;
-            errorMessage = "error al ingresar los datos";
+            errorMessage = "Error al ingresar los datos.";
             printHTML();
         }
     }
     else{
          error = true;
-         errorMessage = "error caracteres no validos (valor solo permite numeros) (nombre y descripcion solo permite letras, numeros y los caracteres .,-:_#$%()=!¿?¡@)";
+         errorMessage = "Error caracteres no validos (valor solo permite numeros) (nombre y descripcion solo permite letras.";
          printHTML();
     }
 
@@ -136,15 +136,15 @@ void AddView::printHTML(){
                         cout<<"<form action='addSell' method='POST'>"<<endl;
                             cout<<"<div class='form-group'>"<<endl;
                                 cout<<"<label for='inputName'>Nombre del Juego</label>"<<endl;
-                                cout<<"<input name='GameName' type='name' class='form-control' id='inputName' placeholder='Ingrese el nombre del videojuego nombre'>"<<endl;
+                                cout<<"<input required name='GameName' type='text' minlength='2' maxlength='100' class='form-control' id='inputName' placeholder='Ingrese el nombre del videojuego nombre'>"<<endl;
                             cout<<"</div>"<<endl;
                             cout<<"<div class='form-group'>"<<endl;
                                 cout<<"<label for='inputValue'>Valor del juego </label>"<<endl;
-                                cout<<"<input name='GameValue' type='value' class='form-control' id='inputValue' placeholder='Ingrese el valor del juego'>"<<endl;
+                                cout<<"<input required name='GameValue' type='text' minlength='2' maxlength='10' class='form-control' id='inputValue' placeholder='Ingrese el valor del juego'>"<<endl;
                             cout<<"</div>"<<endl;
                             cout<<"<div class='form-group'>"<<endl;
                                 cout<<"<label for='inputDescription'>Descripcion</label>"<<endl;
-                                cout<<"<input name='GameDescription' type='descripcion' class='form-control' id='inputDescription' placeholder='Ingrese la descripcion'>"<<endl;
+                                cout<<"<input required name='GameDescription' type='text' minlength='5' maxlength='1000' class='form-control' id='inputDescription' placeholder='Ingrese la descripcion'>"<<endl;
                             cout<<"</div>"<<endl;
                             cout<<"<button type='submit' class='btn btn-primary'>Agregar</button>"<<endl;
                         cout<<"</form>"<<endl;
