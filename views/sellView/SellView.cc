@@ -108,7 +108,7 @@ bool SellView::responsePOST(char* ip)
             }
             else{
                 error = true;
-                errorMessage = "Error, caracteres no validos solo permite letras, numeros y los caracteres .,-:_#$%()=!¿?¡@";
+                errorMessage = "Error, caracteres no validos solo permite letras y números.";
                 printHTML();
             }
         }
