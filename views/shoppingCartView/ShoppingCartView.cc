@@ -146,7 +146,7 @@ bool ShoppingCartView::responsePOST(char* ip){
                   //VERIFY THAT FORM HAS COMPLETE DATA
                   if(cardName != NULL && cardNumber != NULL && cardExpireMonth != NULL && cardExpireYear != NULL && cardCVV != NULL ){
                     if (regex_match(cardNumber, validationOnlyNumbers)) {
-                      if (regex_match(cardExpireYear, validationOnlyNumbers)) {cardCVV
+                      if (regex_match(cardExpireYear, validationOnlyNumbers)) {
                         if (regex_match(cardCVV, validationOnlyNumbers)) {
                           if (regex_match(cardName, validateNames)) {
                             if (regex_match(cardExpireMonth, validateMonth)) {
