@@ -77,11 +77,11 @@ bool RegisterView::responsePOST(){
     char* userPhoneNumber = parserService->getQueryArg("userPhoneNumber");
     char* userDirection = parserService->getQueryArg("userDirection");
     //REGEX VALIDATIONS FOR REGISTER FORM
-    regex validationNames("[ +\\w+]+");
+    regex validateNames("[a-zA-Z áéíóúñÑ]*");
     regex validationEmail("(\\w+)(\\.|_)?(\\w*)@(\\w+)(\\.(\\w+))+");
     regex validationPhoneNumber("[0-9]+");
     regex validationText("[a-zA-Z0-9 áéíóúñÑ]*");
-    regex validatePassword ("^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$");
+    regex validatePassword ("^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$");
     //STRING FOR ENCRYPTION
     string encryptPassword = "";
 
@@ -90,7 +90,7 @@ bool RegisterView::responsePOST(){
         //VERIFY IF ANOTHER USER HAS THE SAME EMAIL
         if (userService->verifyEmailExistence(userEmail) == false){ 
             //VERIFICATIONS OF DATA FORMAT OF THE FORM
-            if (regex_match(userName, validationNames) && regex_match(userLastNames, validationNames)) { 
+            if (regex_match(userName, validateNames) && regex_match(userLastNames, validateNames)) { 
                 
                 if (regex_match(userEmail, validationEmail)){ 
                     
@@ -112,7 +112,7 @@ bool RegisterView::responsePOST(){
                             } else { 
                                 //PRINT ERROR PASSWORD FORMAT
                                 error = true;
-                                errorMessage = "La contraseña debe contener mínimo 8 caracteres, letras mayúsculas y minúsculas, y caracteres especiales.";
+                                errorMessage = "La contraseña debe contener mínimo 8 caracteres, letras mayúsculas y minúsculas, números y caracteres especiales.";
                             }                     
                         } else {
                             //PRINT ERROR DIRECTION FORMAT
