@@ -82,7 +82,7 @@ bool SellView::responsePOST(char* ip)
     sessionID = parserService->getCookieArg("sessionID");
     char* searchName = parserService->getQueryArg("SearchName");
     char* sellId = parserService->getQueryArg("SellId");
-    regex validationText("[a-zA-Z0-9 ,.-:_#$%()=!¿?¡@]*");
+    regex validationText("[a-zA-Z0-9 ,áéíóúÑñ");
     //HAY UNA COOKIE
     if(sessionID != NULL){
         if(sessionService->validateSession(ip, sessionID)){
@@ -108,7 +108,7 @@ bool SellView::responsePOST(char* ip)
             }
             else{
                 error = true;
-                errorMessage = "error caracteres no validos solo permite letras, numeros y los caracteres .,-:_#$%()=!¿?¡@";
+                errorMessage = "Error, caracteres no validos solo permite letras, numeros y los caracteres .,-:_#$%()=!¿?¡@";
                 printHTML();
             }
         }
