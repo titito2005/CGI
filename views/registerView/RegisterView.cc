@@ -80,6 +80,8 @@ bool RegisterView::responsePOST(){
     regex validationNames("[ +\\w+]+");
     regex validationEmail("(\\w+)(\\.|_)?(\\w*)@(\\w+)(\\.(\\w+))+");
     regex validationPhoneNumber("[0-9]+");
+    regex validationText("[a-zA-Z0-9 áéíóúñÑ]*");
+    regex validatePassword ("^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$");
     //STRING FOR ENCRYPTION
     string encryptPassword = "";
 
@@ -93,30 +95,44 @@ bool RegisterView::responsePOST(){
                 if (regex_match(userEmail, validationEmail)){ 
                     
                     if (regex_match(userPhoneNumber, validationPhoneNumber)){ 
-                        //ENCRYPTION OF PASSWORD FOR INSERTION IN DB
-                        encryptPassword = userService->encryption(userPassword);
 
-                        //INSERT THE NEW USER DATA TO THE DB
-                        if(userService->insertUserRegister(userName, userLastNames, userEmail, encryptPassword, userPhoneNumber, userDirection)){
-                            cout << "Location: http://172.24.131.194/cgi-bin/home\n\n" << endl;
-                            } else {
+                        if (regex_match(userDirection, validationText)) {
+                            
+                            if (regex_match(userPassword, validatePassword)) {
+                                //ENCRYPTION OF PASSWORD FOR INSERTION IN DB
+                                encryptPassword = userService->encryption(userPassword);
+
+                                //INSERT THE NEW USER DATA TO THE DB
+                                if(userService->insertUserRegister(userName, userLastNames, userEmail, encryptPassword, userPhoneNumber, userDirection)){
+                                cout << "Location: http://172.24.131.194/cgi-bin/home\n\n" << endl;
+                                } else {
+                                    error = true;
+                                    errorMessage = "Error registrando el usuario.";
+                                }
+                            } else { 
+                                //PRINT ERROR PASSWORD FORMAT
                                 error = true;
-                                errorMessage = "Error registrando el usuario.";
-                            }
-                        } else { 
-                            //PRINT ERROR PHONE NUMBER
+                                errorMessage = "La contraseña debe contener mínimo 8 caracteres, letras mayúsculas y minúsculas, y caracteres especiales.";
+                            }                     
+                        } else {
+                            //PRINT ERROR DIRECTION FORMAT
                             error = true;
-                            errorMessage = "El número de teléfono solo debe contener números. Por favor ingreselo de nuevo.";
-                        }
+                            errorMessage = "La dirección no debe contener caracteres especiales.";            
+                        } 
+                    } else {
+                        //PRINT ERROR PHONE FORMAT
+                        error = true;
+                        errorMessage = "El teléfono debe contener sólo números.";
+                    } 
                 } else { 
                     //PRINT ERROR EMAIL FORMAT
                     error = true;
-                    errorMessage = "El correo no tiene un formato correcto. Por favor digitelo correctamente.";
+                    errorMessage = "El correo no tiene un formato correcto.";
                 }
             } else { 
                 //PRINT ERROR NAME OR LAST NAMES FORMAT
                 error = true;
-                errorMessage = "Los datos para su nombre completo deben tener solo letras. Por favor insertelos correctamente.";
+                errorMessage = "Los datos para su nombre completo deben tener solo letras.";
             }   
         } else { 
             //PRINT ERROR EXISTENCE OF EMAIL IN OTHER USER
@@ -179,7 +195,7 @@ void RegisterView::printHTML(){
                             cout<<"</div>"<<endl;
                             cout<<"<div class='form-group'>"<<endl;
                                 cout<<"<label for='inputPhoneNumber'>Teléfono</label>"<<endl;
-                                cout<<"<input required name='userPhoneNumber' type='text' minlength='8' class='form-control' id='inputPhoneNumber' placeholder='Ingrese su número de teléfono'>"<<endl;
+                                cout<<"<input required name='userPhoneNumber' type='text' minlength='8' maxlength='8' class='form-control' id='inputPhoneNumber' placeholder='Ingrese su número de teléfono'>"<<endl;
                             cout<<"</div>"<<endl;
                             cout<<"<div class='form-group'>"<<endl;
                                 cout<<"<label for='inputDirection'>Dirección</label>"<<endl;
