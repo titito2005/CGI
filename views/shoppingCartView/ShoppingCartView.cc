@@ -170,7 +170,6 @@ bool ShoppingCartView::responsePOST(char* ip){
                         errorMessage = "El CVV debe incluir sólo valores numéricos.";  
                       }
                     } else {
-                      shoppingSuccesfull = false;
                       error = true;
                       errorMessage = "El número de la tarjeta sólo debe incluir valores numéricos.";   
                     }
