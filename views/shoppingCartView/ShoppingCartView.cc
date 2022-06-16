@@ -345,12 +345,12 @@ void ShoppingCartView::printHTML(){
                             cout<<"<form action='cart' method='POST'>"<<endl;
                               cout<<"<div class='form-group'>"<<endl;
                                   cout<<"<label for='inputName'>Nombre de la tarjeta</label>"<<endl;
-                                  cout<<"<input name='cardName' type='text' maxlength='50' class='form-control' id='inputName'  style='width: 100%;' placeholder='Ingrese el nombre de la tarjeta'>"<<endl;
+                                  cout<<"<input required name='cardName' type='text' maxlength='50' class='form-control' id='inputName'  style='width: 100%;' placeholder='Ingrese el nombre de la tarjeta'>"<<endl;
                               cout<<"</div>"<<endl;
 
                               cout<<"<div class='form-group'>"<<endl;
                                   cout<<"<label for='inputcardnumber'>Número de la tarjeta</label>"<<endl;
-                                  cout<<"<input required name='cardNumber' type='number' maxlength='20' class='form-control'  id='inputcardnumber' style='width: 100%;' placeholder='Ingrese el número de la tarjeta'>"<<endl;
+                                  cout<<"<input required name='cardNumber' type='text' maxlength='20' class='form-control'  id='inputcardnumber' style='width: 100%;' placeholder='Ingrese el número de la tarjeta'>"<<endl;
                               cout<<"</div>"<<endl;
 
                               cout<<"<div class='form-group'>"<<endl;
@@ -360,12 +360,12 @@ void ShoppingCartView::printHTML(){
 
                               cout<<"<div class='form-group'>"<<endl;
                                   cout<<"<label for='inputexpyear'>Año de vencimiento</label>"<<endl;
-                                  cout<<"<input required name='cardExpireYear' type='number' maxlength='4' minlength='4' class='form-control' id='inputexpyear'  style='width: 100%;' placeholder='Ingrese el año de vencimiento'>"<<endl;
+                                  cout<<"<input required name='cardExpireYear' type='text' maxlength='4' minlength='4' class='form-control' id='inputexpyear'  style='width: 100%;' placeholder='Ingrese el año de vencimiento'>"<<endl;
                               cout<<"</div>"<<endl;
 
                               cout<<"<div class='form-group'>"<<endl;
                                   cout<<"<label for='inputcvv'>CVV</label>"<<endl;
-                                  cout<<"<input required name='cardCVV' type='number' maxlength='4' class='form-control' id='inputcvv'  style='width: 100%;' placeholder='Ingrese el CVV, por ejemplo '123''>"<<endl;
+                                  cout<<"<input required name='cardCVV' type='text' maxlength='4' class='form-control' id='inputcvv'  style='width: 100%;' placeholder='Ingrese el CVV, por ejemplo '123''>"<<endl;
                               cout<<"</div>"<<endl;     
 
                               cout<<"<div class='form-group'>"<<endl;
