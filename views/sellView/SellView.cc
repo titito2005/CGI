@@ -170,7 +170,7 @@ void SellView::printHTML()
         cout<<"<form action='home' method='POST'>"<<endl;
             cout<<"<div class='form-group'>"<<endl;
             cout<<"<label for='inputSearch'>Buscar</label>"<<endl;
-            cout<<"<input name='SearchName' type='text' maxlength='15' class='form-control' id='inputSearch' placeholder='Ingrese el nombre del videojuego a buscar'>"<<endl;
+            cout<<"<input name='SearchName' required type='text' maxlength='15' class='form-control' id='inputSearch' placeholder='Ingrese el nombre del videojuego a buscar'>"<<endl;
             cout<<"</div>"<<endl;
             cout<<"<button type='submit' class='btn btn-primary'>Buscar</button>"<<endl;
         cout<<"</form>"<<endl;
