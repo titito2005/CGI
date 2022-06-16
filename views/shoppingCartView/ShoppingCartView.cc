@@ -134,7 +134,7 @@ bool ShoppingCartView::responsePOST(char* ip){
               char* checkbox = parserService->getQueryArg("checkbox");
 
               regex validationOnlyNumbers("[0-9]+");
-              regex validateNames("[\w íéóúáñ]+");
+              regex validateNames("[a-zA-Z]+");
               regex validateMonth ("^([1-9]|1[012])$");
               //STRING FOR USERID AND ENCRYPT VARIABLE
               string encryptCVV = "";
@@ -388,7 +388,7 @@ void ShoppingCartView::printHTML(){
 
                               cout<<"<div class='form-group'>"<<endl;
                                   cout<<"<label for='inputexpmonth'>Mes de vencimiento</label>"<<endl;
-                                  cout<<"<input required name='cardExpireMonth' type='text' minlength='2' maxlength='20' class='form-control' id='inputexpmonth'  style='width: 100%;' placeholder='Ingrese el mes de vencimiento 1-12'>"<<endl;
+                                  cout<<"<input required name='cardExpireMonth' type='text' minlength='1' maxlength='2' class='form-control' id='inputexpmonth'  style='width: 100%;' placeholder='Ingrese el mes de vencimiento 1-12'>"<<endl;
                               cout<<"</div>"<<endl;
 
                               cout<<"<div class='form-group'>"<<endl;
