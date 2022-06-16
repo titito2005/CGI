@@ -81,7 +81,6 @@ bool RegisterView::responsePOST(){
     regex validationEmail("(\\w+)(\\.|_)?(\\w*)@(\\w+)(\\.(\\w+))+");
     regex validationPhoneNumber("[0-9]+");
     regex validationText("[a-zA-Z0-9 áéíóúñÑ]*");
-    regex validatePassword ("^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$");
     //STRING FOR ENCRYPTION
     string encryptPassword = "";
 
@@ -96,24 +95,17 @@ bool RegisterView::responsePOST(){
                     
                     if (regex_match(userPhoneNumber, validationPhoneNumber)){ 
 
-                        if (regex_match(userDirection, validationText)) {
-                            
-                            if (regex_match(userPassword, validatePassword)) {
-                                //ENCRYPTION OF PASSWORD FOR INSERTION IN DB
-                                encryptPassword = userService->encryption(userPassword);
+                        if (regex_match(userDirection, validationText)) { 
+                            //ENCRYPTION OF PASSWORD FOR INSERTION IN DB
+                            encryptPassword = userService->encryption(userPassword);
 
-                                //INSERT THE NEW USER DATA TO THE DB
-                                if(userService->insertUserRegister(userName, userLastNames, userEmail, encryptPassword, userPhoneNumber, userDirection)){
-                                cout << "Location: http://172.24.131.194/cgi-bin/home\n\n" << endl;
-                                } else {
-                                    error = true;
-                                    errorMessage = "Error registrando el usuario.";
-                                }
-                            } else { 
-                                //PRINT ERROR PASSWORD FORMAT
+                            //INSERT THE NEW USER DATA TO THE DB
+                            if(userService->insertUserRegister(userName, userLastNames, userEmail, encryptPassword, userPhoneNumber, userDirection)){
+                            cout << "Location: http://172.24.131.194/cgi-bin/home\n\n" << endl;
+                            } else {
                                 error = true;
-                                errorMessage = "La contraseña debe contener mínimo 8 caracteres, letras mayúsculas y minúsculas, números y caracteres especiales.";
-                            }                     
+                                errorMessage = "Error registrando el usuario.";
+                            }                    
                         } else {
                             //PRINT ERROR DIRECTION FORMAT
                             error = true;
