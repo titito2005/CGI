@@ -83,7 +83,6 @@ bool UserCommentView::responsePOST(char* ip){
           if(userComment.length() < 1000){
               userCommentService->addComment(userComment);
           } else {
-            cout<<"Status: 400 Bad Request"<<endl;
             cout << "Location: http://172.24.131.194/cgi-bin/home\n\n" << endl;
           }
         } else {

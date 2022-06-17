@@ -60,7 +60,6 @@ bool LoginView::responseGET(char* ip){
     if(sessionID != NULL){
         if(sessionService->validateSession(ip, sessionID)){
             //LA COOKIE ES VALIDA NO DEBERIA ENTRAR A LOGIN.
-            cout<<"Status: 400 Bad Request"<<endl;
             cout << "Location: http://172.24.131.194/cgi-bin/home\n\n" << endl;
         }
     }
@@ -77,7 +76,6 @@ bool LoginView::responsePOST(char* ip){
         if(sessionService->validateSession(ip, sessionID)){
             //LA COOKIE ES VALIDA NO DEBERIA ENTRAR A LOGIN.
             userLoged = true;
-            cout<<"Status: 400 Bad Request"<<endl;
             cout << "Location: http://172.24.131.194/cgi-bin/home\n\n" << endl;
         }
     }
@@ -96,7 +94,6 @@ bool LoginView::responsePOST(char* ip){
                     //CREAMOS COOKIE.
                     if(createCookie(ip, userEmail)){
                         //REDIRECCION A HOME.
-                        cout<<"Status: 200 Ok"<<endl;
                         cout << "Location: http://172.24.131.194/cgi-bin/home\n\n" << endl;
                     } else {
                         error = true;

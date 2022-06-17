@@ -64,13 +64,11 @@ bool AddView::responseGET(char* ip){
             printHTML();
         } else {
             //NO HAY COOKIE O NO ES VALIDA
-            cout<<"Status: 400 Bad Request"<<endl;
             cout << "Location: http://172.24.131.194/cgi-bin/home\n\n" << endl;
             //printHTML();
         }
     } else {
         //NO HAY COOKIE O NO ES VALIDA
-        cout<<"Status: 400 Bad Request"<<endl;
         cout << "Location: http://172.24.131.194/cgi-bin/home\n\n" << endl;
         //printHTML();
     }
@@ -93,7 +91,6 @@ bool AddView::responsePOST(char* ip){
              if (regex_match(GameName, validationText)&& regex_match(GameValue, validationValue) && regex_match(GameDescription, validationText)) {
                  if(GameName != NULL && GameValue != NULL && GameDescription != NULL ){
                      if(sellService->addSell(GameName, GameValue, GameDescription)){
-                        cout<<"Status: 200 Ok"<<endl;
                          cout << "Location: http://172.24.131.194/cgi-bin/home\n\n" << endl;
                      } else {
                          error = true;
@@ -112,11 +109,9 @@ bool AddView::responsePOST(char* ip){
                   printHTML();
              }
         } else {
-          cout<<"Status: 400 Bad Request"<<endl;
           cout << "Location: http://172.24.131.194/cgi-bin/home\n\n" << endl;
         }
     } else {
-      cout<<"Status: 400 Bad Request"<<endl;
       cout << "Location: http://172.24.131.194/cgi-bin/home\n\n" << endl;
     }
     return true;

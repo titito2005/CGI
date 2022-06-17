@@ -57,7 +57,6 @@ bool LogoutView::responseGET(char* ip){
         }
     }
     //REDIRIGIMOS A HOME
-    cout<<"Status: 400 Bad Request"<<endl;
     cout << "Location: http://172.24.131.194/cgi-bin/home\n\n" << endl;
     return true;
 }

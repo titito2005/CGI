@@ -99,12 +99,10 @@ bool ShoppingCartView::responseGET(char* ip){
         } else {
             //NO HAY COOKIE O NO ES VALIDA
             cout<<"Location: http://172.24.131.194/cgi-bin/home\n\n" << endl;
-            cout<<"Status: 400 Bad Request"<<endl;
         }
     } else {
         //NO HAY COOKIE O NO ES VALIDA
         cout << "Location: http://172.24.131.194/cgi-bin/home\n\n" << endl;
-        cout<<"Status: 400 Bad Request"<<endl;
     }
     return true;
 }
@@ -204,12 +202,10 @@ bool ShoppingCartView::responsePOST(char* ip){
             }
         } else {
           //NO HAY COOKIE O NO ES VALIDA
-          cout<<"Status: 400 Bad Request"<<endl;
           cout << "Location: http://172.24.131.194/cgi-bin/home\n\n" << endl;
         }
     } else {
         //NO HAY COOKIE O NO ES VALIDA
-        cout<<"Status: 400 Bad Request"<<endl;
         cout << "Location: http://172.24.131.194/cgi-bin/home\n\n" << endl;
     }
   return true;
@@ -230,19 +226,15 @@ bool ShoppingCartView::responseDELETE(char* ip){
                     cout<<"Status: 200 Ok"<<endl;
                 } else {
                   cout << "Location: http://172.24.131.194/cgi-bin/home\n\n" << endl;
-                  cout<<"Status: 400 Bad Request"<<endl;
                 }
             } else {
               cout << "Location: http://172.24.131.194/cgi-bin/home\n\n" << endl;
-              cout<<"Status: 400 Bad Request"<<endl;
             }
         } else {
           cout << "Location: http://172.24.131.194/cgi-bin/home\n\n" << endl;
-          cout<<"Status: 400 Bad Request"<<endl;
         }
     } else {
       cout << "Location: http://172.24.131.194/cgi-bin/home\n\n" << endl;
-      cout<<"Status: 400 Bad Request"<<endl;
     }
     return true;
 }
