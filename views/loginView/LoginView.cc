@@ -90,8 +90,12 @@ bool LoginView::responsePOST(char* ip){
           if(userPassword != NULL){
               if (regex_match(userEmail, validationEmail)) {
                   if(strlen(userEmail) <= 50 && strlen(userPassword) <= 100) {
-                    //VERIFICAMOS USER AND PASSWORD.
-                    if(userService->verifyPassword(userEmail, userPassword)){
+                    //ENCRYPTION OF PASSWORD FOR INSERTION IN DB
+                    string hashedPassword = "";
+                    hash<string> hasher;
+                    hashedPassword = to_string(hasher(userPassword));
+                    userPassword = "";
+                    if(userService->verifyPassword(userEmail, hashedPassword)){
                         //CREAMOS COOKIE.
                         if(createCookie(ip, userEmail)){
                             //REDIRECCION A HOME.

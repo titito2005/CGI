@@ -87,11 +87,11 @@ string UserService::getIdByEmail(char* email){
     return userId;
 }
 
-bool UserService::verifyPassword(char* email, char* password){
+bool UserService::verifyPassword(char* email, string password){
     bool acceptPassword = false;
     User* findUser = getUserByEmail(email);
     if(findUser!=NULL){
-        if ((findUser->getPassword().compare(encryption(password))) == 0){
+        if ((findUser->getPassword().compare(password)) == 0){
             acceptPassword = true;
         }
     }
@@ -118,14 +118,4 @@ bool UserService::verifyEmailExistence(char* incomingEmail){
     }
     
     return emailExist;
-}
-
-string UserService::encryption(string password){
-    string encrypt = "";
-    for (int i = 0; i < password.length(); i++){
-        password[i] = password[i]+2; //key for encryption is 3 and is added to ASCII
-    }
-    encrypt = password;
-    
-    return encrypt;
 }

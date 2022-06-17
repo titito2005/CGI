@@ -15,11 +15,10 @@ class UserService {
         ~UserService();
         User* getUserById(char* id);
         User* getUserByEmail(char* email);
-        bool verifyPassword(char* email, char* password);
+        bool verifyPassword(char* email, string password);
         string getIdByEmail(char* email);
         bool insertUserRegister(string name, string lastNames, string email, string password, string phoneNumber, string direction);
         bool verifyEmailExistence(char* incomingEmail);
-        string encryption(string password);
 
     private:
         Database* db;

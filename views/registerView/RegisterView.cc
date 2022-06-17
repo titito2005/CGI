@@ -109,20 +109,29 @@ bool RegisterView::responsePOST(char* ip){
 
                           if (regex_match(userDirection, validationText)) {
 
-                            if(strlen(userName) <= 30 && strlen(userLastNames) <= 30 && strlen(userPhoneNumber) <= 8 && strlen(userDirection) <= 1000 && strlen(userEmail) <= 50 && strlen(userPassword) <= 100){
-                              //ENCRYPTION OF PASSWORD FOR INSERTION IN DB
-                              encryptPassword = userService->encryption(userPassword);
-                              //INSERT THE NEW USER DATA TO THE DB
-                              if(userService->insertUserRegister(userName, userLastNames, userEmail, encryptPassword, userPhoneNumber, userDirection)){
-                                cout<<"Status: 200 Ok"<<endl;
-                                cout << "Location: http://172.24.131.194/cgi-bin/home\n\n" << endl;
-                              } else {
-                                  error = true;
-                                  errorMessage = "Error registrando el usuario.";
-                              }
+                            if (verifyPassword(userPassword)) {
+                                string hashedPassword = "";
+                                hash<string> hasher;
+                                //ENCRYPTION OF PASSWORD FOR INSERTION IN DB
+                                hashedPassword = to_string(hasher(userPassword));
+                                userPassword = "";
+                                if(strlen(userName) <= 30 && strlen(userLastNames) <= 30 && strlen(userPhoneNumber) <= 8 && strlen(userDirection) <= 1000 && strlen(userEmail) <= 50 && strlen(hashedPassword) <= 100){
+                                //INSERT THE NEW USER DATA TO THE DB
+                                if(userService->insertUserRegister(userName, userLastNames, userEmail, hashedPassword, userPhoneNumber, userDirection)){
+                                    cout<<"Status: 200 Ok"<<endl;
+                                    cout << "Location: http://172.24.131.194/cgi-bin/home\n\n" << endl;
+                                } else {
+                                    error = true;
+                                    errorMessage = "Error registrando el usuario.";
+                                }
+                                } else {
+                                error = true;
+                                errorMessage = "Error registrando el usuario, datos inválidos.";
+                                }
+
                             } else {
-                              error = true;
-                              errorMessage = "Error registrando el usuario, datos inválidos.";
+                                error = true;
+                                errorMessage = "La contraseña debe contener letras mayúscula, minúscula, números y caracteres especiales.";
                             }
                           } else {
                               //PRINT ERROR DIRECTION FORMAT
@@ -225,6 +234,35 @@ void RegisterView::printHTML(){
             cout<<"<script src='https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js' integrity='sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM' crossorigin='anonymous'></script>"<<endl;
         cout<<"</body>"<<endl;
     cout<<"</html>"<<endl;
+}
+
+bool RegisterView::verifyPassword(char* input) {
+   string password(input);
+   int n = password.length();
+   // Checking lower alphabet in string
+   bool hasLower = false, hasUpper = false;
+   bool hasDigit = false, specialChar = false;
+   string normalChars = "abcdefghijklmnopqrstu" "vwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 ";
+   
+   for (int i = 0; i < n; i++) {
+      if (islower(password[i])) {
+        hasLower = true;
+      }
+      if (isupper(password[i])) {
+        hasUpper = true;
+      }
+      if (isdigit(password[i])) {
+        hasDigit = true;
+      }
+      size_t special = password.find_first_not_of(normalChars);
+      if (special != string::npos) {
+        specialChar = true;
+      }
+   }
+   if(n>8 && hasLower && hasUpper && hasDigit && specialChar){
+       return true;
+   }
+   return false;
 }
 
 int main(){

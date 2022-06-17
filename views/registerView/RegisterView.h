@@ -30,6 +30,7 @@ class RegisterView {
         bool responseGET(char* ip);
         bool responsePOST(char* ip);
         void printHTML();
+        bool verifyPassword(char* input);
     private:
         //Variables
         ParserService *parserService;
