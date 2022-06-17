@@ -55,7 +55,7 @@ CREATE TABLE shoppingCheckout(
     cardNumber varchar(20),
     cardExpireMonth varchar(20),
     cardExpireYear varchar(4),
-    cardCVV varchar(4),
+    cardCVV varchar(100),
     createdAt timestamp default current_timestamp,
     primary key(id),
     foreign key(userId) references user(id)
