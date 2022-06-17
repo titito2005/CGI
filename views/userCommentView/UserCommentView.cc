@@ -34,7 +34,8 @@ UserCommentView::UserCommentView(){
         if(!parserService->verifyRequest(query_string)) {
             parserService->parseQuery(query_string, query_length);
         } else {
-            cout<<"Status: 400 Bad Request"<<endl;
+            error = true;
+            errorMessage = "Error en la solicitud."
         }
     }
     //PARSE COOKIES
@@ -43,7 +44,8 @@ UserCommentView::UserCommentView(){
             cookie_length = strlen(cookie_string);
             parserService->parseCookie(cookie_string, cookie_length);
         } else {
-            cout<<"Status: 400 Bad Request"<<endl;
+            error = true;
+            errorMessage = "Error en la solicitud."
         }
     }
     // Check request_method variable
