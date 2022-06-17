@@ -150,20 +150,25 @@ bool ShoppingCartView::responsePOST(char* ip){
                         if (regex_match(cardCVV, validationOnlyNumbers)) {
                           if (regex_match(cardName, validateNames)) {
                             if (regex_match(cardExpireMonth, validateMonth)) {
-                              //ENCRYPTION OF PASSWORD FOR INSERTION IN DB
-                              encryptCVV = shoppingCheckoutService->encryptionCardData(cardCVV);
-                              //CHECKBOX IS CHECKED
-                              if (checkbox != NULL){
-                                  //INSERTS CARD CREDENTIALS IN DATABASE
-                                  if(shoppingCheckoutService->insertCardData(userId, cardName, cardNumber, cardExpireMonth, cardExpireYear, encryptCVV)){
-                                    shoppingSuccesfull = true;
-                                  } else {
-                                    error = true;
-                                    errorMessage = "Error guardando tarjeta";
-                                  }
+                              if(strlen(cardName) <= 50 && strlen(cardNumber) <= 20  && strlen(cardExpireMonth) <= 2 && strlen(cardExpireYear) <= 4 && strlen(cardCVV) <= 4) {
+                                //ENCRYPTION OF PASSWORD FOR INSERTION IN DB
+                                encryptCVV = shoppingCheckoutService->encryptionCardData(cardCVV);
+                                //CHECKBOX IS CHECKED
+                                if (checkbox != NULL){
+                                    //INSERTS CARD CREDENTIALS IN DATABASE
+                                    if(shoppingCheckoutService->insertCardData(userId, cardName, cardNumber, cardExpireMonth, cardExpireYear, encryptCVV)){
+                                      shoppingSuccesfull = true;
+                                    } else {
+                                      error = true;
+                                      errorMessage = "Error guardando tarjeta.";
+                                    }
+                                } else {
+                                  //CHECKBOX IS NOT CHECKED
+                                  shoppingSuccesfull = true;
+                                }
                               } else {
-                                //CHECKBOX IS NOT CHECKED
-                                shoppingSuccesfull = true;
+                                error = true;
+                                errorMessage = "Error realizando el pago.";
                               }
                             } else {
                               error = true;

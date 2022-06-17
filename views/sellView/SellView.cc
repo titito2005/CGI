@@ -97,13 +97,19 @@ bool SellView::responsePOST(char* ip)
     }
         if(searchName != NULL){
             if (regex_match(searchName, validationText)) {
-                searchSell=sellService->sellByName(searchName);
-                if(searchSell!=NULL){
-                    printHTML();
+                if(strlen(searchName) <= 15){
+                  searchSell=sellService->sellByName(searchName);
+                  if(searchSell!=NULL){
+                      printHTML();
+                  } else {
+                      error = true;
+                      errorMessage = "No se encontro resultados.";
+                      printHTML();
+                  }
                 } else {
-                    error = true;
-                    errorMessage = "No se encontro resultados";
-                    printHTML();
+                  error = true;
+                  errorMessage = "Error realizando la búsqueda.";
+                  printHTML();
                 }
             }
             else{

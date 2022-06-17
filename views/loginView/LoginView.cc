@@ -89,21 +89,26 @@ bool LoginView::responsePOST(char* ip){
       if(userEmail != NULL){
           if(userPassword != NULL){
               if (regex_match(userEmail, validationEmail)) {
-                //VERIFICAMOS USER AND PASSWORD.
-                if(userService->verifyPassword(userEmail, userPassword)){
-                    //CREAMOS COOKIE.
-                    if(createCookie(ip, userEmail)){
-                        //REDIRECCION A HOME.
-                        cout << "Location: http://172.24.131.194/cgi-bin/home\n\n" << endl;
-                    } else {
+                  if(strlen(userEmail) <= 50 && strlen(userPassword) <= 100) {
+                    //VERIFICAMOS USER AND PASSWORD.
+                    if(userService->verifyPassword(userEmail, userPassword)){
+                        //CREAMOS COOKIE.
+                        if(createCookie(ip, userEmail)){
+                            //REDIRECCION A HOME.
+                            cout << "Location: http://172.24.131.194/cgi-bin/home\n\n" << endl;
+                        } else {
+                            error = true;
+                            errorMessage = "Error verificando el usuario.";
+                        }
+                    }else{
+                        //PRINT ERROR VERIFY PASSWORD
                         error = true;
-                        errorMessage = "Error verificando el usuario.";
+                        errorMessage = "El email y la contraseña no coinciden.";
                     }
-                }else{
-                    //PRINT ERROR VERIFY PASSWORD
+                  } else {
                     error = true;
-                    errorMessage = "El email y la contraseña no coinciden.";
-                }
+                    errorMessage = "Error, datos inválidos.";
+                  }
               } else {
                 error = true;
                 errorMessage = "Fromato del correo electrónico no es correcto.";

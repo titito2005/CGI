@@ -108,9 +108,10 @@ bool RegisterView::responsePOST(char* ip){
                       if (regex_match(userPhoneNumber, validationPhoneNumber)){
 
                           if (regex_match(userDirection, validationText)) {
+
+                            if(strlen(userName) <= 30 && strlen(userLastNames) <= 30 && strlen(userPhoneNumber) <= 8 && strlen(userDirection) <= 1000 && strlen(userEmail) <= 50 && strlen(userPassword) <= 100){
                               //ENCRYPTION OF PASSWORD FOR INSERTION IN DB
                               encryptPassword = userService->encryption(userPassword);
-
                               //INSERT THE NEW USER DATA TO THE DB
                               if(userService->insertUserRegister(userName, userLastNames, userEmail, encryptPassword, userPhoneNumber, userDirection)){
                                 cout<<"Status: 200 Ok"<<endl;
@@ -119,6 +120,10 @@ bool RegisterView::responsePOST(char* ip){
                                   error = true;
                                   errorMessage = "Error registrando el usuario.";
                               }
+                            } else {
+                              error = true;
+                              errorMessage = "Error registrando el usuario, datos inválidos.";
+                            }
                           } else {
                               //PRINT ERROR DIRECTION FORMAT
                               error = true;
@@ -206,7 +211,7 @@ void RegisterView::printHTML(){
                             cout<<"</div>"<<endl;
                             cout<<"<div class='form-group'>"<<endl;
                                 cout<<"<label for='inputDirection'>Dirección</label>"<<endl;
-                                cout<<"<input required name='userDirection' type='text' minlength='5' maxlength='100' class='form-control' id='inputDirection' placeholder='Ingrese su dirección'>"<<endl;
+                                cout<<"<input required name='userDirection' type='text' minlength='5' maxlength='1000' class='form-control' id='inputDirection' placeholder='Ingrese su dirección'>"<<endl;
                             cout<<"</div>"<<endl;
                             cout<<"<button type='submit' class='btn btn-primary'>Registrarse</button>"<<endl;
                         cout<<"</form>"<<endl;

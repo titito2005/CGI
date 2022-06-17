@@ -13,7 +13,7 @@ CREATE TABLE user(
     userPassword varchar(100),
     createdAt timestamp default current_timestamp,
     phoneNumber int,
-    direction varchar(100),
+    direction varchar(1000),
     primary key(id)
 );
 
