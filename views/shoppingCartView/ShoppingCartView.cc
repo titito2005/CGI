@@ -229,20 +229,20 @@ bool ShoppingCartView::responseDELETE(char* ip){
                     shoppingCartService->deleteCartByUserAndItemId(userId, itemId);
                     cout<<"Status: 200 Ok"<<endl;
                 } else {
-                  cout<<"Status: 400 Bad Request"<<endl;
                   cout << "Location: http://172.24.131.194/cgi-bin/home\n\n" << endl;
+                  cout<<"Status: 400 Bad Request"<<endl;
                 }
             } else {
-              cout<<"Status: 400 Bad Request"<<endl;
               cout << "Location: http://172.24.131.194/cgi-bin/home\n\n" << endl;
+              cout<<"Status: 400 Bad Request"<<endl;
             }
         } else {
-          cout<<"Status: 400 Bad Request"<<endl;
           cout << "Location: http://172.24.131.194/cgi-bin/home\n\n" << endl;
+          cout<<"Status: 400 Bad Request"<<endl;
         }
     } else {
-      cout<<"Status: 400 Bad Request"<<endl;
       cout << "Location: http://172.24.131.194/cgi-bin/home\n\n" << endl;
+      cout<<"Status: 400 Bad Request"<<endl;
     }
     return true;
 }
