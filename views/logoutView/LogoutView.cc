@@ -37,10 +37,6 @@ LogoutView::LogoutView(){
         if (strcmp(request_method, "GET") == 0){
             responseGET(requestAddr);
         }
-        // Handle POST requests
-        if (strcmp(request_method, "POST") == 0){
-            responsePOST(requestAddr);
-        }
     }
 }
 
@@ -55,15 +51,13 @@ bool LogoutView::responseGET(char* ip){
         if(sessionService->validateSession(ip, sessionID)){
             //LA COOKIE ES VALIDA LA BORRAMOS DE LA BD
             sessionService->deleteSessionByCookie(sessionID);
+            cout<<"Status: 200 Ok"<<endl;
+            cout << "Location: http://172.24.131.194/cgi-bin/home\n\n" << endl;
+            return true;
         }
     }
     //REDIRIGIMOS A HOME
-    cout << "Location: http://172.24.131.194/cgi-bin/home\n\n" << endl;
-    return true;
-}
-
-bool LogoutView::responsePOST(char* ip){
-    //NO HAY POST, REDIRIGIMOS A HOME.
+    cout<<"Status: 400 Bad Request"<<endl;
     cout << "Location: http://172.24.131.194/cgi-bin/home\n\n" << endl;
     return true;
 }

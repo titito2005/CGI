@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <regex>
 //MODELS
 #include "../../models/userCommentModel/UserComment.h"
 //SERVICES
@@ -32,5 +33,7 @@ class UserCommentView {
         HeaderView *headerView;
         FooterView *footerView;
         bool userLoged;
+        bool error;
+        string errorMessage;
 };
 #endif

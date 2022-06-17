@@ -54,12 +54,13 @@ LoginView::~LoginView()
 {
 }
 
-bool LoginView::responseGET(char* ip){ 
+bool LoginView::responseGET(char* ip){
     char *sessionID = parserService->getCookieArg("sessionID");
     //HAY UNA COOKIE
     if(sessionID != NULL){
         if(sessionService->validateSession(ip, sessionID)){
             //LA COOKIE ES VALIDA NO DEBERIA ENTRAR A LOGIN.
+            cout<<"Status: 400 Bad Request"<<endl;
             cout << "Location: http://172.24.131.194/cgi-bin/home\n\n" << endl;
         }
     }
@@ -69,35 +70,57 @@ bool LoginView::responseGET(char* ip){
 }
 
 bool LoginView::responsePOST(char* ip){
-    //EXPECTED VARIABLES FROM QUERY
-    char* userEmail = parserService->getQueryArg("userEmail");
-    char* userPassword = parserService->getQueryArg("userPassword");
-    if(userEmail != NULL){
-        if(userPassword != NULL){
-            //VERIFICAMOS USER AND PASSWORD.
-            if(userService->verifyPassword(userEmail, userPassword)){
-                //CREAMOS COOKIE.
-                if(createCookie(ip, userEmail)){
-                    //REDIRECCION A HOME.
-                    cout << "Location: http://172.24.131.194/cgi-bin/home\n\n" << endl;
-                } else {
-                    error = true;
-                    errorMessage = "Error verificando el usuario.";
-                }
-            }else{
-                //PRINT ERROR VERIFY PASSWORD
-                error = true;
-                errorMessage = "El email y la contraseña no coinciden.";
-            }
-        }else{
-            //PRINT ERROR NO PASSWORD
-            error = true;
-            errorMessage = "No se ha ingresado la contraseña, asegúrese de rellenar todos los espacios.";
+    bool userLoged = false;
+    char *sessionID = parserService->getCookieArg("sessionID");
+    //HAY UNA COOKIE
+    if(sessionID != NULL){
+        if(sessionService->validateSession(ip, sessionID)){
+            //LA COOKIE ES VALIDA NO DEBERIA ENTRAR A LOGIN.
+            userLoged = true;
+            cout<<"Status: 400 Bad Request"<<endl;
+            cout << "Location: http://172.24.131.194/cgi-bin/home\n\n" << endl;
         }
-    }else{
-        //PRINT ERROR NO EMAIL
-        error = true;
-        errorMessage = "No se ha ingresado el email, asegúrese de rellenar todos los espacios.";
+    }
+    if(!userLoged) {
+      //EXPECTED VARIABLES FROM QUERY
+      char* userEmail = parserService->getQueryArg("userEmail");
+      char* userPassword = parserService->getQueryArg("userPassword");
+
+      regex validationEmail("(\\w+)(\\.|_)?(\\w*)@(\\w+)(\\.(\\w+))+");
+
+      if(userEmail != NULL){
+          if(userPassword != NULL){
+              if (regex_match(userEmail, validationEmail)) {
+                //VERIFICAMOS USER AND PASSWORD.
+                if(userService->verifyPassword(userEmail, userPassword)){
+                    //CREAMOS COOKIE.
+                    if(createCookie(ip, userEmail)){
+                        //REDIRECCION A HOME.
+                        cout<<"Status: 200 Ok"<<endl;
+                        cout << "Location: http://172.24.131.194/cgi-bin/home\n\n" << endl;
+                    } else {
+                        error = true;
+                        errorMessage = "Error verificando el usuario.";
+                    }
+                }else{
+                    //PRINT ERROR VERIFY PASSWORD
+                    error = true;
+                    errorMessage = "El email y la contraseña no coinciden.";
+                }
+              } else {
+                error = true;
+                errorMessage = "Fromato del correo electrónico no es correcto.";
+              }
+          }else{
+              //PRINT ERROR NO PASSWORD
+              error = true;
+              errorMessage = "No se ha ingresado la contraseña, asegúrese de rellenar todos los espacios.";
+          }
+      }else{
+          //PRINT ERROR NO EMAIL
+          error = true;
+          errorMessage = "No se ha ingresado el email, asegúrese de rellenar todos los espacios.";
+      }
     }
 
     if(error){
@@ -113,6 +136,7 @@ bool LoginView::createCookie(char* ip, char* userEmail){
     //BORRO COOKIE CON EL ID DEL USUARIO (Por si existe una session anterior)
     sessionService->deleteSessionByUserId(userId);
     if(sessionService->setSessionCookie(ip, userId, cookie)){
+        cout<<"Status: 200 Ok"<<endl;
         cout << "Set-Cookie:sessionID="<<cookie<<";"<< endl;
         return true;
     }
@@ -149,11 +173,11 @@ void LoginView::printHTML(){
                         cout<<"<form action='login' method='POST'>"<<endl;
                             cout<<"<div class='form-group'>"<<endl;
                                 cout<<"<label for='inputEmail1'>Email</label>"<<endl;
-                                cout<<"<input name='userEmail' type='email' class='form-control' id='inputEmail1' placeholder='Ingrese su correo electrónico'>"<<endl;
+                                cout<<"<input required name='userEmail' type='email' class='form-control' minlength='2' maxlength='50' id='inputEmail1' placeholder='Ingrese su correo electrónico'>"<<endl;
                             cout<<"</div>"<<endl;
                             cout<<"<div class='form-group'>"<<endl;
                                 cout<<"<label for='inputPassword'>Contraseña</label>"<<endl;
-                                cout<<"<input name='userPassword' type='password' class='form-control' id='inputPassword' placeholder='Ingrese su contraseña'>"<<endl;
+                                cout<<"<input required name='userPassword' type='password' class='form-control' minlength='8' maxlength='20' id='inputPassword' placeholder='Ingrese su contraseña'>"<<endl;
                             cout<<"</div>"<<endl;
                             cout<<"<button type='submit' class='btn btn-primary'>Iniciar sesión</button>"<<endl;
                         cout<<"</form>"<<endl;

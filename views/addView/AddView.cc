@@ -54,7 +54,7 @@ AddView::~AddView()
 {
 }
 
-bool AddView::responseGET(char* ip){ 
+bool AddView::responseGET(char* ip){
     char *sessionID = parserService->getCookieArg("sessionID");
     //HAY UNA COOKIE
     if(sessionID != NULL){
@@ -64,11 +64,13 @@ bool AddView::responseGET(char* ip){
             printHTML();
         } else {
             //NO HAY COOKIE O NO ES VALIDA
+            cout<<"Status: 400 Bad Request"<<endl;
             cout << "Location: http://172.24.131.194/cgi-bin/home\n\n" << endl;
             //printHTML();
         }
     } else {
         //NO HAY COOKIE O NO ES VALIDA
+        cout<<"Status: 400 Bad Request"<<endl;
         cout << "Location: http://172.24.131.194/cgi-bin/home\n\n" << endl;
         //printHTML();
     }
@@ -76,35 +78,47 @@ bool AddView::responseGET(char* ip){
 }
 
 bool AddView::responsePOST(char* ip){
- //EXPECTED VARIABLES FROM QUERY
-    char* GameName = parserService->getQueryArg("GameName");
-    char* GameValue = parserService->getQueryArg("GameValue");
-    char* GameDescription = parserService->getQueryArg("GameDescription");
-    regex validationText("[a-zA-Z0-9 áéíóúñÑ]*");
-    regex validationValue("[0-9]+");
-    if (regex_match(GameName, validationText)&& regex_match(GameValue, validationValue) && regex_match(GameDescription, validationText)) { 
-        if(GameName != NULL && GameValue != NULL && GameDescription != NULL ){
-            if(sellService->addSell(GameName, GameValue, GameDescription)){
-                cout << "Location: http://172.24.131.194/cgi-bin/home\n\n" << endl;
-            } else {
-                error = true;
-                errorMessage = "Error al agregar juego limite de caracteres debe ser el nombre menor a 100 y descripcion menor a 5000.";
-                printHTML();
-            }
+    bool userLoged = false;
+    char *sessionID = parserService->getCookieArg("sessionID");
+    //HAY UNA COOKIE
+    if(sessionID != NULL){
+        if(sessionService->validateSession(ip, sessionID)){
+            //LA COOKIE ES VALIDA NO DEBERIA ENTRAR A LOGIN.
+            //EXPECTED VARIABLES FROM QUERY
+             char* GameName = parserService->getQueryArg("GameName");
+             char* GameValue = parserService->getQueryArg("GameValue");
+             char* GameDescription = parserService->getQueryArg("GameDescription");
+             regex validationText("[a-zA-Z0-9 áéíóúñÑ]*");
+             regex validationValue("[0-9]+");
+             if (regex_match(GameName, validationText)&& regex_match(GameValue, validationValue) && regex_match(GameDescription, validationText)) {
+                 if(GameName != NULL && GameValue != NULL && GameDescription != NULL ){
+                     if(sellService->addSell(GameName, GameValue, GameDescription)){
+                        cout<<"Status: 200 Ok"<<endl;
+                         cout << "Location: http://172.24.131.194/cgi-bin/home\n\n" << endl;
+                     } else {
+                         error = true;
+                         errorMessage = "Error al agregar juego limite de caracteres debe ser el nombre menor a 100 y descripcion menor a 5000.";
+                         printHTML();
+                     }
+                 } else {
+                     error = true;
+                     errorMessage = "Error al ingresar los datos.";
+                     printHTML();
+                 }
+             }
+             else{
+                  error = true;
+                  errorMessage = "Error caracteres no validos (valor solo permite numeros) (nombre y descripcion solo permite letras.";
+                  printHTML();
+             }
         } else {
-            error = true;
-            errorMessage = "Error al ingresar los datos.";
-            printHTML();
+          cout<<"Status: 400 Bad Request"<<endl;
+          cout << "Location: http://172.24.131.194/cgi-bin/home\n\n" << endl;
         }
+    } else {
+      cout<<"Status: 400 Bad Request"<<endl;
+      cout << "Location: http://172.24.131.194/cgi-bin/home\n\n" << endl;
     }
-    else{
-         error = true;
-         errorMessage = "Error caracteres no validos (valor solo permite numeros) (nombre y descripcion solo permite letras.";
-         printHTML();
-    }
-
-   
-
     return true;
 }
 

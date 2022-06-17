@@ -1,7 +1,9 @@
 #include "UserCommentView.h"
 
 UserCommentView::UserCommentView(){
-    userLoged=false;
+    userLoged = false;
+    error = false;
+    errorMessage = "";
     //SERVICE
     parserService = new ParserService();
     userCommentService = new UserCommentService();
@@ -66,8 +68,9 @@ bool UserCommentView::responseGET(char* ip){
 }
 
 bool UserCommentView::responsePOST(char* ip){
-    char* comment = parserService->getQueryArg("comment");
+    char *comment = parserService->getQueryArg("comment");
     char *sessionID = parserService->getCookieArg("sessionID");
+    regex validationText("[a-zA-Z0-9 áéíóúñÑ]*");
     //HAY UNA COOKIE
     if(sessionID != NULL){
         if(sessionService->validateSession(ip, sessionID)){
@@ -76,8 +79,16 @@ bool UserCommentView::responsePOST(char* ip){
     }
     if(comment != NULL){
         string userComment(comment);
-        if(userComment.length() < 500){
-            userCommentService->addComment(userComment);
+        if (regex_match(userComment, validationText)) {
+          if(userComment.length() < 1000){
+              userCommentService->addComment(userComment);
+          } else {
+            cout<<"Status: 400 Bad Request"<<endl;
+            cout << "Location: http://172.24.131.194/cgi-bin/home\n\n" << endl;
+          }
+        } else {
+          error = true;
+          errorMessage = "El comentario sólo debe contener letras y números."
         }
     }
     printHTML();
@@ -102,6 +113,12 @@ void UserCommentView::printHTML(){
         headerView->printHeaderHTML(userLoged);
         cout<<"<div class='container'>"<<endl;
         cout<<"<h3 class='mt-2'>Reportes y comentarios</h3>"<<endl;
+        //VERIFIES ERRORS AND PRINT THEM AS WARNINGS
+        if(error){
+            cout<<"<div class='alert alert-warning' role='alert'>"<<endl;
+                cout<< errorMessage << endl;
+            cout<<"</div>"<<endl;
+        }
         cout<<"<button type='button' class='btn btn-primary mt-3' data-toggle='modal' data-target='#exampleModal'> Enviar nuevo comentario</button>"<<endl;
 
         cout<<"<div class='modal fade' id='exampleModal' tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true'>"<<endl;

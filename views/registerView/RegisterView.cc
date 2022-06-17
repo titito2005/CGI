@@ -57,84 +57,101 @@ RegisterView::~RegisterView()
 
 bool RegisterView::responseGET(char* ip){
     char *sessionID = parserService->getCookieArg("sessionID");
-    //THERE IS A COOKIE 
+    //THERE IS A COOKIE
     if(sessionID != NULL){
         if(sessionService->validateSession(ip, sessionID)){
             //IF THE COOKIE IS VALID, IT SHOULDN'T ENTER IN LOGIN
+            cout<<"Status: 400 Bad Request"<<endl;
             cout << "Location: http://172.24.131.194/cgi-bin/home\n\n" << endl;
         }
-    } 
+    }
     printHTML();
     return true;
 }
 
 bool RegisterView::responsePOST(){
-    //EXPECTED VARIABLES FROM QUERY
-    char* userName = parserService->getQueryArg("userName");
-    char* userLastNames = parserService->getQueryArg("userLastNames");
-    char* userEmail = parserService->getQueryArg("userEmail");
-    char* userPassword = parserService->getQueryArg("userPassword");
-    char* userPhoneNumber = parserService->getQueryArg("userPhoneNumber");
-    char* userDirection = parserService->getQueryArg("userDirection");
-    //REGEX VALIDATIONS FOR REGISTER FORM
-    regex validateNames("[a-zA-Z áéíóúñÑ]*");
-    regex validationEmail("(\\w+)(\\.|_)?(\\w*)@(\\w+)(\\.(\\w+))+");
-    regex validationPhoneNumber("[0-9]+");
-    regex validationText("[a-zA-Z0-9 áéíóúñÑ]*");
-    //STRING FOR ENCRYPTION
-    string encryptPassword = "";
-
-    //VERIFY THAT FORM HAS COMPLETE DATA
-    if(userName != NULL && userLastNames != NULL && userPhoneNumber != NULL && userDirection != NULL && userEmail != NULL && userPassword != NULL){ 
-        //VERIFY IF ANOTHER USER HAS THE SAME EMAIL
-        if (userService->verifyEmailExistence(userEmail) == false){ 
-            //VERIFICATIONS OF DATA FORMAT OF THE FORM
-            if (regex_match(userName, validateNames) && regex_match(userLastNames, validateNames)) { 
-                
-                if (regex_match(userEmail, validationEmail)){ 
-                    
-                    if (regex_match(userPhoneNumber, validationPhoneNumber)){ 
-
-                        if (regex_match(userDirection, validationText)) { 
-                            //ENCRYPTION OF PASSWORD FOR INSERTION IN DB
-                            encryptPassword = userService->encryption(userPassword);
-
-                            //INSERT THE NEW USER DATA TO THE DB
-                            if(userService->insertUserRegister(userName, userLastNames, userEmail, encryptPassword, userPhoneNumber, userDirection)){
-                            cout << "Location: http://172.24.131.194/cgi-bin/home\n\n" << endl;
-                            } else {
-                                error = true;
-                                errorMessage = "Error registrando el usuario.";
-                            }                    
-                        } else {
-                            //PRINT ERROR DIRECTION FORMAT
-                            error = true;
-                            errorMessage = "La dirección no debe contener caracteres especiales.";            
-                        } 
-                    } else {
-                        //PRINT ERROR PHONE FORMAT
-                        error = true;
-                        errorMessage = "El teléfono debe contener sólo números.";
-                    } 
-                } else { 
-                    //PRINT ERROR EMAIL FORMAT
-                    error = true;
-                    errorMessage = "El correo no tiene un formato correcto.";
-                }
-            } else { 
-                //PRINT ERROR NAME OR LAST NAMES FORMAT
-                error = true;
-                errorMessage = "Los datos para su nombre completo deben tener solo letras.";
-            }   
-        } else { 
-            //PRINT ERROR EXISTENCE OF EMAIL IN OTHER USER
-            error = true;
-            errorMessage = "Este correo ya existe, ingrese uno válido.";
+    bool userLoged = false;
+    char *sessionID = parserService->getCookieArg("sessionID");
+    //HAY UNA COOKIE
+    if(sessionID != NULL){
+        if(sessionService->validateSession(ip, sessionID)){
+            //LA COOKIE ES VALIDA NO DEBERIA ENTRAR A LOGIN.
+            userLoged = true;
+            cout<<"Status: 400 Bad Request"<<endl;
+            cout << "Location: http://172.24.131.194/cgi-bin/home\n\n" << endl;
         }
-    } else {
-        //PRINT ERROR INCOMPLETE DATA
-        error = true;
-        errorMessage = "Hay datos incompletos. Por favor inserte todos los datos solicitados.";
+    }
+
+    if(!userLoged) {
+      //EXPECTED VARIABLES FROM QUERY
+      char* userName = parserService->getQueryArg("userName");
+      char* userLastNames = parserService->getQueryArg("userLastNames");
+      char* userEmail = parserService->getQueryArg("userEmail");
+      char* userPassword = parserService->getQueryArg("userPassword");
+      char* userPhoneNumber = parserService->getQueryArg("userPhoneNumber");
+      char* userDirection = parserService->getQueryArg("userDirection");
+      //REGEX VALIDATIONS FOR REGISTER FORM
+      regex validateNames("[a-zA-Z áéíóúñÑ]*");
+      regex validationEmail("(\\w+)(\\.|_)?(\\w*)@(\\w+)(\\.(\\w+))+");
+      regex validationPhoneNumber("[0-9]+");
+      regex validationText("[a-zA-Z0-9 áéíóúñÑ]*");
+      //STRING FOR ENCRYPTION
+      string encryptPassword = "";
+
+      //VERIFY THAT FORM HAS COMPLETE DATA
+      if(userName != NULL && userLastNames != NULL && userPhoneNumber != NULL && userDirection != NULL && userEmail != NULL && userPassword != NULL){
+          //VERIFY IF ANOTHER USER HAS THE SAME EMAIL
+          if (userService->verifyEmailExistence(userEmail) == false){
+              //VERIFICATIONS OF DATA FORMAT OF THE FORM
+              if (regex_match(userName, validateNames) && regex_match(userLastNames, validateNames)) {
+
+                  if (regex_match(userEmail, validationEmail)){
+
+                      if (regex_match(userPhoneNumber, validationPhoneNumber)){
+
+                          if (regex_match(userDirection, validationText)) {
+                              //ENCRYPTION OF PASSWORD FOR INSERTION IN DB
+                              encryptPassword = userService->encryption(userPassword);
+
+                              //INSERT THE NEW USER DATA TO THE DB
+                              if(userService->insertUserRegister(userName, userLastNames, userEmail, encryptPassword, userPhoneNumber, userDirection)){
+                                cout<<"Status: 200 Ok"<<endl;
+                                cout << "Location: http://172.24.131.194/cgi-bin/home\n\n" << endl;
+                              } else {
+                                  error = true;
+                                  errorMessage = "Error registrando el usuario.";
+                              }
+                          } else {
+                              //PRINT ERROR DIRECTION FORMAT
+                              error = true;
+                              errorMessage = "La dirección no debe contener caracteres especiales.";
+                          }
+                      } else {
+                          //PRINT ERROR PHONE FORMAT
+                          error = true;
+                          errorMessage = "El teléfono debe contener sólo números.";
+                      }
+                  } else {
+                      //PRINT ERROR EMAIL FORMAT
+                      error = true;
+                      errorMessage = "El correo no tiene un formato correcto.";
+                  }
+              } else {
+                  //PRINT ERROR NAME OR LAST NAMES FORMAT
+                  error = true;
+                  errorMessage = "Los datos para su nombre completo deben tener solo letras.";
+              }
+          } else {
+              //PRINT ERROR EXISTENCE OF EMAIL IN OTHER USER
+              error = true;
+              errorMessage = "Este correo ya existe, ingrese uno válido.";
+          }
+      } else {
+          //PRINT ERROR INCOMPLETE DATA
+          error = true;
+          errorMessage = "Hay datos incompletos. Por favor inserte todos los datos solicitados.";
+      }
+
     }
 
     if(error){

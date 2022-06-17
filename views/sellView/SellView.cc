@@ -96,7 +96,7 @@ bool SellView::responsePOST(char* ip)
         sesion=false;
     }
         if(searchName != NULL){
-            if (regex_match(searchName, validationText)) { 
+            if (regex_match(searchName, validationText)) {
                 searchSell=sellService->sellByName(searchName);
                 if(searchSell!=NULL){
                     printHTML();
@@ -120,30 +120,30 @@ bool SellView::responsePOST(char* ip)
                 }
                 else{
                     error = true;
-                    errorMessage = "error al agregar al carrito";
+                    errorMessage = "Error al agregar al carrito.";
                     printHTML();
                 }
             }
             else{
                 error=true;
-                errorMessage = "no se pudo validar la seccion ingrese de nuevo ";
+                errorMessage = "No se pudo validar la seccion ingrese de nuevo.";
                 printHTML();
             }
         }
         else if(!sesion){
             error = true;
-            errorMessage = "no se pudo validar la seccion ingrese de nuevo ";
+            errorMessage = "No se pudo validar la seccion ingrese de nuevo.";
             printHTML();
         }
         else if(searchName == NULL){
             error = true;
-            errorMessage = "No ingreso datos ";
+            errorMessage = "No ingreso datos.";
             printHTML();
         }
         else{
-           printHTML(); 
+           printHTML();
         }
-    
+
     return true;
 }
 
@@ -202,7 +202,7 @@ void SellView::printHTML()
             Sell *sell = NULL;
             SellCount =sellService->getSellCountAll();
             for (int i = 1; i <= SellCount; i++)
-            {   
+            {
                 sell = sellService->getById(i);
                 cout << "<div class='card border-dark mb-3' style='width: 60rem;'>" << endl;
                 cout<<"<div class=\"card-body\">"<< endl;

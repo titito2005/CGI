@@ -10,7 +10,7 @@ CREATE TABLE user(
     firstName varchar(30),
     lastName varchar(30),
     email varchar(50),
-    userPassword varchar(20),
+    userPassword varchar(100),
     createdAt timestamp default current_timestamp,
     phoneNumber int,
     direction varchar(100),
