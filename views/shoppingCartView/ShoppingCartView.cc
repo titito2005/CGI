@@ -152,11 +152,14 @@ bool ShoppingCartView::responsePOST(char* ip){
                             if (regex_match(cardExpireMonth, validateMonth)) {
                               if(strlen(cardName) <= 50 && strlen(cardNumber) <= 20  && strlen(cardExpireMonth) <= 2 && strlen(cardExpireYear) <= 4 && strlen(cardCVV) <= 4) {
                                 //ENCRYPTION OF PASSWORD FOR INSERTION IN DB
-                                encryptCVV = shoppingCheckoutService->encryptionCardData(cardCVV);
+                                  string hashedCVV = "";
+                                  hash<string> hasher;
+                                  hashedCVV = to_string(hasher(cardCVV));
+                                  cardCVV = "";
                                 //CHECKBOX IS CHECKED
                                 if (checkbox != NULL){
                                     //INSERTS CARD CREDENTIALS IN DATABASE
-                                    if(shoppingCheckoutService->insertCardData(userId, cardName, cardNumber, cardExpireMonth, cardExpireYear, encryptCVV)){
+                                    if(shoppingCheckoutService->insertCardData(userId, cardName, cardNumber, cardExpireMonth, cardExpireYear, hashedCVV)){
                                       shoppingSuccesfull = true;
                                     } else {
                                       error = true;

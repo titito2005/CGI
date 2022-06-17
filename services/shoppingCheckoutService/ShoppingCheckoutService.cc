@@ -58,16 +58,6 @@ bool ShoppingCheckoutService::insertCardData(string idUser, string name, string 
     return insertNewCardData;
 }
 
-string ShoppingCheckoutService::encryptionCardData(string stringToBeEncrypted){
-    string encrypt = "";
-    for (int i = 0; i < stringToBeEncrypted.length(); i++){
-        stringToBeEncrypted[i] = stringToBeEncrypted[i]+2; //key for encryption is 3 and is added to ASCII
-    }
-    encrypt = stringToBeEncrypted;              
-    
-    return encrypt;
-}
-
 string ShoppingCheckoutService::getCardByUserId(char* userId){
     string card = "";
     ShoppingCheckout* checkout = getCheckoutByUserId(userId);

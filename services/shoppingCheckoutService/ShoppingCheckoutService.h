@@ -23,7 +23,6 @@ class ShoppingCheckoutService {
         ~ShoppingCheckoutService();
         ShoppingCheckout* getCheckoutByUserId(char* id);
         bool insertCardData(string idUser, string name, string number, string month, string year, string cvv);
-        string encryptionCardData(string stringToBeEncrypted);
         string getCardByUserId(char* userId);
         int getRandomPayment();
         
