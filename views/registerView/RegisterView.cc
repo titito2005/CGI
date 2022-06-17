@@ -115,7 +115,7 @@ bool RegisterView::responsePOST(char* ip){
                                 //ENCRYPTION OF PASSWORD FOR INSERTION IN DB
                                 hashedPassword = to_string(hasher(userPassword));
                                 userPassword = "";
-                                if(strlen(userName) <= 30 && strlen(userLastNames) <= 30 && strlen(userPhoneNumber) <= 8 && strlen(userDirection) <= 1000 && strlen(userEmail) <= 50 && strlen(hashedPassword) <= 100){
+                                if(strlen(userName) <= 30 && strlen(userLastNames) <= 30 && strlen(userPhoneNumber) <= 8 && strlen(userDirection) <= 1000 && strlen(userEmail) <= 50 && hashedPassword.length() <= 100){
                                 //INSERT THE NEW USER DATA TO THE DB
                                 if(userService->insertUserRegister(userName, userLastNames, userEmail, hashedPassword, userPhoneNumber, userDirection)){
                                     cout<<"Status: 200 Ok"<<endl;
