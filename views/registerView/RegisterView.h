@@ -28,7 +28,7 @@ class RegisterView {
         RegisterView();
         ~RegisterView();
         bool responseGET(char* ip);
-        bool responsePOST();
+        bool responsePOST(char* ip);
         void printHTML();
     private:
         //Variables

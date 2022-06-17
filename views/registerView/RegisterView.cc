@@ -46,7 +46,7 @@ RegisterView::RegisterView()
         }
         // Handle POST requests
         if (strcmp(request_method, "POST") == 0){
-            responsePOST();
+            responsePOST(requestAddr);
         }
     }
 }
@@ -69,7 +69,7 @@ bool RegisterView::responseGET(char* ip){
     return true;
 }
 
-bool RegisterView::responsePOST(){
+bool RegisterView::responsePOST(char* ip){
     bool userLoged = false;
     char *sessionID = parserService->getCookieArg("sessionID");
     //HAY UNA COOKIE
