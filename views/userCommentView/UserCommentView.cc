@@ -78,7 +78,7 @@ bool UserCommentView::responsePOST(char* ip){
         }
     }
     if(comment != NULL){
-        if (regex_match(userComment, validationText)) {
+        if (regex_match(comment, validationText)) {
           if(strlen(comment) <= 1000){
               userCommentService->addComment(userComment);
           } else {
