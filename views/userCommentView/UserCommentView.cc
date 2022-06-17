@@ -35,7 +35,7 @@ UserCommentView::UserCommentView(){
             parserService->parseQuery(query_string, query_length);
         } else {
             error = true;
-            errorMessage = "Error en la solicitud."
+            errorMessage = "Error en la solicitud.";
         }
     }
     //PARSE COOKIES
@@ -45,7 +45,7 @@ UserCommentView::UserCommentView(){
             parserService->parseCookie(cookie_string, cookie_length);
         } else {
             error = true;
-            errorMessage = "Error en la solicitud."
+            errorMessage = "Error en la solicitud.";
         }
     }
     // Check request_method variable
