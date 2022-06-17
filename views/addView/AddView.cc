@@ -3,6 +3,7 @@
 AddView::AddView()
 {
     error = false;
+    errorMessage = "";
     //SERVICES
     sessionService = new SessionService();
     parserService = new ParserService();
@@ -30,12 +31,22 @@ AddView::AddView()
     }
     //PARSE QUERY
     if(query_string != NULL && content_length != NULL){
-        parserService->parseQuery(query_string, query_length);
+        if(!parserService->verifyRequest(query_string)) {
+            parserService->parseQuery(query_string, query_length);
+        } else {
+            error = true;
+            errorMessage = "Error en la solicitud.";
+        }
     }
     //PARSE COOKIES
     if(cookie_string != NULL){
-        cookie_length = strlen(cookie_string);
-        parserService->parseCookie(cookie_string, cookie_length);
+        if(!parserService->verifyRequest(cookie_string)) {
+            cookie_length = strlen(cookie_string);
+            parserService->parseCookie(cookie_string, cookie_length);
+        } else {
+            error = true;
+            errorMessage = "Error en la solicitud.";
+        }
     }
     // Check request_method variable
     if (request_method != NULL){

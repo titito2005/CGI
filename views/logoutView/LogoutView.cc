@@ -24,12 +24,16 @@ LogoutView::LogoutView(){
     }
     //PARSE QUERY
     if(query_string != NULL && content_length != NULL){
-        parserService->parseQuery(query_string, query_length);
+        if(!parserService->verifyRequest(query_string)) {
+            parserService->parseQuery(query_string, query_length);
+        }
     }
     //PARSE COOKIES
     if(cookie_string != NULL){
-        cookie_length = strlen(cookie_string);
-        parserService->parseCookie(cookie_string, cookie_length);
+        if(!parserService->verifyRequest(cookie_string)) {
+            cookie_length = strlen(cookie_string);
+            parserService->parseCookie(cookie_string, cookie_length);
+        }
     }
     // Check request_method variable
     if (request_method != NULL){
