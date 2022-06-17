@@ -54,7 +54,6 @@ bool ShoppingCheckoutService::insertCardData(string idUser, string name, string 
     if (!mysql_query(conn, finalQuery)){
         insertNewCardData = true;
     }
-
     return insertNewCardData;
 }
 

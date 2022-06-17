@@ -52,10 +52,10 @@ CREATE TABLE shoppingCheckout(
     id int auto_increment,
     userId int NOT NULL,
     cardName varchar(50),
-    cardNumber int,
+    cardNumber varchar(20),
     cardExpireMonth varchar(20),
-    cardExpireYear int,
-    cardCVV int,
+    cardExpireYear varchar(4),
+    cardCVV varchar(4),
     createdAt timestamp default current_timestamp,
     primary key(id),
     foreign key(userId) references user(id)

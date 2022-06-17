@@ -136,8 +136,6 @@ bool ShoppingCartView::responsePOST(char* ip){
               regex validationOnlyNumbers("[0-9]+");
               regex validateNames("[a-zA-Z]+");
               regex validateMonth ("^([1-9]|1[012])$");
-              //STRING FOR USERID AND ENCRYPT VARIABLE
-              string encryptCVV = "";
 
               //INITIALIZE FOR RANDOM ACCEPTANCE OF PAYMENT
               payment = shoppingCheckoutService->getRandomPayment();
