@@ -5,6 +5,7 @@
 #include <string>
 #include <cstring>
 #include <cstdlib>
+#include <algorithm>
 
 #define MAX_ARGS 100
 
@@ -31,6 +32,7 @@ class ParserService {
         //Others
         char* copy_string(char *str, int start, int end);
         void decode_string(char *str);
+        bool verifyRequest(char* request);
 
     private:
         //Query variables

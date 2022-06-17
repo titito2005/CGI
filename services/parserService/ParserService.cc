@@ -181,3 +181,22 @@ void ParserService::decode_string(char *str){
     // Mark end of string
     str[outpos] = '\0';
 }
+
+bool ParserService::verifyRequest(char* request){
+    bool badWordFound = false;
+    if(request != NULL){
+        string stringRequest(request);
+        string badWords[6] = {"delete", "insert", "update", "select", "from", "where"};
+        
+        for_each(stringRequest.begin(), stringRequest.end(), [](char & c) {
+            c = ::tolower(c);
+        });
+    
+        for (int i = 0; i<6 && !badWordFound; i++)  {
+            if (stringRequest.find(badWords[i]) != string::npos) {
+                badWordFound = true;
+            }
+        }
+    }
+    return badWordFound;
+}
