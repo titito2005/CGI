@@ -80,7 +80,7 @@ bool UserCommentView::responsePOST(char* ip){
     if(comment != NULL){
         if (regex_match(comment, validationText)) {
           if(strlen(comment) <= 1000){
-              userCommentService->addComment(userComment);
+              userCommentService->addComment(comment);
           } else {
             cout << "Location: http://172.24.131.194/cgi-bin/home\n\n" << endl;
           }
