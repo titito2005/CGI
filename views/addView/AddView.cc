@@ -105,7 +105,7 @@ bool AddView::responsePOST(char* ip){
              }
              else{
                   error = true;
-                  errorMessage = "Error caracteres no validos (valor solo permite numeros) (nombre y descripcion solo permite letras.";
+                  errorMessage = "Error caracteres no válidos, valor sólo permite números, nombre y descripcion sólo permite letras.";
                   printHTML();
              }
         } else {
