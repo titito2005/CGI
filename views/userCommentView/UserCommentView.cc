@@ -88,7 +88,7 @@ bool UserCommentView::responsePOST(char* ip){
           }
         } else {
           error = true;
-          errorMessage = "El comentario sólo debe contener letras y números."
+          errorMessage = "El comentario sólo debe contener letras y números.";
         }
     }
     printHTML();
