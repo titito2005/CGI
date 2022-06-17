@@ -70,7 +70,7 @@ bool UserCommentView::responseGET(char* ip){
 bool UserCommentView::responsePOST(char* ip){
     char *comment = parserService->getQueryArg("comment");
     char *sessionID = parserService->getCookieArg("sessionID");
-    regex validationText("[a-zA-Z0-9 áéíóúñÑ]*");
+    regex validationText("[a-zA-Z0-9 áéíóúñÑ:.,]*");
     //HAY UNA COOKIE
     if(sessionID != NULL){
         if(sessionService->validateSession(ip, sessionID)){

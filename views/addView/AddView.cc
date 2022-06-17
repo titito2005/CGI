@@ -86,7 +86,7 @@ bool AddView::responsePOST(char* ip){
              char* GameName = parserService->getQueryArg("GameName");
              char* GameValue = parserService->getQueryArg("GameValue");
              char* GameDescription = parserService->getQueryArg("GameDescription");
-             regex validationText("[a-zA-Z0-9 áéíóúñÑ]*");
+             regex validationText("[a-zA-Z0-9 áéíóúñÑ:.,]*");
              regex validationValue("[0-9]+");
              if(GameName != NULL && GameValue != NULL && GameDescription != NULL ){
                if (regex_match(GameName, validationText)&& regex_match(GameValue, validationValue) && regex_match(GameDescription, validationText)) {
