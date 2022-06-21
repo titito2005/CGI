@@ -3,6 +3,7 @@
 #include <mysql/mysql.h>  // require libmysqlclient-dev
 #include <cstring>
 #include <stdio.h>
+#include <string>
 
 #include "../../models/userModel/User.h"
 #include "../Database.h"
@@ -17,7 +18,7 @@ class UserService {
         User* getUserByEmail(char* email);
         bool verifyPassword(char* email, string password);
         string getIdByEmail(char* email);
-        string getEmailById(char* id);
+        string getEmailById(string id);
         bool insertUserRegister(string name, string lastNames, string email, string password, string phoneNumber, string direction);
         bool verifyEmailExistence(char* incomingEmail);
 
