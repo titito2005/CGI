@@ -259,6 +259,6 @@ void ParserService::auditBuyProducts(bool isPurchase, string user, string ip, bo
   }
 
   myfile.open (("sellData.txt"), std::ios::app);
-  myfile <<"hola"<<\n";
+  myfile <<"hola"<<"\n";
   myfile.close();
 }
