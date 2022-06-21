@@ -9,8 +9,6 @@
 #include "../Database.h"
 
 #define MAX_ARGS 100
-
-using sysclock_t = std::chrono::system_clock;
 using namespace std;
 
 class ParserService {
