@@ -15,6 +15,7 @@
 #include "../../services/sessionService/SessionService.h"
 #include "../../services/shoppingCartService/ShoppingCartService.h"
 #include "../../services/shoppingCheckoutService/ShoppingCheckoutService.h"
+#include "../../services/userService/UserService.h"
 //VIEWS
 #include "../headerView/HeaderView.h"
 #include "../footerView/FooterView.h"

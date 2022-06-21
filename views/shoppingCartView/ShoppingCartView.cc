@@ -124,6 +124,7 @@ bool ShoppingCartView::responsePOST(char* ip){
         if(sessionService->validateSession(ip, sessionID)){
             //LA COOKIE ES VALIDA PUEDE ENTRAR AL CARRITO
             string userId = sessionService->getUserIdByCookie(sessionID);
+            string email = userService->getEmailById(userId);
 
             if(userId.length()>0){
 
@@ -169,46 +170,57 @@ bool ShoppingCartView::responsePOST(char* ip){
                                     //INSERTS CARD CREDENTIALS IN DATABASE
                                     if(shoppingCheckoutService->insertCardData(userId, cardName, cardNumber, cardExpireMonth, cardExpireYear, hashedCVV)){
                                       shoppingSuccesfull = true;
+                                      parserService->auditBuyProducts(true, email, ip, true);
                                     } else {
                                       error = true;
                                       errorMessage = "Error guardando tarjeta.";
+                                      parserService->auditBuyProducts(true, email, ip, false);
                                     }
                                 } else {
                                   //CHECKBOX IS NOT CHECKED
                                   shoppingSuccesfull = true;
+                                  parserService->auditBuyProducts(true, email, ip, true);
                                 }
                               } else {
                                 error = true;
                                 errorMessage = "Error realizando el pago.";
+                                parserService->auditBuyProducts(true, email, ip, false);
                               }
                             } else {
                               error = true;
                               errorMessage = "El mes de vencimiento debe contener un número entre el 1 y 12.";
+                              parserService->auditBuyProducts(true, email, ip, false);
                             }
                           } else {
                             error = true;
                             errorMessage = "El nombre de la tarjeta debe incluir sólo letras.";
+                            parserService->auditBuyProducts(true, email, ip, false);
                           }
                         } else {
                           error = true;
                           errorMessage = "El CVV debe incluir sólo valores numéricos.";
+                          parserService->auditBuyProducts(true, email, ip, false);
                         }
                       } else {
                         error = true;
                         errorMessage = "El año de vencimiento sólo debe incluir valores numéricos.";
+                        parserService->auditBuyProducts(true, email, ip, false);
                       }
                     } else {
                       error = true;
                       errorMessage = "El número de la tarjeta sólo debe incluir valores numéricos.";
+                      parserService->auditBuyProducts(true, email, ip, false);
                     }
                   } else{
                     //PRINT ERROR INCOMPLETE DATA
                     error = true;
                     errorMessage = "Hay datos incompletos. Por favor inserte todos los datos.";
+                    parserService->auditBuyProducts(true, email, ip, false);
                   }
               } else {
                 //THE CARD IS ALREADY REGISTERED
                 shoppingSuccesfull = true;
+                parserService->auditBuyProducts(true, email, ip, true);
               }
 
               if(error == true || shoppingSuccesfull == true){

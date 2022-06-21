@@ -8,6 +8,7 @@ AddView::AddView()
     sessionService = new SessionService();
     parserService = new ParserService();
     sellService = new SellService();
+    userService = new UserService();
     //VIEWS
     headerView = new HeaderView();
     footerView = new FooterView();
@@ -92,6 +93,8 @@ bool AddView::responsePOST(char* ip){
     //HAY UNA COOKIE
     if(sessionID != NULL){
         if(sessionService->validateSession(ip, sessionID)){
+            string userId = sessionService->getUserIdByCookie(sessionID);
+            string email = userService->getEmailById(userId);
             //LA COOKIE ES VALIDA NO DEBERIA ENTRAR A LOGIN.
             //EXPECTED VARIABLES FROM QUERY
              char* GameName = parserService->getQueryArg("GameName");
@@ -103,24 +106,29 @@ bool AddView::responsePOST(char* ip){
                if (regex_match(GameName, validationText)&& regex_match(GameValue, validationValue) && regex_match(GameDescription, validationText)) {
                  if(strlen(GameName) <= 100 && strlen(GameValue) <= 10 && strlen(GameDescription) <= 1000) {
                    if(sellService->addSell(GameName, GameValue, GameDescription)) {
+                       parserService->auditBuyProducts(false, email, ip, true);
                        cout << "Location: http://172.24.131.194/cgi-bin/home\n\n" << endl;
                    } else {
                        error = true;
+                       parserService->auditBuyProducts(false, email, ip, false);
                        errorMessage = "Error al agregar juego limite de caracteres debe ser el nombre menor a 100 y descripcion menor a 5000.";
                        printHTML();
                    }
                  } else {
                    error = true;
+                   parserService->auditBuyProducts(false, email, ip, false);
                    errorMessage = "Error, datos inválidos.";
                    printHTML();
                  }
                } else {
                    error = true;
+                   parserService->auditBuyProducts(false, email, ip, false);
                    errorMessage = "Error caracteres no válidos, valor sólo permite números, nombre y descripcion sólo permite letras.";
                    printHTML();
                }
              } else {
                   error = true;
+                  parserService->auditBuyProducts(false, email, ip, false);
                   errorMessage = "Error al ingresar los datos.";
                   printHTML();
              }

@@ -14,6 +14,7 @@
 #include "../../services/parserService/ParserService.h"
 #include "../../services/sellService/SellService.h"
 #include "../../services/sessionService/SessionService.h"
+#include "../../services/userService/UserService.h"
 #include "../headerView/HeaderView.h"
 #include "../footerView/FooterView.h"
 
@@ -37,6 +38,7 @@ class AddView {
         SessionService *sessionService;
         ParserService *parserService;
         SellService * sellService;
+        UserService *userService;
 
         bool error;
         string errorMessage;
