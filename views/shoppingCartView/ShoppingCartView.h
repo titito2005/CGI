@@ -38,6 +38,7 @@ class ShoppingCartView {
         ShoppingCartService* shoppingCartService;
         SessionService* sessionService;
         ShoppingCheckoutService* shoppingCheckoutService;
+        UserService* userService;
         HeaderView *headerView;
         FooterView *footerView;
         bool error;

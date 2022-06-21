@@ -13,6 +13,7 @@ ShoppingCartView::ShoppingCartView(){
     shoppingCartService = new ShoppingCartService();
     sellService = new SellService();
     shoppingCheckoutService = new ShoppingCheckoutService();
+    userService = new UserService();
     //VIEWS
     headerView = new HeaderView();
     footerView = new FooterView();
