@@ -114,24 +114,30 @@ bool LoginView::responsePOST(char* ip){
                         } else {
                             error = true;
                             errorMessage = "Error verificando el usuario.";
+                            parserService->auditLoginAndLogout(true, userEmail, ip, false);
                         }
+                        parserService->auditLoginAndLogout(true, userEmail, ip, true);
                     }else{
                         //PRINT ERROR VERIFY PASSWORD
                         error = true;
                         errorMessage = "El email y la contraseña no coinciden.";
+                        parserService->auditLoginAndLogout(true, userEmail, ip, false);
                     }
                   } else {
                     error = true;
                     errorMessage = "Error, datos inválidos.";
+                    parserService->auditLoginAndLogout(true, userEmail, ip, false);
                   }
               } else {
                 error = true;
                 errorMessage = "Fromato del correo electrónico no es correcto.";
+                parserService->auditLoginAndLogout(true, userEmail, ip, false);
               }
           }else{
               //PRINT ERROR NO PASSWORD
               error = true;
               errorMessage = "No se ha ingresado la contraseña, asegúrese de rellenar todos los espacios.";
+              parserService->auditLoginAndLogout(true, userEmail, ip, false);
           }
       }else{
           //PRINT ERROR NO EMAIL
