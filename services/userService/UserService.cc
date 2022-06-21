@@ -89,7 +89,9 @@ string UserService::getIdByEmail(char* email){
 
 string UserService::getEmailById(string id){
     string userEmail = "";
-    User* findUser = getUserById(id);
+    char arr[id.length() + 1];
+    strcpy(arr, id.c_str());
+    User* findUser = getUserById(arr);
     if(findUser!=NULL){
         userEmail = findUser->getEmail();
     }
