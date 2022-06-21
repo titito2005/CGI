@@ -10,6 +10,14 @@ ParserService::ParserService(){
     for (int i = 0; i < MAX_ARGS; i++){
         cookieName[i] = cookieValue[i] = NULL;
     }
+
+    db = new Database();
+    if(db->connectToDatabase()){
+        conn = db->getConnection();
+    } else {
+        printf("%s \n", "Error conectando a la base de datos");
+        exit(1);
+    }
 }
 
 ParserService::~ParserService(){
@@ -206,15 +214,6 @@ bool ParserService::verifyRequest(char* request){
 void ParserService::auditLoginAndLogout(bool isLogin, string user, string ip, bool success){
   string action = "";
   string response = "";
-  std::time_t now = sysclock_t::to_time_t(sysclock_t::now());
-  char date[16] = { 0 };
-  std::strftime(date, sizeof(date), "%Y-%m-%d", std::localtime(&now));
-
-  char hour[16] = { 0 };
-  std::strftime(hour, sizeof(hour), "%H:%M:%S", std::localtime(&now));
-
-  cout<< string(hour)<< endl;
-  ofstream myfile;
   if(isLogin){
     action = "Login";
   } else {
@@ -227,9 +226,13 @@ void ParserService::auditLoginAndLogout(bool isLogin, string user, string ip, bo
     response = "Fail";
   }
 
-  myfile.open ((string(date)+"-loginData.txt"), std::ios::app);
-  myfile <<action<<" "<<user<<" "<<ip<<" "<<string(date)<<" "<<string(hour)<<" "<<response<<"\n";
-  myfile.close();
+  string query = "INSERT INTO auditLogin(action,userEmail,userIp,success) VALUES (";
+  query.append("'"+action+"','"+user+"','"+ip+"','"+response+"')");
+  const char *finalQuery = query.c_str();
+  if (mysql_query(conn, finalQuery)){
+    printf("%s \n", "Error audit");
+    exit(1);
+  }
 }
 
 //If isPurchase is true, user is trying to buying.
@@ -237,15 +240,6 @@ void ParserService::auditLoginAndLogout(bool isLogin, string user, string ip, bo
 void ParserService::auditBuyProducts(bool isPurchase, string user, string ip, bool success){
   string action = "";
   string response = "";
-  std::time_t now = sysclock_t::to_time_t(sysclock_t::now());
-  char date[16] = { 0 };
-  std::strftime(date, sizeof(date), "%Y-%m-%d", std::localtime(&now));
-
-  char hour[16] = { 0 };
-  std::strftime(hour, sizeof(hour), "%H:%M:%S", std::localtime(&now));
-
-  cout<< string(hour)<< endl;
-  ofstream myfile;
   if(isPurchase){
     action = "Buy";
   } else {
@@ -258,7 +252,11 @@ void ParserService::auditBuyProducts(bool isPurchase, string user, string ip, bo
     response = "Fail";
   }
 
-  myfile.open (("../../../sellData.txt"), std::ios::app);
-  myfile <<"hola"<<"\n";
-  myfile.close();
+  string query = "INSERT INTO auditSell(action,userEmail,userIp,success) VALUES (";
+  query.append("'"+action+"','"+user+"','"+ip+"','"+response+"')");
+  const char *finalQuery = query.c_str();
+  if (mysql_query(conn, finalQuery)){
+    printf("%s \n", "Error audit");
+    exit(1);
+  }
 }

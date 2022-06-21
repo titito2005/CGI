@@ -66,4 +66,24 @@ CREATE TABLE userComment(
     comment varchar(1000),
     createdAt timestamp default current_timestamp,
     primary key(id)
-)
+);
+
+CREATE TABLE auditLogin(
+    id int auto_increment,
+    action varchar(50),
+    userEmail varchar(50),
+    userIp varchar(20),
+    createdAt timestamp default current_timestamp,
+    success boolean,
+    primary key(id)
+);
+
+CREATE TABLE auditSell(
+    id int auto_increment,
+    action varchar(50),
+    userEmail varchar(50),
+    userIp varchar(20),
+    createdAt timestamp default current_timestamp,
+    success boolean,
+    primary key(id)
+);

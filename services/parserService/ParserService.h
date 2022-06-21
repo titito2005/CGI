@@ -6,8 +6,7 @@
 #include <cstring>
 #include <cstdlib>
 #include <algorithm>
-#include <fstream>
-#include <chrono>
+#include "../Database.h"
 
 #define MAX_ARGS 100
 
@@ -51,5 +50,10 @@ class ParserService {
         int cookieArgCnt;
         char *cookieName[MAX_ARGS];
         char *cookieValue[MAX_ARGS];
+
+        //Database
+        Database* db;
+        MYSQL* conn;
+        MYSQL_RES *res;
 };
 #endif
