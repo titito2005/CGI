@@ -227,7 +227,7 @@ void ParserService::auditLoginAndLogout(bool isLogin, string user, string ip, bo
   }
 
   string query = "INSERT INTO auditLogin(action,userEmail,userIp,success) VALUES (";
-  query.append("'"+action+"','"+user+"','"+ip+"','"+response+"')");
+  query.append("'"+"hola"+"','"+"hola"+"','"+"hola"+"','"+"hola"+"')");
   const char *finalQuery = query.c_str();
   if (mysql_query(conn, finalQuery)){
     printf("%s \n", "Error audit");
