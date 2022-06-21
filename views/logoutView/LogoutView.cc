@@ -4,6 +4,7 @@ LogoutView::LogoutView(){
     //SERVICES
     sessionService = new SessionService();
     parserService = new ParserService();
+    userService = new UserService();
     // Read environment variables
     char *request_method = getenv("REQUEST_METHOD");
     char *query_string = getenv("QUERY_STRING");

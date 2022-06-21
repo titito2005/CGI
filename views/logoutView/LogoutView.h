@@ -22,6 +22,7 @@ class LogoutView {
         //Variables
         SessionService *sessionService;
         ParserService *parserService;
+        UserService *userService;
         //Methods
 };
 #endif
