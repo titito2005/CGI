@@ -3,7 +3,8 @@ DROP TABLE shoppingCart;
 DROP TABLE shoppingCheckout;
 DROP TABLE sell;
 DROP TABLE user;
-DROP TABLE userComment;
+DROP TABLE auditLogin;
+DROP TABLE auditSell;
 
 CREATE TABLE user(
     id int auto_increment,

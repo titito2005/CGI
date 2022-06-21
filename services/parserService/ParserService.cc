@@ -213,21 +213,14 @@ bool ParserService::verifyRequest(char* request){
 //If isLogin is false, user is login out.
 void ParserService::auditLoginAndLogout(bool isLogin, string user, string ip, bool success){
   string action = "";
-  string response = "";
   if(isLogin){
     action = "Login";
   } else {
     action = "Logout";
   }
 
-  if(success){
-    response = "Success";
-  } else {
-    response = "Fail";
-  }
-
   string query = "INSERT INTO auditLogin(action,userEmail,userIp,success) VALUES (";
-  query.append("'"+"hola"+"','"+"hola"+"','"+"hola"+"','"+"hola"+"')");
+  query.append("'"+action+"','"+user+"','"+ip+"',"+success+")");
   const char *finalQuery = query.c_str();
   if (mysql_query(conn, finalQuery)){
     printf("%s \n", "Error audit");
@@ -246,14 +239,8 @@ void ParserService::auditBuyProducts(bool isPurchase, string user, string ip, bo
     action = "AddItem";
   }
 
-  if(success){
-    response = "Success";
-  } else {
-    response = "Fail";
-  }
-
   string query = "INSERT INTO auditSell(action,userEmail,userIp,success) VALUES (";
-  query.append("'"+action+"','"+user+"','"+ip+"','"+response+"')");
+  query.append("'"+action+"','"+user+"','"+ip+"',"+success+")");
   const char *finalQuery = query.c_str();
   if (mysql_query(conn, finalQuery)){
     printf("%s \n", "Error audit");
