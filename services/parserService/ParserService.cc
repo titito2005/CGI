@@ -18,7 +18,7 @@ ParserService::~ParserService(){
 
 //QUERY PARSER
 void ParserService::parseQuery(char* query_string, int query_length){
-    // Separate query_string into arguments 
+    // Separate query_string into arguments
     int start_name, end_name, start_value, end_value = -1;
     while (end_value < query_length){
         // Find argument name
@@ -82,7 +82,7 @@ int ParserService::getQueryCant(){
 
 //COOKIE PARSER
 void ParserService::parseCookie(char* cookie_string, int cookie_length){
-    // Separate cookie_string into arguments 
+    // Separate cookie_string into arguments
     int start_name, end_name, start_value, end_value = -1;
     while (end_value < cookie_length){
         // Find argument name
@@ -172,7 +172,7 @@ void ParserService::decode_string(char *str){
                 char ch1 = toupper(str[++pos]);
                 char ch2 = toupper(str[++pos]);
                 str[outpos++] = 16*(strchr(digits, ch1)-strchr(digits,'0'))
-                + strchr(digits, ch2)-strchr(digits,'0'); 
+                + strchr(digits, ch2)-strchr(digits,'0');
             }else{
                 str[outpos++] = str[pos];
             }
@@ -187,11 +187,11 @@ bool ParserService::verifyRequest(char* request){
     if(request != NULL){
         string stringRequest(request);
         string badWords[6] = {"delete", "insert", "update", "select", "from", "where"};
-        
+
         for_each(stringRequest.begin(), stringRequest.end(), [](char & c) {
             c = ::tolower(c);
         });
-    
+
         for (int i = 0; i<6 && !badWordFound; i++)  {
             if (stringRequest.find(badWords[i]) != string::npos) {
                 badWordFound = true;
@@ -199,4 +199,66 @@ bool ParserService::verifyRequest(char* request){
         }
     }
     return badWordFound;
+}
+
+//If isLogin is true, user is trying to Login.
+//If isLogin is false, user is login out.
+void ParserService::auditLoginAndLogout(bool isLogin, string user, string ip, bool success){
+  string action = "";
+  string response = "";
+  std::time_t now = sysclock_t::to_time_t(sysclock_t::now());
+  char date[16] = { 0 };
+  std::strftime(date, sizeof(date), "%Y-%m-%d", std::localtime(&now));
+
+  char hour[16] = { 0 };
+  std::strftime(hour, sizeof(hour), "%H:%M:%S", std::localtime(&now));
+
+  cout<< string(hour)<< endl;
+  ofstream myfile;
+  if(isLogin){
+    action = "Login";
+  } else {
+    action = "Logout";
+  }
+
+  if(success){
+    response = "Success";
+  } else {
+    response = "Fail";
+  }
+
+  myfile.open ((string(date)+"-loginData.txt"), std::ios::app);
+  myfile <<action<<" "<<user<<" "<<ip<<" "<<string(date)<<" "<<string(hour)<<" "<<response<<"\n";
+  myfile.close();
+}
+
+//If isPurchase is true, user is trying to buying.
+//If isPurchase is false, user tryng to set new item to sell it.
+void ParserService::auditBuyProducts(bool isPurchase, string user, string ip, bool success){
+  string action = "";
+  string response = "";
+  std::time_t now = sysclock_t::to_time_t(sysclock_t::now());
+  char date[16] = { 0 };
+  std::strftime(date, sizeof(date), "%Y-%m-%d", std::localtime(&now));
+
+  char hour[16] = { 0 };
+  std::strftime(hour, sizeof(hour), "%H:%M:%S", std::localtime(&now));
+
+  cout<< string(hour)<< endl;
+  ofstream myfile;
+  if(isPurchase){
+    action = "Buy";
+  } else {
+    action = "AddItem";
+  }
+
+  if(success){
+    response = "Success";
+  } else {
+    response = "Fail";
+  }
+
+  myfile.open ((string(date)+"-sellData.txt"), std::ios::app);
+  myfile <<action<<" "<<user<<" "<<ip<<" "<<string(date)<<" "<<string(hour)<<" "<<response<<"\n";
+  myfile.close();
 }

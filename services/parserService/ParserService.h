@@ -6,9 +6,12 @@
 #include <cstring>
 #include <cstdlib>
 #include <algorithm>
+#include <fstream>
+#include <chrono>
 
 #define MAX_ARGS 100
 
+using sysclock_t = std::chrono::system_clock;
 using namespace std;
 
 class ParserService {
@@ -28,6 +31,10 @@ class ParserService {
         char* getCookieName(int index);
         char* getCookieValue(int index);
         int getCookieCant();
+
+        //Audit methods
+        void auditLoginAndLogout(bool isLogin, string user, string ip, bool success);
+        void auditBuyProducts(bool isPurchase, string user, string ip, bool success);
 
         //Others
         char* copy_string(char *str, int start, int end);
