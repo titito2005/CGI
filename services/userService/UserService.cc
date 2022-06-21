@@ -87,6 +87,15 @@ string UserService::getIdByEmail(char* email){
     return userId;
 }
 
+string UserService::getEmailById(string id){
+    string userEmail = "";
+    User* findUser = getUserById(id);
+    if(findUser!=NULL){
+        userEmail = findUser->getEmail();
+    }
+    return userEmail;
+}
+
 bool UserService::verifyPassword(char* email, string password){
     bool acceptPassword = false;
     User* findUser = getUserByEmail(email);
@@ -116,6 +125,6 @@ bool UserService::verifyEmailExistence(char* incomingEmail){
     if (findUser != NULL){
         emailExist = true; // encuentra el email de usuario
     }
-    
+
     return emailExist;
 }

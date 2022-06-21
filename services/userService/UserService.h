@@ -17,6 +17,7 @@ class UserService {
         User* getUserByEmail(char* email);
         bool verifyPassword(char* email, string password);
         string getIdByEmail(char* email);
+        string getEmailById(char* id);
         bool insertUserRegister(string name, string lastNames, string email, string password, string phoneNumber, string direction);
         bool verifyEmailExistence(char* incomingEmail);
 

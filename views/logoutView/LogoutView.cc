@@ -53,6 +53,9 @@ bool LogoutView::responseGET(char* ip){
     //HAY UNA COOKIE
     if(sessionID != NULL){
         if(sessionService->validateSession(ip, sessionID)){
+            string userId = sessionService->getUserIdByCookie(sessionID);
+            string email = userService->getEmailById(userId);
+            parserService->auditLoginAndLogout(false, email, ip, true);
             //LA COOKIE ES VALIDA LA BORRAMOS DE LA BD
             sessionService->deleteSessionByCookie(sessionID);
             cout<<"Status: 200 Ok"<<endl;

@@ -6,6 +6,7 @@
 
 #include "../../services/parserService/ParserService.h"
 #include "../../services/sessionService/SessionService.h"
+#include "../../services/userService/UserService.h"
 
 using namespace std;
 

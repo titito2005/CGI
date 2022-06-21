@@ -2,14 +2,14 @@
 
 SessionService::SessionService(){
     //Rand for cookie
-    srand((unsigned)time(NULL) * getpid());  
+    srand((unsigned)time(NULL) * getpid());
     db = new Database();
     if(db->connectToDatabase()){
         conn = db->getConnection();
     } else {
         printf("%s \n", "Error conectando a la base de datos");
         exit(1);
-    }   
+    }
 }
 
 SessionService::~SessionService(){
