@@ -60,12 +60,12 @@ bool LogoutView::responseGET(char* ip){
             //LA COOKIE ES VALIDA LA BORRAMOS DE LA BD
             sessionService->deleteSessionByCookie(sessionID);
             cout<<"Status: 200 Ok"<<endl;
-            cout << "Location: http://172.24.131.194/cgi-bin/home\n\n" << endl;
+            cout << "Location: https://www.freakys-game-store.com/cgi-bin/home\n\n" << endl;
             return true;
         }
     }
     //REDIRIGIMOS A HOME
-    cout << "Location: http://172.24.131.194/cgi-bin/home\n\n" << endl;
+    cout << "Location: https://www.freakys-game-store.com/cgi-bin/home\n\n" << endl;
     return true;
 }
 

@@ -71,7 +71,7 @@ bool LoginView::responseGET(char* ip){
     if(sessionID != NULL){
         if(sessionService->validateSession(ip, sessionID)){
             //LA COOKIE ES VALIDA NO DEBERIA ENTRAR A LOGIN.
-            cout << "Location: http://172.24.131.194/cgi-bin/home\n\n" << endl;
+            cout << "Location: https://www.freakys-game-store.com/cgi-bin/home\n\n" << endl;
         }
     }
     //NO HAY COOKIE O NO ES VALIDA
@@ -87,7 +87,7 @@ bool LoginView::responsePOST(char* ip){
         if(sessionService->validateSession(ip, sessionID)){
             //LA COOKIE ES VALIDA NO DEBERIA ENTRAR A LOGIN.
             userLoged = true;
-            cout << "Location: http://172.24.131.194/cgi-bin/home\n\n" << endl;
+            cout << "Location: https://www.freakys-game-store.com/cgi-bin/home\n\n" << endl;
         }
     }
     if(!userLoged) {
@@ -110,13 +110,13 @@ bool LoginView::responsePOST(char* ip){
                         //CREAMOS COOKIE.
                         if(createCookie(ip, userEmail)){
                             //REDIRECCION A HOME.
-                            cout << "Location: http://172.24.131.194/cgi-bin/home\n\n" << endl;
+                            parserService->auditLoginAndLogout(true, userEmail, ip, true);
+                            cout << "Location: https://www.freakys-game-store.com/cgi-bin/home\n\n" << endl;
                         } else {
                             error = true;
                             errorMessage = "Error verificando el usuario.";
                             parserService->auditLoginAndLogout(true, userEmail, ip, false);
                         }
-                        parserService->auditLoginAndLogout(true, userEmail, ip, true);
                     }else{
                         //PRINT ERROR VERIFY PASSWORD
                         error = true;

@@ -76,12 +76,12 @@ bool AddView::responseGET(char* ip){
             printHTML();
         } else {
             //NO HAY COOKIE O NO ES VALIDA
-            cout << "Location: http://172.24.131.194/cgi-bin/home\n\n" << endl;
+            cout << "Location: https://www.freakys-game-store.com/cgi-bin/home\n\n" << endl;
             //printHTML();
         }
     } else {
         //NO HAY COOKIE O NO ES VALIDA
-        cout << "Location: http://172.24.131.194/cgi-bin/home\n\n" << endl;
+        cout << "Location: https://www.freakys-game-store.com/cgi-bin/home\n\n" << endl;
         //printHTML();
     }
     return true;
@@ -107,7 +107,7 @@ bool AddView::responsePOST(char* ip){
                  if(strlen(GameName) <= 100 && strlen(GameValue) <= 10 && strlen(GameDescription) <= 1000) {
                    if(sellService->addSell(GameName, GameValue, GameDescription)) {
                        parserService->auditBuyProducts(false, email, ip, true);
-                       cout << "Location: http://172.24.131.194/cgi-bin/home\n\n" << endl;
+                       cout << "Location: https://www.freakys-game-store.com/cgi-bin/home\n\n" << endl;
                    } else {
                        error = true;
                        parserService->auditBuyProducts(false, email, ip, false);
@@ -133,10 +133,10 @@ bool AddView::responsePOST(char* ip){
                   printHTML();
              }
         } else {
-          cout << "Location: http://172.24.131.194/cgi-bin/home\n\n" << endl;
+          cout << "Location: https://www.freakys-game-store.com/cgi-bin/home\n\n" << endl;
         }
     } else {
-      cout << "Location: http://172.24.131.194/cgi-bin/home\n\n" << endl;
+      cout << "Location: https://www.freakys-game-store.com/cgi-bin/home\n\n" << endl;
     }
     return true;
 }

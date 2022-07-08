@@ -71,7 +71,7 @@ bool RegisterView::responseGET(char* ip){
     if(sessionID != NULL){
         if(sessionService->validateSession(ip, sessionID)){
             //IF THE COOKIE IS VALID, IT SHOULDN'T ENTER IN LOGIN
-            cout << "Location: http://172.24.131.194/cgi-bin/home\n\n" << endl;
+            cout << "Location: https://www.freakys-game-store.com/cgi-bin/home\n\n" << endl;
         }
     }
     printHTML();
@@ -86,7 +86,7 @@ bool RegisterView::responsePOST(char* ip){
         if(sessionService->validateSession(ip, sessionID)){
             //LA COOKIE ES VALIDA NO DEBERIA ENTRAR A LOGIN.
             userLoged = true;
-            cout << "Location: http://172.24.131.194/cgi-bin/home\n\n" << endl;
+            cout << "Location: https://www.freakys-game-store.com/cgi-bin/home\n\n" << endl;
         }
     }
 
@@ -129,7 +129,7 @@ bool RegisterView::responsePOST(char* ip){
                                 //INSERT THE NEW USER DATA TO THE DB
                                 if(userService->insertUserRegister(userName, userLastNames, userEmail, hashedPassword, userPhoneNumber, userDirection)){
                                     cout<<"Status: 200 Ok"<<endl;
-                                    cout << "Location: http://172.24.131.194/cgi-bin/home\n\n" << endl;
+                                    cout << "Location: https://www.freakys-game-store.com/cgi-bin/home\n\n" << endl;
                                 } else {
                                     error = true;
                                     errorMessage = "Error registrando el usuario.";
